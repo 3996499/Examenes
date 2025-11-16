@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     themeToggle.addEventListener('click', () => {
         const next = body.dataset.theme === 'light' ? 'dark' : 'light';
-        themeStatus.textContent = next === 'light' ? 'Modo claro' : 'Modo oscuro';
         setTheme(next);
     });
 
@@ -54,6 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
         body.dataset.theme = theme;
         localStorage.setItem('preferred-theme', theme);
         themeToggle.textContent = theme === 'light' ? '\u263E' : '\u2600';
+        if (themeStatus) {
+            themeStatus.textContent = theme === 'light' ? 'Modo claro' : 'Modo oscuro';
+        }
     }
 
     function renderState(state) {
