@@ -1,27 +1,92 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>Sostenibilidad - RAs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAs Sostenibilidad</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    
 </head>
-<body>
 
-    <h1>RA Sostenibilidad</h1>
+<body data-theme="light">
+    <div class="detail-shell">
+        <header class="appbar">
+            <a class="icon-button" href="Index.html" aria-label="Volver">
+                &#8592;
+            </a>
+            <div class="brand">
+                <span class="eyebrow">2º DAW</span>
+                <h1>Sostenibilidad</h1>
+            </div>
+            <div class="appbar-actions">
+                <button class="chip" aria-label="Modo standalone">Solo módulo</button>
+                <button class="icon-button" id="themeToggle" aria-label="Cambiar tema">&#9788;</button>
+            </div>
+        </header>
 
-    <ul>
-        <li><a href="https://www.daypo.com/ra1-sostenibilidad.html#test" target="_blank">RA1 </a></li>
-        <li><a href="https://www.daypo.com/ra2-sostenibilidad.html#test" target="_blank">RA2</a></li>
-        <li><a href="https://www.daypo.com/ra3-sostenibilidad.html#test" target="_blank">RA3 </a></li>
-        <li><a href="" target="_blank">RA4 </a></li>
-        <li><a href="" target="_blank">RA5 </a></li>
-        <li><a href="" target="_blank">RA6 </a></li>
-    </ul>
-
-    <div class="volver">
-        <a href="index.html">⬅ Volver</a>
+        <main class="detail-main" data-part="module">
+            <article class="module-card">
+                <span class="eyebrow">Resultados de aprendizaje</span>
+                <h2>Sostenibilidad</h2>
+                <p class="tagline">Accede a los cuestionarios Daypo desde aquí y regresa sin perder el contexto.</p>
+                <div class="ra-grid">
+                    <div class="ra-card">
+                        <h3>RA1</h3>
+                        <p>Cuestionario oficial enfocado en fundamentos.</p>
+                        <a href="https://www.daypo.com/ra1-sostenibilidad.html#test" data-open="daypo">Abrir en visor</a>
+                    </div>
+                    <div class="ra-card">
+                        <h3>RA2</h3>
+                        <p>Repaso de normativas medioambientales.</p>
+                        <a href="https://www.daypo.com/ra2-sostenibilidad.html#test" data-open="daypo">Abrir en visor</a>
+                    </div>
+                    <div class="ra-card">
+                        <h3>RA3</h3>
+                        <p>Evaluación orientada a casos reales.</p>
+                        <a href="https://www.daypo.com/ra3-sostenibilidad.html#test" data-open="daypo">Abrir en visor</a>
+                    </div>
+                    <div class="ra-card">
+                        <h3>RA4</h3>
+                        <p>Material en preparación.</p>
+                        <a href="#">En construcción</a>
+                    </div>
+                    <div class="ra-card">
+                        <h3>RA5</h3>
+                        <p>Pendiente de contenidos y checkpoints.</p>
+                        <a href="#">En construcción</a>
+                    </div>
+                    <div class="ra-card">
+                        <h3>RA6</h3>
+                        <p>Últimos ajustes antes del simulacro.</p>
+                        <a href="#">En construcción</a>
+                    </div>
+                </div>
+            </article>
+        </main>
     </div>
 
+    <div class="embed-wrapper" id="embedWrapper" aria-hidden="true">
+        <article class="embed">
+            <div class="embed-toolbar">
+                <div>
+                    <span class="eyebrow">Visor Daypo</span>
+                    <h3 id="embedTitle">Recurso</h3>
+                </div>
+                <button class="icon-button" id="closeEmbed" aria-label="Cerrar visor">&#10006;</button>
+            </div>
+            <div class="embed-body">
+                <div class="skeleton" id="embedLoader"></div>
+                <iframe id="embedFrame" title="Visor de recursos" loading="lazy"></iframe>
+            </div>
+        </article>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="module.js"></script>
 </body>
+
 </html>
