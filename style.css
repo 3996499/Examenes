@@ -1,0 +1,27 @@
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #f7f7f7;
+        }
+        h1 {
+            text-align: center;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 300px;
+            margin: auto;
+        }
+        li {
+            margin: 12px 0;
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        a {
+            text-decoration: none;
+            color: #0056a0;
+            font-weight: bold;
+        }
