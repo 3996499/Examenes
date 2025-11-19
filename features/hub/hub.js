@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return `
             <section class="hero viewer-content">
                 <div>
-                    <h2>Todo tu curso en una sola vista.</h2>
+                    <h2>Practica para tus examenes.</h2>
                     <p>Activa el modo oscuro, abre los tests Daypo dentro del hub y utiliza el botón volver para navegar rápido entre módulos.</p>
             </section>
         `;
@@ -108,10 +108,11 @@ document.addEventListener('DOMContentLoaded', () => {
         updateBackButton();
     }
 
-    async function loadModule(url, label) {
+    async function loadModule(target, label) {
         viewer.innerHTML = loadingTemplate(label);
         try {
-            const response = await fetch(url);
+            const resolvedUrl = target instanceof URL ? target : new URL(target, window.location.href);
+            const response = await fetch(resolvedUrl.href);
             if (!response.ok) throw new Error('No se pudo cargar el módulo');
             const html = await response.text();
             const parser = new DOMParser();
@@ -186,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const isLocal = url.origin === window.location.origin;
                 if (isLocal && url.pathname.endsWith('.html')) {
                     evt.preventDefault();
-                    loadModule(url.pathname.replace(/^\//, ''), anchor.textContent.trim() || 'Detalle');
+                    loadModule(url, anchor.textContent.trim() || 'Detalle');
                     return;
                 }
                 evt.preventDefault();

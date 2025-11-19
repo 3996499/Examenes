@@ -1,18 +1,18 @@
 :root {
     color-scheme: light;
-    --bg: #f6f7fb;
-    --bg-alt: #edf1ff;
-    --surface: rgba(255, 255, 255, 0.95);
-    --surface-strong: rgba(255, 255, 255, 0.8);
-    --text: #13141a;
-    --text-soft: #5b6072;
-    --stroke: rgba(14, 16, 26, 0.08);
+    --bg: #d4d8e3;
+    --bg-alt: #c8cddb;
+    --surface: rgba(230, 232, 243, 0.92);
+    --surface-strong: rgba(220, 223, 237, 0.86);
+    --text: #0f1118;
+    --text-soft: #3c4154;
+    --stroke: rgba(12, 16, 28, 0.2);
     --primary: #6759ff;
     --primary-strong: #4635f2;
     --accent: #ff8b4c;
     --success: #55c28d;
     --warning: #ffb347;
-    --shadow: 0 25px 65px rgba(18, 24, 58, 0.08);
+    --shadow: 0 18px 48px rgba(10, 12, 20, 0.22);
     --radius-lg: 1.5rem;
     --radius-md: 1rem;
     --radius-sm: 0.65rem;
@@ -45,8 +45,8 @@ body {
     font-family: "Plus Jakarta Sans", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     margin: 0;
     min-height: 100vh;
-    background: radial-gradient(circle at 20% 20%, rgba(103, 89, 255, 0.15), transparent 55%),
-        radial-gradient(circle at 80% 0%, rgba(255, 139, 76, 0.15), transparent 45%),
+    background: radial-gradient(circle at 15% 25%, rgba(103, 89, 255, 0.06), transparent 55%),
+        radial-gradient(circle at 78% 5%, rgba(255, 139, 76, 0.08), transparent 42%),
         var(--bg);
     color: var(--text);
     transition: background 0.3s ease;
@@ -117,6 +117,62 @@ body {
 .icon-button:not(:disabled):hover {
     transform: translateY(-2px) scale(1.03);
     background: var(--surface);
+}
+
+.ra-multi {
+    border: 1px dashed var(--stroke);
+    border-radius: var(--radius-md);
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--surface);
+}
+
+.ra-multi summary {
+    list-style: none;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+}
+
+.ra-multi summary::-webkit-details-marker {
+    display: none;
+}
+
+.ra-multi summary::after {
+    content: '\25BC';
+    font-size: 0.75rem;
+    transition: transform 1.2s ease;
+}
+
+.ra-multi[open] summary::after {
+    transform: rotate(-180deg);
+}
+
+.ra-multi .ra-links {
+    margin-top: 0;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 1.2s ease, opacity 1.2s ease, margin-top 1.2s ease;
+}
+
+.ra-multi[open] .ra-links {
+    margin-top: var(--space-sm);
+    max-height: 640px;
+    opacity: 1;
+}
+
+.ra-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
 }
 
 .workspace {
@@ -317,6 +373,64 @@ body {
     color: var(--primary-strong);
 }
 
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    padding: 0.4rem 0.85rem;
+    border: 1px solid transparent;
+    background: var(--surface-strong);
+    color: var(--text);
+}
+
+.status-badge.warning {
+    background: rgba(255, 179, 71, 0.18);
+    border-color: rgba(255, 179, 71, 0.4);
+    color: #7a3c00;
+}
+
+.ra-link,
+.ra-links a {
+    font-weight: 500;
+    color: var(--text);
+    border: 1px solid var(--stroke);
+    border-radius: var(--radius-sm);
+    padding: 0.4rem 0.6rem;
+    background: var(--surface);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.ra-link::after,
+.ra-links a::after {
+    content: '\2197';
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
+
+.ra-link:hover,
+.ra-links a:hover {
+    border-color: var(--primary);
+    color: var(--primary-strong);
+}
+
+.notice-card {
+    border: 1px dashed var(--stroke);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    margin: 0;
+    flex: 1;
+    color: var(--text-soft);
+}
+
+.ra-card a {
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--primary-strong);
+}
+
 .notice-card {
     border: 1px dashed var(--stroke);
     border-radius: var(--radius-lg);
@@ -418,8 +532,13 @@ body {
 }
 
 @keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 .toast {
@@ -483,6 +602,7 @@ body {
 }
 
 @media (max-width: 600px) {
+
     .appbar,
     .panel {
         padding: var(--space-md);

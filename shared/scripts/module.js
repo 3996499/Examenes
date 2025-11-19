@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
     const themeToggle = document.getElementById('themeToggle');
+    const themeStatus = document.getElementById('themeStatus');
     const toast = document.getElementById('toast');
     const embedWrapper = document.getElementById('embedWrapper');
     const embedFrame = document.getElementById('embedFrame');
@@ -47,6 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
         body.dataset.theme = theme;
         localStorage.setItem('preferred-theme', theme);
         themeToggle.textContent = theme === 'light' ? '\u263E' : '\u2600';
+        if (themeStatus) {
+            themeStatus.textContent = theme === 'light' ? 'Modo claro' : 'Modo oscuro';
+        }
     }
 
     function openExternal(url, label) {

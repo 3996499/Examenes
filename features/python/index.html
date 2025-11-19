@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAs Python</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../shared/styles/style.css">
+</head>
+
+<body data-theme="light">
+    <div class="detail-shell">
+        <header class="appbar">
+            <a class="icon-button" href="../hub/index.html" aria-label="Volver">
+                &#8592;
+            </a>
+            <div class="brand">
+                <span class="eyebrow">2º DAW</span>
+                <h1>Python</h1>
+            </div>
+            <div class="appbar-actions">
+                <button class="chip" aria-label="Modo standalone">Solo módulo</button>
+                <span id="themeStatus" class="chip" aria-live="polite">Modo claro</span>
+                <button class="icon-button" id="themeToggle" aria-label="Cambiar tema">&#9788;</button>
+            </div>
+        </header>
+
+        <main class="detail-main" data-part="module">
+            <article class="module-card">
+                <p class="tagline">Recopilamos los retos prácticos de cada RA. Los que todavía están vacíos muestran "En construcción".</p>
+                <div class="ra-grid">
+                    <div class="ra-card">
+                        <h3>RA1</h3>
+                        <p>Prácticas iniciales de sintaxis y scripts CLI.</p>
+                        <details class="ra-multi">
+                            <summary>9 versiones disponibles</summary>
+                            <ul class="ra-links">
+                                <li><a href="https://www.daypo.com/ra01-python.html">Versión 0</a></li>
+                                <li><a href="https://www.daypo.com/ra01-python-1.html">Versión 1</a></li>
+                                <li><a href="https://www.daypo.com/ra01-python-2.html">Versión 2</a></li>
+                                <li><a href="https://www.daypo.com/ra01-python-3.html">Versión 3</a></li>
+                                <li><a href="https://www.daypo.com/ra01-python-4.html">Versión 4</a></li>
+                                <li><a href="https://www.daypo.com/ra01-python-5.html">Versión 5</a></li>
+                                <li><a href="https://www.daypo.com/ra01-python-6.html">Versión 6</a></li>
+                                <li><a href="https://www.daypo.com/ra01-python-7.html">Versión 7</a></li>
+                                <li><a href="https://www.daypo.com/ra01-python-8.html">Versión 8</a></li>
+                            </ul>
+                        </details>
+                    </div>
+                    <div class="ra-card">
+                        <h3>RA2</h3>
+                        <p>Trabajo con estructuras de datos y colecciones avanzadas.</p>
+                        <details class="ra-multi">
+                            <summary>4 versiones disponibles</summary>
+                            <ul class="ra-links">
+                                <li><a href="https://www.daypo.com/ra02-python.html">Versión 0</a></li>
+                                <li><a href="https://www.daypo.com/ra02-python-1.html">Versión 1</a></li>
+                                <li><a href="https://www.daypo.com/ra02-python-2.html">Versión 2</a></li>
+                                <li><a href="https://www.daypo.com/ra02-python-3.html">Versión 3</a></li>
+                            </ul>
+                        </details>
+                    </div>
+                    <div class="ra-card">
+                        <h3>RA3</h3>
+                        <p>Persistencia simple y manejo de ficheros.</p>
+                        <a class="ra-link" href="https://www.daypo.com/ra03-python.html#test">Abrir en visor</a>
+                    </div>
+                    <div class="ra-card">
+                        <h3>RA4</h3>
+                        <p>Automatización de tareas y uso de librerías externas.</p>
+                        <span class="pill warning">En construcción</span>
+                    </div>
+                    <div class="ra-card">
+                        <h3>RA5</h3>
+                        <p>Desarrollo orientado a pruebas y packaging.</p>
+                        <span class="pill warning">En construcción</span>
+                    </div>
+                    <div class="ra-card">
+                        <h3>RA6</h3>
+                        <p>Últimos ajustes antes del despliegue en Daypo.</p>
+                        <span class="pill warning">En construcción</span>
+                    </div>
+                </div>
+            </article>
+        </main>
+    </div>
+
+    <div class="embed-wrapper" id="embedWrapper" aria-hidden="true">
+        <article class="embed">
+            <div class="embed-toolbar">
+                <div>
+                    <span class="eyebrow">Visor Daypo</span>
+                    <h3 id="embedTitle">Recurso</h3>
+                </div>
+                <button class="icon-button" id="closeEmbed" aria-label="Cerrar visor">&#10006;</button>
+            </div>
+            <div class="embed-body">
+                <div class="skeleton" id="embedLoader"></div>
+                <iframe id="embedFrame" title="Visor de recursos" loading="lazy"></iframe>
+            </div>
+        </article>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="../../shared/scripts/module.js"></script>
+</body>
+
+</html>

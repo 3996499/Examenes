@@ -4,25 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAs Python</title>
+    <title>RAs Sostenibilidad</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../shared/styles/style.css">
 </head>
 
 <body data-theme="light">
     <div class="detail-shell">
         <header class="appbar">
-            <a class="icon-button" href="Index.html" aria-label="Volver">
+            <a class="icon-button" href="../hub/index.html" aria-label="Volver">
                 &#8592;
             </a>
             <div class="brand">
                 <span class="eyebrow">2º DAW</span>
-                <h1>Python</h1>
+                <h1>Sostenibilidad</h1>
             </div>
             <div class="appbar-actions">
                 <button class="chip" aria-label="Modo standalone">Solo módulo</button>
+                <span id="themeStatus" class="chip" aria-live="polite">Modo claro</span>
                 <button class="icon-button" id="themeToggle" aria-label="Cambiar tema">&#9788;</button>
             </div>
         </header>
@@ -30,38 +31,38 @@
         <main class="detail-main" data-part="module">
             <article class="module-card">
                 <span class="eyebrow">Resultados de aprendizaje</span>
-                <h2>Python</h2>
-                <p class="tagline">Recopilamos los retos prácticos de cada RA. Los que todavía están vacíos muestran "En construcción".</p>
+                <h2>Sostenibilidad</h2>
+                <p class="tagline">Accede a los cuestionarios Daypo desde aquí y regresa sin perder el contexto.</p>
                 <div class="ra-grid">
                     <div class="ra-card">
                         <h3>RA1</h3>
-                        <p>Prácticas iniciales de sintaxis y scripts CLI.</p>
-                        <a href="#">En construcción</a>
+                        <p>Cuestionario oficial enfocado en fundamentos.</p>
+                        <a class="ra-link" href="https://www.daypo.com/ra1-sostenibilidad.html#test" data-open="daypo">Abrir en visor</a>
                     </div>
                     <div class="ra-card">
                         <h3>RA2</h3>
-                        <p>Trabajo con estructuras de datos y colecciones avanzadas.</p>
-                        <a href="#">En construcción</a>
+                        <p>Repaso de normativas medioambientales.</p>
+                        <a class="ra-link" href="https://www.daypo.com/ra2-sostenibilidad.html#test" data-open="daypo">Abrir en visor</a>
                     </div>
                     <div class="ra-card">
                         <h3>RA3</h3>
-                        <p>Persistencia simple y manejo de ficheros.</p>
-                        <a href="#">En construcción</a>
+                        <p>Evaluación orientada a casos reales.</p>
+                        <a class="ra-link" href="https://www.daypo.com/ra3-sostenibilidad.html#test" data-open="daypo">Abrir en visor</a>
                     </div>
                     <div class="ra-card">
                         <h3>RA4</h3>
-                        <p>Automatización de tareas y uso de librerías externas.</p>
-                        <a href="#">En construcción</a>
+                        <p>Material en preparación.</p>
+                        <span class="status-badge warning">En construcción</span>
                     </div>
                     <div class="ra-card">
                         <h3>RA5</h3>
-                        <p>Desarrollo orientado a pruebas y packaging.</p>
-                        <a href="#">En construcción</a>
+                        <p>Pendiente de contenidos y checkpoints.</p>
+                        <span class="status-badge warning">En construcción</span>
                     </div>
                     <div class="ra-card">
                         <h3>RA6</h3>
-                        <p>Últimos ajustes antes del despliegue en Daypo.</p>
-                        <a href="#">En construcción</a>
+                        <p>Últimos ajustes antes del simulacro.</p>
+                        <span class="status-badge warning">En construcción</span>
                     </div>
                 </div>
             </article>
@@ -86,7 +87,7 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    <script src="module.js"></script>
+    <script src="../../shared/scripts/module.js"></script>
 </body>
 
 </html>
