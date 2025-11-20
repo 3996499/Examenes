@@ -22,6 +22,17 @@
             document.documentElement.classList.toggle('dark', theme === 'dark');
             document.documentElement.dataset.theme = theme;
             window.__preferredTheme = theme;
+            const markThemeReady = function () {
+                document.documentElement.classList.add('theme-ready');
+            };
+            const scheduleReady = function () {
+                requestAnimationFrame(markThemeReady);
+            };
+            if (document.readyState === 'complete') {
+                scheduleReady();
+            } else {
+                window.addEventListener('load', scheduleReady, { once: true });
+            }
         })();
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -53,6 +64,28 @@
 
         html.dark * {
             color: #f8fafc !important;
+        }
+        
+        html.dark:not(.theme-ready) .appbar,
+        html.dark:not(.theme-ready) .panel,
+        html.dark:not(.theme-ready) .module-card,
+        html.dark:not(.theme-ready) .ra-card,
+        html.dark:not(.theme-ready) .embed,
+        html.dark:not(.theme-ready) .embed-toolbar,
+        html.dark:not(.theme-ready) #viewer {
+            background-color: rgba(15, 17, 24, 0.9);
+            border-color: rgba(248, 250, 252, 0.12);
+            color: #f8fafc;
+        }
+
+        html.dark:not(.theme-ready) .module-link,
+        html.dark:not(.theme-ready) .chip,
+        html.dark:not(.theme-ready) .icon-button,
+        html.dark:not(.theme-ready) .toast,
+        html.dark:not(.theme-ready) .pill {
+            background-color: rgba(15, 17, 24, 0.6);
+            border-color: rgba(248, 250, 252, 0.1);
+            color: #f8fafc;
         }
     </style>
     <script>
