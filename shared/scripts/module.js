@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const storedTheme = localStorage.getItem('preferred-theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    setTheme(storedTheme || (prefersDark ? 'dark' : 'light'));
+    // Default to dark to match inline script and avoid flash
+    setTheme(storedTheme || 'dark');
 
     themeToggle.addEventListener('click', () => {
         setTheme(body.dataset.theme === 'light' ? 'dark' : 'light');

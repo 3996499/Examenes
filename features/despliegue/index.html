@@ -9,6 +9,28 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="../../shared/assets/favicon.svg">
+    <script>
+        (function () {
+            const storageKey = 'preferred-theme';
+            let storedTheme = null;
+            try {
+                storedTheme = localStorage.getItem(storageKey);
+            } catch (error) {
+                storedTheme = null;
+            }
+            const theme = storedTheme || 'dark';
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+            document.documentElement.dataset.theme = theme;
+            window.__preferredTheme = theme;
+        })();
+    </script>
+    <style>
+        html.dark,
+        html.dark body {
+            background-color: #0f1118;
+            color: #f8fafc;
+        }
+    </style>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -25,7 +47,7 @@
     <link rel="stylesheet" href="../../shared/styles/theme.css">
 </head>
 
-<body data-theme="light"
+<body data-theme="dark"
     class="font-sans min-h-screen text-slate-900 transition-colors duration-300 ease-out antialiased dark:text-slate-100">
     <div class="detail-shell w-full max-w-4xl px-4 sm:px-6 pt-12 pb-10 mx-auto flex flex-col gap-6">
         <header
