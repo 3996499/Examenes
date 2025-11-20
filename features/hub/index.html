@@ -10,98 +10,212 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="../../shared/assets/favicon.svg">
-    <link rel="stylesheet" href="../../shared/styles/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
+    <link rel="stylesheet" href="../../shared/styles/theme.css">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="../../shared/assets/favicon.svg" type="image/svg+xml">
 </head>
 
-<body data-theme="light">
-    <div class="app-shell">
-        <header class="appbar">
-            <button class="icon-button" id="backButton" aria-label="Volver" disabled>
+<body data-theme="light"
+    class="font-sans min-h-screen text-slate-900 transition-colors duration-300 ease-out antialiased dark:text-slate-100">
+    <div class="app-shell w-full max-w-6xl px-4 sm:px-6 pt-3 sm:pt-12 pb-10 mx-auto flex flex-col gap-6">
+        <header
+            class="appbar sticky top-4 z-10 flex flex-wrap items-center gap-4 rounded-[1.75rem] border border-slate-200/60 bg-white/80 px-5 py-4 shadow-[0_18px_48px_rgba(15,23,42,0.25)] backdrop-blur-2xl transition-all duration-300 dark:border-white/10 dark:bg-slate-900/70"
+            data-expanded="false">
+            <button class="icon-button inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/60 bg-white/80 text-slate-900 transition duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-white shadow-sm disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
+                id="backButton" aria-label="Volver" disabled>
                 &#8592;
             </button>
-            <div class="brand">
-                <span class="eyebrow">2º DAW CIFP CARLOS III</span>
-                <h1>Hub de Enlaces</h1>
+            <div class="brand flex flex-col gap-1">
+                <span class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">2º DAW CIFP CARLOS III</span>
+                <h1 class="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-white">Hub de Enlaces</h1>
             </div>
-            <div class="appbar-actions">
-                <!-- texto para el boton de tema actualizado -->
-                <span id="themeStatus" class="chip" aria-live="polite">Modo oscuro</span>
-                <button class="icon-button" id="themeToggle" aria-label="Cambiar tema">
-                    &#9788;
+            <div class="appbar-actions ml-auto flex items-center gap-3">
+                <button id="mobileMenuToggle" aria-label="Abrir menú" aria-controls="appbarMenu" aria-expanded="false"
+                    class="icon-button inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/60 bg-white/80 text-slate-900 transition duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-white shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20 lg:hidden">
+                    &#9776;
                 </button>
+                <div class="hidden items-center gap-3 lg:flex">
+                    <span data-role="theme-status"
+                        class="chip inline-flex items-center rounded-full border border-slate-200/60 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-700 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                        aria-live="polite">Modo oscuro</span>
+                    <button data-role="theme-toggle"
+                        class="icon-button inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/60 bg-white/80 text-slate-900 transition duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-white shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
+                        aria-label="Cambiar tema">
+                        &#9788;
+                    </button>
+                </div>
+            </div>
+            <div id="appbarMenu"
+                class="appbar-menu w-full space-y-5 rounded-[1.5rem] border border-slate-200/50 bg-white/70 text-sm text-slate-600 opacity-0 shadow-inner transition-all duration-300 dark:border-white/10 dark:bg-slate-900/40 lg:hidden">
+                <div class="flex flex-col gap-2">
+                    <span class="eyebrow text-[0.7rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Mapa del curso</span>
+                    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">Módulos disponibles</h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Abre un módulo sin salir del hub.</p>
+                </div>
+                <ul class="module-list list-none m-0 p-0 flex flex-col gap-3">
+                    <li>
+                        <a class="module-link flex items-center justify-between rounded-[1.1rem] border border-transparent bg-slate-50/80 px-5 py-4 text-slate-900 no-underline transition hover:border-indigo-400 hover:translate-x-1 dark:bg-slate-800/80 dark:text-white"
+                            href="../despliegue/index.html" data-label="Despliegue">
+                            <span class="text-base font-medium">Despliegue</span>
+                            <span
+                                class="pill success inline-flex items-center rounded-full border border-emerald-200/70 bg-emerald-50/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-500 dark:border-emerald-400/30 dark:bg-emerald-500/10 dark:text-emerald-200">RA 1 - 3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="module-link flex items-center justify-between rounded-[1.1rem] border border-transparent bg-slate-50/80 px-5 py-4 text-slate-900 no-underline transition hover:border-indigo-400 hover:translate-x-1 dark:bg-slate-800/80 dark:text-white"
+                            href="#" data-label="DWEC">
+                            <span class="text-base font-medium">DWEC</span>
+                            <span
+                                class="pill warning inline-flex items-center rounded-full border border-amber-200/70 bg-amber-50/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-500 dark:border-amber-400/30 dark:bg-amber-500/10 dark:text-amber-200">En construcción</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="module-link flex items-center justify-between rounded-[1.1rem] border border-transparent bg-slate-50/80 px-5 py-4 text-slate-900 no-underline transition hover:border-indigo-400 hover:translate-x-1 dark:bg-slate-800/80 dark:text-white"
+                            href="#" data-label="DWES">
+                            <span class="text-base font-medium">DWES</span>
+                            <span
+                                class="pill warning inline-flex items-center rounded-full border border-amber-200/70 bg-amber-50/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-500 dark:border-amber-400/30 dark:bg-amber-500/10 dark:text-amber-200">En construcción</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="module-link flex items-center justify-between rounded-[1.1rem] border border-transparent bg-slate-50/80 px-5 py-4 text-slate-900 no-underline transition hover:border-indigo-400 hover:translate-x-1 dark:bg-slate-800/80 dark:text-white"
+                            href="../interfaces/index.html" data-label="Interfaces">
+                            <span class="text-base font-medium">Diseño de Interfaces</span>
+                            <span
+                                class="pill success inline-flex items-center rounded-full border border-emerald-200/70 bg-emerald-50/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-500 dark:border-emerald-400/30 dark:bg-emerald-500/10 dark:text-emerald-200">RA 1 - 3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="module-link flex items-center justify-between rounded-[1.1rem] border border-transparent bg-slate-50/80 px-5 py-4 text-slate-900 no-underline transition hover:border-indigo-400 hover:translate-x-1 dark:bg-slate-800/80 dark:text-white"
+                            href="../python/index.html" data-label="Python">
+                            <span class="text-base font-medium">Python</span>
+                            <span
+                                class="pill success inline-flex items-center rounded-full border border-emerald-200/70 bg-emerald-50/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-500 dark:border-emerald-400/30 dark:bg-emerald-500/10 dark:text-emerald-200">RA 1 - 3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="module-link flex items-center justify-between rounded-[1.1rem] border border-transparent bg-slate-50/80 px-5 py-4 text-slate-900 no-underline transition hover:border-indigo-400 hover:translate-x-1 dark:bg-slate-800/80 dark:text-white"
+                            href="../sostenibilidad/index.html" data-label="Sostenibilidad">
+                            <span class="text-base font-medium">Sostenibilidad</span>
+                            <span
+                                class="pill success inline-flex items-center rounded-full border border-emerald-200/70 bg-emerald-50/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-500 dark:border-emerald-400/30 dark:bg-emerald-500/10 dark:text-emerald-200">RA 1 - 3</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="flex items-center justify-between gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 px-4 py-3 text-sm font-semibold text-slate-700 dark:border-white/10 dark:bg-white/10 dark:text-white">
+                    <span data-role="theme-status" aria-live="polite">Modo oscuro</span>
+                    <button data-role="theme-toggle" aria-label="Cambiar tema"
+                        class="icon-button inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/60 bg-white/80 text-slate-900 transition duration-200 ease-out hover:-translate-y-0.5 hover:bg-white shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20">
+                        &#9788;
+                    </button>
+                </div>
             </div>
         </header>
 
-        <main class="workspace">
-            <section class="panel nav-panel">
-                <div class="panel-heading">
-                    <span class="eyebrow">Mapa del curso</span>
-                    <h2>Módulos disponibles</h2>
-                    <p>Explora los RAs sin salir de esta página.</p>
+        <main class="workspace grid gap-6 items-start lg:grid-cols-[minmax(280px,320px)_1fr]">
+            <section
+                class="panel nav-panel relative hidden rounded-[1.5rem] border border-slate-200/60 bg-white/80 p-6 shadow-[0_30px_70px_rgba(15,23,42,0.18)] backdrop-blur-2xl dark:border-white/10 dark:bg-slate-900/70 lg:block">
+                <div class="panel-heading flex flex-col gap-2 mb-4">
+                    <span class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Mapa del curso</span>
+                    <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Módulos disponibles</h2>
+                    <p class="text-slate-500 dark:text-slate-300">Explora los RAs sin salir de esta página.</p>
                 </div>
-                <ul class="module-list">
+                <ul class="module-list list-none m-0 p-0 flex flex-col gap-3">
                     <li>
-                        <a class="module-link" href="../despliegue/index.html" data-label="Despliegue">
-                            <span>Despliegue</span>
-                            <span class="pill success">RA 1 - 3</span>
+                        <a class="module-link flex items-center justify-between rounded-[1.1rem] border border-transparent bg-slate-50/80 px-5 py-4 text-slate-900 no-underline transition hover:border-indigo-400 hover:translate-x-1 dark:bg-slate-800/80 dark:text-white"
+                            href="../despliegue/index.html" data-label="Despliegue">
+                            <span class="text-base font-medium">Despliegue</span>
+                            <span
+                                class="pill success inline-flex items-center rounded-full border border-emerald-200/70 bg-emerald-50/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-500 dark:border-emerald-400/30 dark:bg-emerald-500/10 dark:text-emerald-200">RA 1 - 3</span>
                         </a>
                     </li>
                     <li>
-                        <a class="module-link" href="#" data-label="DWEC">
-                            <span>DWEC</span>
-                            <span class="pill warning">En construcción</span>
+                        <a class="module-link flex items-center justify-between rounded-[1.1rem] border border-transparent bg-slate-50/80 px-5 py-4 text-slate-900 no-underline transition hover:border-indigo-400 hover:translate-x-1 dark:bg-slate-800/80 dark:text-white"
+                            href="#" data-label="DWEC">
+                            <span class="text-base font-medium">DWEC</span>
+                            <span
+                                class="pill warning inline-flex items-center rounded-full border border-amber-200/70 bg-amber-50/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-500 dark:border-amber-400/30 dark:bg-amber-500/10 dark:text-amber-200">En construcción</span>
                         </a>
                     </li>
                     <li>
-                        <a class="module-link" href="#" data-label="DWES">
-                            <span>DWES</span>
-                            <span class="pill warning">En construcción</span>
+                        <a class="module-link flex items-center justify-between rounded-[1.1rem] border border-transparent bg-slate-50/80 px-5 py-4 text-slate-900 no-underline transition hover:border-indigo-400 hover:translate-x-1 dark:bg-slate-800/80 dark:text-white"
+                            href="#" data-label="DWES">
+                            <span class="text-base font-medium">DWES</span>
+                            <span
+                                class="pill warning inline-flex items-center rounded-full border border-amber-200/70 bg-amber-50/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-500 dark:border-amber-400/30 dark:bg-amber-500/10 dark:text-amber-200">En construcción</span>
                         </a>
                     </li>
                     <li>
-                        <a class="module-link" href="../interfaces/index.html" data-label="Interfaces">
-                            <span>Diseño de Interfaces</span>
-                            <span class="pill success">RA 1 - 3</span>
+                        <a class="module-link flex items-center justify-between rounded-[1.1rem] border border-transparent bg-slate-50/80 px-5 py-4 text-slate-900 no-underline transition hover:border-indigo-400 hover:translate-x-1 dark:bg-slate-800/80 dark:text-white"
+                            href="../interfaces/index.html" data-label="Interfaces">
+                            <span class="text-base font-medium">Diseño de Interfaces</span>
+                            <span
+                                class="pill success inline-flex items-center rounded-full border border-emerald-200/70 bg-emerald-50/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-500 dark:border-emerald-400/30 dark:bg-emerald-500/10 dark:text-emerald-200">RA 1 - 3</span>
                         </a>
                     </li>
                     <li>
-                        <a class="module-link" href="../python/index.html" data-label="Python">
-                            <span>Python</span>
-                            <span class="pill success">RA 1 - 3</span>
+                        <a class="module-link flex items-center justify-between rounded-[1.1rem] border border-transparent bg-slate-50/80 px-5 py-4 text-slate-900 no-underline transition hover:border-indigo-400 hover:translate-x-1 dark:bg-slate-800/80 dark:text-white"
+                            href="../python/index.html" data-label="Python">
+                            <span class="text-base font-medium">Python</span>
+                            <span
+                                class="pill success inline-flex items-center rounded-full border border-emerald-200/70 bg-emerald-50/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-500 dark:border-emerald-400/30 dark:bg-emerald-500/10 dark:text-emerald-200">RA 1 - 3</span>
                         </a>
                     </li>
                     <li>
-                        <a class="module-link" href="../sostenibilidad/index.html" data-label="Sostenibilidad">
-                            <span>Sostenibilidad</span>
-                            <span class="pill success">RA 1 - 3</span>
+                        <a class="module-link flex items-center justify-between rounded-[1.1rem] border border-transparent bg-slate-50/80 px-5 py-4 text-slate-900 no-underline transition hover:border-indigo-400 hover:translate-x-1 dark:bg-slate-800/80 dark:text-white"
+                            href="../sostenibilidad/index.html" data-label="Sostenibilidad">
+                            <span class="text-base font-medium">Sostenibilidad</span>
+                            <span
+                                class="pill success inline-flex items-center rounded-full border border-emerald-200/70 bg-emerald-50/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-500 dark:border-emerald-400/30 dark:bg-emerald-500/10 dark:text-emerald-200">RA 1 - 3</span>
                         </a>
                     </li>
                 </ul>
             </section>
 
-            <section class="panel viewer" id="viewer" aria-live="polite">
-                <!-- Content injected via JS -->
-            </section>
-        </main>
+            <section id="viewer" aria-live="polite"
+                class="panel viewer relative overflow-hidden rounded-[1.5rem] border border-slate-200/60 bg-white/80 p-6 shadow-[0_30px_70px_rgba(15,23,42,0.18)] backdrop-blur-2xl min-h-[430px] dark:border-white/10 dark:bg-slate-900/70">
+                </div>
+            </div>
+        </aside>
     </div>
 
-    <div class="embed-wrapper" id="embedWrapper" aria-hidden="true">
-        <article class="embed">
-            <div class="embed-toolbar">
-                <div>
-                    <span class="eyebrow">Visor Daypo</span>
-                    <h3 id="embedTitle">Recurso</h3>
+    <div class="embed-wrapper fixed inset-0 z-30 hidden items-stretch justify-stretch bg-slate-900/70 p-0 backdrop-blur-2xl"
+        id="embedWrapper" aria-hidden="true">
+        <article class="embed flex h-full w-full flex-col bg-white dark:bg-slate-900">
+            <div
+                class="embed-toolbar flex min-h-[56px] items-center justify-between gap-4 border-b border-slate-200/60 bg-white/90 px-6 py-3 shadow-lg dark:border-white/10 dark:bg-slate-900/90">
+                <div class="flex flex-col gap-1">
+                    <span class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Visor Daypo</span>
+                    <h3 id="embedTitle" class="text-lg font-semibold text-slate-900 dark:text-white">Recurso</h3>
                 </div>
-                <button class="icon-button" id="closeEmbed" aria-label="Cerrar visor">&#10006;</button>
+                <button
+                    class="icon-button inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/60 bg-white/80 text-slate-900 transition duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-white shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
+                    id="closeEmbed" aria-label="Cerrar visor">&#10006;</button>
             </div>
-            <div class="embed-body">
-                <div class="skeleton" id="embedLoader"></div>
-                <iframe id="embedFrame" title="Visor de recursos" loading="lazy"></iframe>
+            <div class="embed-body relative flex-1">
+                <div class="skeleton absolute inset-5 rounded-[1.1rem] bg-gradient-to-r from-transparent via-white/40 to-transparent animate-[shimmer_1.4s_linear_infinite] dark:via-white/10"
+                    id="embedLoader"></div>
+                <iframe id="embedFrame" title="Visor de recursos" loading="lazy"
+                    class="h-full w-full border-0 rounded-none bg-white dark:bg-slate-900"></iframe>
             </div>
         </article>
     </div>
 
-    <!-- <div class="toast" id="toast" role="status" aria-live="polite"></div> -->
+    <!-- <div class="toast fixed bottom-8 left-1/2 -translate-x-1/2 translate-y-full rounded-full border border-slate-200/80 bg-white/90 px-6 py-3 text-sm font-semibold text-slate-900 shadow-xl transition dark:border-white/10 dark:bg-slate-900/90 dark:text-white"
+        id="toast" role="status" aria-live="polite"></div> -->
 
     <script src="hub.js"></script>
 </body>

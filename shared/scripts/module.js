@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
+    const root = document.documentElement;
     const themeToggle = document.getElementById('themeToggle');
     const themeStatus = document.getElementById('themeStatus');
     const toast = document.getElementById('toast');
@@ -39,15 +40,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeEmbed.addEventListener('click', hideEmbed);
     document.addEventListener('keydown', event => {
-        if (event.key === 'Escape' && embedWrapper.classList.contains('active')) {
+        if (event.key === 'Escape' && !embedWrapper.classList.contains('hidden')) {
             hideEmbed();
         }
     });
 
     function setTheme(theme) {
         body.dataset.theme = theme;
+        root.classList.toggle('dark', theme === 'dark');
+        body.classList.toggle('dark', theme === 'dark');
         localStorage.setItem('preferred-theme', theme);
-        themeToggle.textContent = theme === 'light' ? '\u263E' : '\u2600';
+        themeToggle.textContent = theme === 'light' ? '\u2600' : '\u263E';
         if (themeStatus) {
             themeStatus.textContent = theme === 'light' ? 'Modo claro' : 'Modo oscuro';
         }
@@ -57,7 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
         embedLoader.hidden = false;
         embedFrame.src = 'about:blank';
         embedTitle.textContent = label;
-        embedWrapper.classList.add('active');
+        embedWrapper.classList.remove('hidden');
+        embedWrapper.classList.add('flex');
         embedWrapper.setAttribute('aria-hidden', 'false');
         embedFrame.src = url;
         embedFrame.onload = () => {
@@ -66,16 +70,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function hideEmbed() {
-        embedWrapper.classList.remove('active');
+        embedWrapper.classList.add('hidden');
+        embedWrapper.classList.remove('flex');
         embedWrapper.setAttribute('aria-hidden', 'true');
         embedFrame.src = 'about:blank';
     }
 
     let toastTimeout;
     function showToast(message) {
+        if (!toast) return;
         toast.textContent = message;
-        toast.classList.add('show');
+        toast.classList.remove('translate-y-full');
+        toast.classList.add('translate-y-0');
         clearTimeout(toastTimeout);
-        toastTimeout = setTimeout(() => toast.classList.remove('show'), 2400);
+        toastTimeout = setTimeout(() => {
+            toast.classList.add('translate-y-full');
+            toast.classList.remove('translate-y-0');
+        }, 2400);
     }
 });

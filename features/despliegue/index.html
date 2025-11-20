@@ -9,68 +9,96 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="../../shared/assets/favicon.svg">
-    <link rel="stylesheet" href="../../shared/styles/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
+    <link rel="stylesheet" href="../../shared/styles/theme.css">
 </head>
 
-<body data-theme="light">
-    <div class="detail-shell">
-        <header class="appbar">
-            <a class="icon-button" href="../hub/index.html" aria-label="Volver">
+<body data-theme="light"
+    class="font-sans min-h-screen text-slate-900 transition-colors duration-300 ease-out antialiased dark:text-slate-100">
+    <div class="detail-shell w-full max-w-4xl px-4 sm:px-6 pt-12 pb-10 mx-auto flex flex-col gap-6">
+        <header
+            class="appbar sticky top-4 z-10 flex flex-wrap items-center gap-4 rounded-[1.75rem] border border-slate-200/60 bg-white/80 px-5 py-4 shadow-[0_18px_48px_rgba(15,23,42,0.25)] backdrop-blur-2xl dark:border-white/10 dark:bg-slate-900/70">
+            <a class="icon-button inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/60 bg-white/80 text-slate-900 transition duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-white shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
+                href="../hub/index.html" aria-label="Volver">
                 &#8592;
             </a>
-            <div class="brand">
-                <span class="eyebrow">2º DAW</span>
-                <h1>Despliegue de Aplicaciones Web</h1>
+            <div class="brand flex flex-col gap-1">
+                <span class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">2º DAW</span>
+                <h1 class="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-white">Despliegue de Aplicaciones Web</h1>
             </div>
-            <div class="appbar-actions">
-                <span id="themeStatus" class="chip" aria-live="polite">Modo claro</span>
-                <button class="icon-button" id="themeToggle" aria-label="Cambiar tema">&#9788;</button>
+            <div class="appbar-actions ml-auto flex items-center gap-3">
+                <span id="themeStatus"
+                    class="chip inline-flex items-center rounded-full border border-slate-200/60 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-700 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                    aria-live="polite">Modo claro</span>
+                <button
+                    class="icon-button inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/60 bg-white/80 text-slate-900 transition duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-white shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
+                    id="themeToggle" aria-label="Cambiar tema">&#9788;</button>
             </div>
         </header>
 
-        <main class="detail-main" data-part="module">
-            <article class="module-card">
-                <span class="eyebrow">Resultados de aprendizaje</span>
-                <h2>Despliegue</h2>
-                <p class="tagline">Controla los entornos de ejecución y repasa los RA clave desde el visor integrado.</p>
-                <div class="ra-grid">
-                    <div class="ra-card">
-                        <h3>RA1</h3>
-                        <p>Consideraciones iniciales de infraestructura y servidores.</p>
-                        <a class="ra-link" href="https://www.daypo.com/ra01-daw.html#test">Abrir en visor</a>
+        <main class="detail-main flex flex-col gap-6" data-part="module">
+            <article class="module-card relative rounded-[1.5rem] border border-slate-200/60 bg-white/80 p-6 shadow-[0_30px_70px_rgba(15,23,42,0.18)] backdrop-blur-2xl dark:border-white/10 dark:bg-slate-900/70">
+                <span class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Resultados de aprendizaje</span>
+                <div class="ra-grid grid mt-6 gap-4 sm:grid-cols-2">
+                    <div class="ra-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg transition hover:-translate-y-1 hover:border-indigo-400 min-h-[150px] dark:border-white/10 dark:bg-slate-900/70">
+                        <h3 class="text-xl font-semibold text-slate-900 dark:text-white">RA1</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 flex-1">Consideraciones iniciales de infraestructura y servidores.</p>
+                        <a class="ra-link inline-flex items-center gap-1 rounded-full border border-slate-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 no-underline transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                            href="https://www.daypo.com/ra01-daw.html#test">Abrir en visor ↗</a>
                     </div>
-                    <div class="ra-card">
-                        <h3>RA2</h3>
-                        <p>Automatización del despliegue y pipelines.</p>
-                        <a class="ra-link" href="https://www.daypo.com/ra02-daw.html#test">Abrir en visor</a>
+                    <div class="ra-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg transition hover:-translate-y-1 hover:border-indigo-400 min-h-[150px] dark:border-white/10 dark:bg-slate-900/70">
+                        <h3 class="text-xl font-semibold text-slate-900 dark:text-white">RA2</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 flex-1">Automatización del despliegue y pipelines.</p>
+                        <a class="ra-link inline-flex items-center gap-1 rounded-full border border-slate-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 no-underline transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                            href="https://www.daypo.com/ra02-daw.html#test">Abrir en visor ↗</a>
                     </div>
-                    <div class="ra-card">
-                        <h3>RA3</h3>
-                        <p>Monitorización, logging y diagnósticos.</p>
-                        <a class="ra-link" href="https://www.daypo.com/ra03-daw.html#test">Abrir en visor</a>
+                    <div class="ra-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg transition hover:-translate-y-1 hover:border-indigo-400 min-h-[150px] dark:border-white/10 dark:bg-slate-900/70">
+                        <h3 class="text-xl font-semibold text-slate-900 dark:text-white">RA3</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 flex-1">Monitorización, logging y diagnósticos.</p>
+                        <a class="ra-link inline-flex items-center gap-1 rounded-full border border-slate-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 no-underline transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                            href="https://www.daypo.com/ra03-daw.html#test">Abrir en visor ↗</a>
                     </div>
                 </div>
             </article>
         </main>
     </div>
 
-    <div class="embed-wrapper" id="embedWrapper" aria-hidden="true">
-        <article class="embed">
-            <div class="embed-toolbar">
-                <div>
-                    <span class="eyebrow">Visor Daypo</span>
-                    <h3 id="embedTitle">Recurso</h3>
+    <div class="embed-wrapper fixed inset-0 z-30 hidden items-stretch justify-stretch bg-slate-900/70 p-0 backdrop-blur-2xl"
+        id="embedWrapper" aria-hidden="true">
+        <article class="embed flex h-full w-full flex-col bg-white dark:bg-slate-900">
+            <div
+                class="embed-toolbar flex min-h-[56px] items-center justify-between gap-4 border-b border-slate-200/60 bg-white/90 px-6 py-3 shadow-lg dark:border-white/10 dark:bg-slate-900/90">
+                <div class="flex flex-col gap-1">
+                    <span class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Visor Daypo</span>
+                    <h3 id="embedTitle" class="text-lg font-semibold text-slate-900 dark:text-white">Recurso</h3>
                 </div>
-                <button class="icon-button" id="closeEmbed" aria-label="Cerrar visor">&#10006;</button>
+                <button
+                    class="icon-button inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/60 bg-white/80 text-slate-900 transition duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-white shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
+                    id="closeEmbed" aria-label="Cerrar visor">&#10006;</button>
             </div>
-            <div class="embed-body">
-                <div class="skeleton" id="embedLoader"></div>
-                <iframe id="embedFrame" title="Visor de recursos" loading="lazy"></iframe>
+            <div class="embed-body relative flex-1">
+                <div class="skeleton absolute inset-5 rounded-[1.1rem] bg-gradient-to-r from-transparent via-white/40 to-transparent animate-[shimmer_1.4s_linear_infinite] dark:via-white/10"
+                    id="embedLoader"></div>
+                <iframe id="embedFrame" title="Visor de recursos" loading="lazy"
+                    class="h-full w-full border-0 rounded-none bg-white dark:bg-slate-900"></iframe>
             </div>
         </article>
     </div>
 
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="toast fixed bottom-8 left-1/2 -translate-x-1/2 translate-y-full rounded-full border border-slate-200/80 bg-white/90 px-6 py-3 text-sm font-semibold text-slate-900 shadow-xl transition dark:border-white/10 dark:bg-slate-900/90 dark:text-white"
+        id="toast" role="status" aria-live="polite"></div>
 
     <script src="../../shared/scripts/module.js"></script>
 </body>
