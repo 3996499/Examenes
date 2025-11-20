@@ -25,6 +25,26 @@ body.dark {
     background-repeat: no-repeat;
 }
 
+html.dark:not(.theme-ready) .appbar,
+html.dark:not(.theme-ready) .panel,
+html.dark:not(.theme-ready) .module-card,
+html.dark:not(.theme-ready) .ra-card,
+html.dark:not(.theme-ready) .embed,
+html.dark:not(.theme-ready) .embed-toolbar {
+    background-color: rgba(15, 17, 24, 0.82);
+    border-color: rgba(248, 250, 252, 0.12);
+    color: #f8fafc;
+}
+
+html.dark:not(.theme-ready) .module-link,
+html.dark:not(.theme-ready) .chip,
+html.dark:not(.theme-ready) .icon-button,
+html.dark:not(.theme-ready) .toast {
+    background-color: rgba(15, 17, 24, 0.7);
+    border-color: rgba(248, 250, 252, 0.12);
+    color: #f8fafc;
+}
+
 #viewer {
     background-image: radial-gradient(circle at top right, rgba(99, 102, 241, 0.18), transparent 55%);
     background-repeat: no-repeat;
