@@ -1,11 +1,11 @@
 const CACHE_NAME = 'hub-shell-v1';
 const APP_SHELL = [
     './',
-    './index.html',
+    './Index.html',
     './hub.js',
     './manifest.webmanifest',
-    '../../shared/styles/theme.css',
-    '../../shared/assets/favicon.svg'
+    './shared/styles/theme.css',
+    './shared/assets/favicon.svg'
 ];
 
 self.addEventListener('install', event => {
@@ -58,9 +58,9 @@ self.addEventListener('fetch', event => {
                 })
                 .catch(() => {
                     if (event.request.mode === 'navigate') {
-                        return caches.match('./index.html');
+                        return caches.match('./Index.html');
                     }
-                    return caches.match('../../shared/assets/favicon.svg');
+                    return caches.match('./shared/assets/favicon.svg');
                 });
         })
     );

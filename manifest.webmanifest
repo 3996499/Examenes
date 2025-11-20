@@ -2,7 +2,7 @@
   "name": "Hub Interactivo 2º DAW",
   "short_name": "Hub DAW",
   "description": "Accede a todos los módulos y recursos interactivos de 2º DAW desde un único hub instalable.",
-  "start_url": "./index.html",
+  "start_url": "./Index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
@@ -10,7 +10,7 @@
   "theme_color": "#0f172a",
   "icons": [
     {
-      "src": "../../shared/assets/favicon.svg",
+      "src": "./shared/assets/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"

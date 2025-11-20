@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const moduleLinks = document.querySelectorAll('.module-link');
     const stateStack = [];
+    const storageKey = 'preferred-theme';
 
     const initialState = { type: 'home' };
     stateStack.push(initialState);
@@ -24,9 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     registerServiceWorker();
 
-    const storedTheme = localStorage.getItem('preferred-theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    setTheme(storedTheme || (prefersDark ? 'dark' : 'light'));
+    const storedTheme = getStoredTheme();
+    setTheme(storedTheme || window.__preferredTheme || 'dark');
 
     themeToggleButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         body.dataset.theme = theme;
         root.classList.toggle('dark', theme === 'dark');
         body.classList.toggle('dark', theme === 'dark');
-        localStorage.setItem('preferred-theme', theme);
+        persistTheme(theme);
         themeToggleButtons.forEach(button => {
             button.textContent = theme === 'light' ? '\u2600' : '\u263E';
         });
@@ -326,6 +326,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         mobileMenuToggle?.setAttribute('aria-expanded', 'false');
         mobileMenuToggle?.setAttribute('aria-label', 'Abrir menú');
+    }
+
+    function persistTheme(theme) {
+        try {
+            localStorage.setItem(storageKey, theme);
+        } catch (error) {
+            // Ignored: storage might be unavailable in some contexts.
+        }
+    }
+
+    function getStoredTheme() {
+        try {
+            return localStorage.getItem(storageKey);
+        } catch (error) {
+            return null;
+        }
     }
 
     function registerServiceWorker() {

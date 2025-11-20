@@ -15,6 +15,7 @@ body {
     background-repeat: no-repeat;
 }
 
+html.dark body,
 body.dark {
     background:
         radial-gradient(circle at 15% 25%, rgba(99, 102, 241, 0.25), transparent 55%),
@@ -29,6 +30,7 @@ body.dark {
     background-repeat: no-repeat;
 }
 
+html.dark #viewer,
 body.dark #viewer {
     background-image: radial-gradient(circle at top right, rgba(99, 102, 241, 0.3), transparent 55%);
 }
