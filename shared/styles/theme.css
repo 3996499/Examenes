@@ -25,6 +25,7 @@ body.dark {
     background-repeat: no-repeat;
 }
 
+
 #viewer {
     background-image: radial-gradient(circle at top right, rgba(99, 102, 241, 0.18), transparent 55%);
     background-repeat: no-repeat;
