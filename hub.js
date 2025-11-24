@@ -281,6 +281,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     showToast('En construcción');
                     return;
                 }
+                if (isDaypoLink(href)) {
+                    // Evita el iframe para Daypo, que prohíbe el embebido.
+                    evt.preventDefault();
+                    window.open(href, '_blank', 'noopener');
+                    return;
+                }
                 const url = new URL(href, window.location.href);
                 const isLocal = url.origin === window.location.origin;
                 if (isLocal && url.pathname.endsWith('.html')) {
@@ -297,6 +303,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function openExternal(url, label) {
+        if (isDaypoLink(url)) {
+            window.open(url, '_blank', 'noopener');
+            return;
+        }
         embedLoader.hidden = false;
         embedFrame.src = 'about:blank';
         embedTitle.textContent = label;
@@ -355,6 +365,18 @@ document.addEventListener('DOMContentLoaded', () => {
             toast.classList.add('translate-y-full');
             toast.classList.remove('translate-y-0');
         }, 2600);
+    }
+
+    function isDaypoLink(href) {
+        if (!href) {
+            return false;
+        }
+        try {
+            const url = new URL(href, window.location.href);
+            return url.hostname.endsWith('daypo.com');
+        } catch (error) {
+            return false;
+        }
     }
 
     function expandAppbarMenu() {

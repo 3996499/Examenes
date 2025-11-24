@@ -30,6 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 showToast('Este RA está en construcción');
                 return;
             }
+
+            if (isDaypoLink(href)) {
+                // Daypo bloquea iframes, así que lo abrimos en nueva pestaña.
+                event.preventDefault();
+                window.open(href, '_blank', 'noopener');
+                return;
+            }
+
             event.preventDefault();
             const label = anchor.dataset.label
                 || anchor.closest('.ra-card')?.querySelector('h3')?.textContent.trim()
@@ -89,5 +97,17 @@ document.addEventListener('DOMContentLoaded', () => {
             toast.classList.add('translate-y-full');
             toast.classList.remove('translate-y-0');
         }, 2400);
+    }
+
+    function isDaypoLink(href) {
+        if (!href) {
+            return false;
+        }
+        try {
+            const url = new URL(href, window.location.href);
+            return url.hostname.endsWith('daypo.com');
+        } catch (error) {
+            return false;
+        }
     }
 });
