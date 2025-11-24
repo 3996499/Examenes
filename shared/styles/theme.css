@@ -8,21 +8,109 @@
 
 body {
     background:
-        radial-gradient(circle at 15% 25%, rgba(99, 102, 241, 0.12), transparent 55%),
-        radial-gradient(circle at 78% 5%, rgba(249, 115, 22, 0.15), transparent 45%),
+        radial-gradient(circle at 18% 25%, rgba(99, 102, 241, 0.16), transparent 60%),
+        radial-gradient(circle at 78% 5%, rgba(249, 115, 22, 0.12), transparent 50%),
         #d4d8e3;
     background-attachment: fixed, fixed, fixed;
     background-repeat: no-repeat;
 }
 
+.plasma-wrapper {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    filter: blur(145px);
+    pointer-events: none;
+    z-index: -3;
+}
+
+.plasma-wrapper--reduced,
+html.reduced-motion .plasma-wrapper {
+    filter: blur(110px);
+}
+
+.plasma-gradient {
+    position: absolute;
+    border-radius: 100%;
+    opacity: 0.51;
+    mix-blend-mode: screen;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.1, 0, 0.9, 1);
+}
+
+.plasma-gradient-1 {
+    background: rgb(249, 115, 22);
+    width: 700px;
+    height: 700px;
+    left: 60%;
+    top: 40%;
+    z-index: -2;
+    animation-duration: 5s;
+    animation-name: animation-gradient-1;
+}
+
+.plasma-gradient-2 {
+    background: rgb(99, 102, 241);
+    width: 600px;
+    height: 600px;
+    left: 40%;
+    top: 60%;
+    z-index: -1;
+    animation-duration: 5s;
+    animation-name: animation-gradient-2;
+}
+
+html.reduced-motion .plasma-gradient,
+.plasma-wrapper--reduced .plasma-gradient {
+    animation: none;
+    opacity: 0.3;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes animation-gradient-1 {
+    0% {
+        transform: translateY(-50%) translateX(-50%) rotate(-20deg) translateX(20%);
+    }
+    25% {
+        transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(80deg) translateX(30%);
+    }
+    50% {
+        transform: translateY(-50%) translateX(-50%) rotate(180deg) translateX(25%);
+    }
+    75% {
+        transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(240deg) translateX(15%);
+    }
+    100% {
+        transform: translateY(-50%) translateX(-50%) rotate(340deg) translateX(20%);
+    }
+}
+
+@keyframes animation-gradient-2 {
+    0% {
+        transform: translateY(-50%) translateX(-50%) rotate(40deg) translateX(-20%);
+    }
+    25% {
+        transform: translateY(-50%) translateX(-50%) skew(15deg, 15deg) rotate(110deg) translateX(-5%);
+    }
+    50% {
+        transform: translateY(-50%) translateX(-50%) rotate(210deg) translateX(-35%);
+    }
+    75% {
+        transform: translateY(-50%) translateX(-50%) skew(-15deg, -15deg) rotate(300deg) translateX(-10%);
+    }
+    100% {
+        transform: translateY(-50%) translateX(-50%) rotate(400deg) translateX(-20%);
+    }
+}
+
 html.dark body,
 body.dark {
     background:
-        radial-gradient(circle at 15% 25%, rgba(99, 102, 241, 0.25), transparent 55%),
-        radial-gradient(circle at 78% 5%, rgba(249, 115, 22, 0.18), transparent 45%),
+        radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.25), transparent 60%),
+        radial-gradient(circle at 80% 7%, rgba(249, 115, 22, 0.2), transparent 50%),
         #0f1118;
-    background-attachment: fixed, fixed, fixed;
-    background-repeat: no-repeat;
 }
 
 #viewer {
@@ -61,6 +149,13 @@ body.dark .tilt-card:focus-within {
         transition: none;
         transform: none;
     }
+}
+
+html.reduced-motion .tilt-card,
+html.reduced-motion .tilt-card:hover,
+html.reduced-motion .tilt-card:focus-within {
+    transition: none;
+    transform: none;
 }
 
 .appbar-menu {
