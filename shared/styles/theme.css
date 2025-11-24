@@ -25,7 +25,6 @@ body.dark {
     background-repeat: no-repeat;
 }
 
-
 #viewer {
     background-image: radial-gradient(circle at top right, rgba(99, 102, 241, 0.18), transparent 55%);
     background-repeat: no-repeat;
@@ -34,6 +33,34 @@ body.dark {
 html.dark #viewer,
 body.dark #viewer {
     background-image: radial-gradient(circle at top right, rgba(99, 102, 241, 0.3), transparent 55%);
+}
+
+.tilt-card {
+    transition: transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1),
+        box-shadow 0.45s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transform-style: preserve-3d;
+}
+
+.tilt-card:hover,
+.tilt-card:focus-within {
+    transform: perspective(700px) rotateX(6deg) rotateY(-4deg) translateY(-8px);
+    box-shadow: 0 32px 64px rgba(79, 70, 229, 0.25);
+}
+
+html.dark .tilt-card:hover,
+body.dark .tilt-card:hover,
+html.dark .tilt-card:focus-within,
+body.dark .tilt-card:focus-within {
+    box-shadow: 0 40px 80px rgba(99, 102, 241, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tilt-card,
+    .tilt-card:hover,
+    .tilt-card:focus-within {
+        transition: none;
+        transform: none;
+    }
 }
 
 .appbar-menu {

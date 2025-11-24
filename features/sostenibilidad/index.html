@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark" class="dark">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -9,85 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="../../shared/assets/favicon.svg">
-    <script>
-        (function () {
-            const storageKey = 'preferred-theme';
-            let storedTheme = null;
-            try {
-                storedTheme = localStorage.getItem(storageKey);
-            } catch (error) {
-                storedTheme = null;
-            }
-            const theme = storedTheme || 'dark';
-            document.documentElement.classList.toggle('dark', theme === 'dark');
-            document.documentElement.dataset.theme = theme;
-            window.__preferredTheme = theme;
-            const markThemeReady = function () {
-                document.documentElement.classList.add('theme-ready');
-            };
-            const scheduleReady = function () {
-                requestAnimationFrame(markThemeReady);
-            };
-            if (document.readyState === 'complete') {
-                scheduleReady();
-            } else {
-                window.addEventListener('load', scheduleReady, { once: true });
-            }
-        })();
-    </script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        html.dark,
-        html.dark body {
-            background-color: #0f1118 !important;
-            color: #f8fafc !important;
-        }
-
-        html.dark .appbar,
-        html.dark .panel,
-        html.dark .module-card,
-        html.dark .ra-card,
-        html.dark .embed,
-        html.dark .embed-toolbar,
-        html.dark #viewer {
-            background-color: rgba(15, 17, 24, 0.8) !important;
-            border-color: rgba(248, 250, 252, 0.12) !important;
-        }
-
-        html.dark .module-link,
-        html.dark .chip,
-        html.dark .icon-button,
-        html.dark .toast {
-            background-color: rgba(15, 17, 24, 0.6) !important;
-            border-color: rgba(248, 250, 252, 0.1) !important;
-        }
-
-        html.dark * {
-            color: #f8fafc !important;
-        }
-        
-        html.dark:not(.theme-ready) .appbar,
-        html.dark:not(.theme-ready) .panel,
-        html.dark:not(.theme-ready) .module-card,
-        html.dark:not(.theme-ready) .ra-card,
-        html.dark:not(.theme-ready) .embed,
-        html.dark:not(.theme-ready) .embed-toolbar,
-        html.dark:not(.theme-ready) #viewer {
-            background-color: rgba(15, 17, 24, 0.9);
-            border-color: rgba(248, 250, 252, 0.12);
-            color: #f8fafc;
-        }
-
-        html.dark:not(.theme-ready) .module-link,
-        html.dark:not(.theme-ready) .chip,
-        html.dark:not(.theme-ready) .icon-button,
-        html.dark:not(.theme-ready) .toast,
-        html.dark:not(.theme-ready) .pill {
-            background-color: rgba(15, 17, 24, 0.6);
-            border-color: rgba(248, 250, 252, 0.1);
-            color: #f8fafc;
-        }
-    </style>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -103,13 +25,13 @@
     <link rel="stylesheet" href="../../shared/styles/theme.css">
 </head>
 
-<body data-theme="dark"
+<body data-theme="light"
     class="font-sans min-h-screen text-slate-900 transition-colors duration-300 ease-out antialiased dark:text-slate-100">
     <div class="detail-shell w-full max-w-4xl px-4 sm:px-6 pt-12 pb-10 mx-auto flex flex-col gap-6">
         <header
             class="appbar sticky top-4 z-10 flex flex-wrap items-center gap-4 rounded-[1.75rem] border border-slate-200/60 bg-white/80 px-5 py-4 shadow-[0_18px_48px_rgba(15,23,42,0.25)] backdrop-blur dark:border-white/10 dark:bg-slate-900/70">
             <a class="icon-button inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/60 bg-white/80 text-slate-900 transition duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-white shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
-                href="../../Index.html" aria-label="Volver">
+                href="../../index.html" aria-label="Volver">
                 &#8592;
             </a>
             <div class="brand flex flex-col gap-1">
@@ -133,37 +55,37 @@
                 <span class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Resultados de aprendizaje</span>
                 
                 <div class="ra-grid grid mt-6 gap-4 sm:grid-cols-2">
-                    <div class="ra-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg transition hover:-translate-y-1 hover:border-indigo-400 min-h-[150px] dark:border-white/10 dark:bg-slate-900/70">
+                    <div class="ra-card tilt-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg transition hover:border-indigo-400 min-h-[150px] dark:border-white/10 dark:bg-slate-900/70">
                         <h3 class="text-xl font-semibold text-slate-900 dark:text-white">RA1</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 flex-1">Cuestionario oficial enfocado en fundamentos.</p>
                         <a class="ra-link inline-flex items-center gap-1 rounded-full border border-slate-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 no-underline transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white"
                             href="https://www.daypo.com/ra1-sostenibilidad.html" data-open="daypo">Abrir en visor ↗</a>
                     </div>
-                    <div class="ra-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg transition hover:-translate-y-1 hover:border-indigo-400 min-h-[150px] dark:border-white/10 dark:bg-slate-900/70">
+                    <div class="ra-card tilt-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg transition hover:border-indigo-400 min-h-[150px] dark:border-white/10 dark:bg-slate-900/70">
                         <h3 class="text-xl font-semibold text-slate-900 dark:text-white">RA2</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 flex-1">Repaso de normativas medioambientales.</p>
                         <a class="ra-link inline-flex items-center gap-1 rounded-full border border-slate-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 no-underline transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white"
                             href="https://www.daypo.com/ra2-sostenibilidad.html" data-open="daypo">Abrir en visor ↗</a>
                     </div>
-                    <div class="ra-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg transition hover:-translate-y-1 hover:border-indigo-400 min-h-[150px] dark:border-white/10 dark:bg-slate-900/70">
+                    <div class="ra-card tilt-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg transition hover:border-indigo-400 min-h-[150px] dark:border-white/10 dark:bg-slate-900/70">
                         <h3 class="text-xl font-semibold text-slate-900 dark:text-white">RA3</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 flex-1">Evaluación orientada a casos reales.</p>
                         <a class="ra-link inline-flex items-center gap-1 rounded-full border border-slate-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 no-underline transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white"
                             href="https://www.daypo.com/ra3-sostenibilidad.html" data-open="daypo">Abrir en visor ↗</a>
                     </div>
-                    <div class="ra-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg dark:border-white/10 dark:bg-slate-900/70">
+                    <div class="ra-card tilt-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg dark:border-white/10 dark:bg-slate-900/70">
                         <h3 class="text-xl font-semibold text-slate-900 dark:text-white">RA4</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300">Material en preparación.</p>
                         <span
                             class="pill warning inline-flex items-center rounded-full border border-amber-200/70 bg-amber-50/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-500 dark:border-amber-400/30 dark:bg-amber-500/10 dark:text-amber-200">En construcción</span>
                     </div>
-                    <div class="ra-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg dark:border-white/10 dark:bg-slate-900/70">
+                    <div class="ra-card tilt-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg dark:border-white/10 dark:bg-slate-900/70">
                         <h3 class="text-xl font-semibold text-slate-900 dark:text-white">RA5</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300">Pendiente de contenidos y checkpoints.</p>
                         <span
                             class="pill warning inline-flex items-center rounded-full border border-amber-200/70 bg-amber-50/60 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-500 dark:border-amber-400/30 dark:bg-amber-500/10 dark:text-amber-200">En construcción</span>
                     </div>
-                    <div class="ra-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg dark:border-white/10 dark:bg-slate-900/70">
+                    <div class="ra-card tilt-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg dark:border-white/10 dark:bg-slate-900/70">
                         <h3 class="text-xl font-semibold text-slate-900 dark:text-white">RA6</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300">Últimos ajustes antes del simulacro.</p>
                         <span
@@ -191,7 +113,7 @@
                 <div class="skeleton absolute inset-5 rounded-[1.1rem] bg-gradient-to-r from-transparent via-white/40 to-transparent animate-[shimmer_1.4s_linear_infinite] dark:via-white/10"
                     id="embedLoader"></div>
                 <iframe id="embedFrame" title="Visor de recursos" loading="lazy"
-                    class="h-full w-full border-0 rounded-none bg-white dark:bg-slate-900"></iframe>
+                    class="h-full w-full border-0 rounded-none bg-white"></iframe>
             </div>
         </article>
     </div>

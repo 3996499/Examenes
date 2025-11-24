@@ -2,7 +2,7 @@
   "name": "Hub Interactivo 2º DAW",
   "short_name": "Hub DAW",
   "description": "Accede a todos los módulos y recursos interactivos de 2º DAW desde un único hub instalable.",
-  "start_url": "./Index.html",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",

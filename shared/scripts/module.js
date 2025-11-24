@@ -47,8 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setTheme(theme) {
         body.dataset.theme = theme;
-        root.classList.toggle('dark', theme === 'dark');
-        body.classList.toggle('dark', theme === 'dark');
+        const isDark = theme === 'dark';
+        root.classList.toggle('dark', isDark);
+        body.classList.toggle('dark', isDark);
+        document.documentElement.classList.toggle('dark', isDark);
         localStorage.setItem('preferred-theme', theme);
         themeToggle.textContent = theme === 'light' ? '\u2600' : '\u263E';
         if (themeStatus) {

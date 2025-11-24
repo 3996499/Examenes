@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const appbarMenu = document.getElementById('appbarMenu');
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const moduleLinks = document.querySelectorAll('.module-link');
+    const notebookButtons = document.querySelectorAll('[data-action="open-notebooklm"]');
     const stateStack = [];
-    const storageKey = 'preferred-theme';
 
     const initialState = { type: 'home' };
     stateStack.push(initialState);
@@ -25,8 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     registerServiceWorker();
 
-    const storedTheme = getStoredTheme();
-    setTheme(storedTheme || window.__preferredTheme || 'dark');
+    const storedTheme = localStorage.getItem('preferred-theme');
+    setTheme(storedTheme || 'dark');
 
     themeToggleButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (mobileMenuToggle) {
         mobileMenuToggle.addEventListener('click', () => {
+            appbarMenu.classList.toggle('mb-4');
             const expanded = appbar?.dataset.expanded === 'true';
             expanded ? collapseAppbarMenu() : expandAppbarMenu();
         });
@@ -82,11 +83,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    notebookButtons.forEach(button => {
+        button.addEventListener('click', event => {
+            event.preventDefault();
+            loadNotebookModule();
+            if (appbar?.dataset.expanded === 'true' && window.innerWidth < 1024) {
+                collapseAppbarMenu();
+            }
+        });
+    });
+
     function setTheme(theme) {
         body.dataset.theme = theme;
-        root.classList.toggle('dark', theme === 'dark');
-        body.classList.toggle('dark', theme === 'dark');
-        persistTheme(theme);
+        const isDark = theme === 'dark';
+        root.classList.toggle('dark', isDark);
+        body.classList.toggle('dark', isDark);
+        document.documentElement.classList.toggle('dark', isDark);
+        localStorage.setItem('preferred-theme', theme);
         themeToggleButtons.forEach(button => {
             button.textContent = theme === 'light' ? '\u2600' : '\u263E';
         });
@@ -136,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (daypoButton) {
             daypoButton.addEventListener('click', () => {
-                window.open('https://www.daypo.com/', '_blank');
+                openExternal('https://www.daypo.com/', 'Daypo');
             });
         }
     }
@@ -176,6 +189,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function loadNotebookModule() {
+        const content = notebookTemplate();
+        const template = moduleTemplate('NoteBookLM', content);
+        viewer.innerHTML = template;
+        hookInlineLinks();
+        pushState({ type: 'module', title: 'NoteBookLM', html: template }, true);
+    }
+
     function loadingTemplate(label) {
         return `
             <div class="viewer-content grid min-h-[320px] place-items-center gap-4 text-slate-600 dark:text-slate-200" role="status">
@@ -195,6 +216,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="flex flex-col gap-5 text-slate-600 dark:text-slate-300">
                     ${content}
                 </div>
+            </article>
+        `;
+    }
+
+    function notebookTemplate() {
+        return `
+            <p>
+                Links a los cuadernos de las asignaturas.
+            </p>
+            <div class="grid gap-5 md:grid-cols-2">
+                ${notebookEntry('DWEC', 'Conceptos clave de JavaScript en entorno cliente.', 'dwec', 'https://notebooklm.google.com/notebook/d4ab9e00-b333-46c7-bd04-d07fddbc4ebc')}
+                ${notebookEntry('DWES', 'Backend con PHP y servicios complementarios.', 'dwes', 'https://notebooklm.google.com/notebook/4e099eaf-b752-4229-8031-15249c1346f8')}
+                ${notebookEntry('DAW', 'Despliegue y administración de aplicaciones web.', 'daw','https://notebooklm.google.com/notebook/b76c0e0a-97a3-4ca0-b860-6db1741c4e95')}
+                ${notebookEntry('DIW', 'Interfaces web y diseño responsive.', 'diw', 'https://notebooklm.google.com/notebook/5f65dbcc-3ae9-46ad-84fa-d689cbf0714d')}
+                ${notebookEntry('PYTHON', 'Automatizaciones y scripts para afrontar los retos.', 'python', 'https://notebooklm.google.com/notebook/5d6d7b9d-c296-4d4d-9232-8dc3bfb04a25')}
+                ${notebookEntry('SASP', 'Sostenibilidad y proyectos sociales.', 'sasp', 'https://notebooklm.google.com/notebook/dd815534-2c57-499e-843d-34c83fb3e153')}
+            </div>
+        `;
+    }
+
+    function notebookEntry(name, description, key, link = '#') {
+        return `
+            <article class="tilt-card group flex flex-col gap-4 rounded-[1.2rem] border border-slate-200/70 bg-white/80 p-5 shadow-[0_18px_38px_rgba(15,23,42,0.08)] transition duration-300 ease-out hover:border-indigo-300/80 dark:border-white/10 dark:bg-slate-900/70 dark:shadow-[0_18px_38px_rgba(0,0,0,0.45)]">
+                <div class="space-y-1">
+                    <span class="text-xs font-semibold uppercase tracking-[0.3em] text-indigo-400/80">Cuaderno</span>
+                    <h3 class="text-lg font-semibold text-slate-900 dark:text-white">${name}</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">${description}</p>
+                </div>
+                <a class="inline-flex items-center justify-center rounded-full border border-indigo-200/70 bg-indigo-500/10 px-4 py-2 text-sm font-semibold text-indigo-600 transition hover:bg-indigo-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 dark:border-indigo-400/30 dark:text-indigo-100" href="${link}" target="_blank" rel="noopener" data-notebook="${key}" data-open="direct">Ir al cuaderno</a>
             </article>
         `;
     }
@@ -222,6 +272,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function hookInlineLinks() {
         viewer.querySelectorAll('a').forEach(anchor => {
             anchor.addEventListener('click', evt => {
+                if (anchor.dataset.open === 'direct') {
+                    return;
+                }
                 const href = anchor.getAttribute('href') || '';
                 if (!href || href === '#') {
                     evt.preventDefault();
@@ -326,22 +379,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         mobileMenuToggle?.setAttribute('aria-expanded', 'false');
         mobileMenuToggle?.setAttribute('aria-label', 'Abrir menú');
-    }
-
-    function persistTheme(theme) {
-        try {
-            localStorage.setItem(storageKey, theme);
-        } catch (error) {
-            // Ignored: storage might be unavailable in some contexts.
-        }
-    }
-
-    function getStoredTheme() {
-        try {
-            return localStorage.getItem(storageKey);
-        } catch (error) {
-            return null;
-        }
     }
 
     function registerServiceWorker() {
