@@ -399,9 +399,10 @@ body {
     padding: 0.4rem 0.6rem;
     background: var(--surface);
     display: inline-flex;
-    align-items: center;
+    justify-content: center !important;
     gap: 0.35rem;
 }
+
 
 .ra-link::after,
 .ra-links a::after {
@@ -590,10 +591,6 @@ body {
 @media (max-width: 960px) {
     .app-shell {
         width: min(100% - 1.5rem, 100%);
-    }
-
-    .workspace {
-        grid-template-columns: 1fr;
     }
 
     .appbar {
