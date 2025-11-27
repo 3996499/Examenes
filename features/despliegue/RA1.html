@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Guión Paso a Paso RA1 – DAW</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background: #f7f7f7;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        h2 {
+            margin-top: 40px;
+            color: #444;
+        }
+        pre {
+            background: #222;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        .block {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .emoji {
+            font-size: 22px;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #ccc;
+            margin: 25px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>📌 Guión Paso a Paso RA1 – DAW</h1>
+
+<div class="block">
+    <h2>1️⃣ Actualizar paquetes</h2>
+    <hr>
+    <pre>
+sudo apt update
+sudo apt upgrade
+    </pre>
+</div>
+
+<div class="block">
+    <h2>2️⃣ Instalar pila LAMP</h2>
+    <hr>
+
+    <h3>🧱 Instalar Apache</h3>
+    <pre>
+sudo apt install apache2
+    </pre>
+
+    <h3>▶️ Activar y arrancar Apache</h3>
+    <pre>
+sudo systemctl enable apache2
+sudo systemctl start apache2
+sudo systemctl status apache2
+    </pre>
+
+    <h3>🐬 Instalar MySQL</h3>
+    <pre>
+sudo apt install mysql-server
+    </pre>
+
+    <h3>🔐 Ejecutar configuración segura</h3>
+    <pre>
+sudo mysql_secure_installation
+    </pre>
+
+    <h3>🚀 Probar MySQL</h3>
+    <pre>
+sudo systemctl status mysql
+sudo mysql
+    </pre>
+
+    <h3>🟡 Instalar PHP</h3>
+    <pre>
+sudo apt install php libapache2-mod-php php-mysql php-cli php-common php-json php-opcache php-readline
+    </pre>
+
+    <h3>Reiniciar Apache</h3>
+    <pre>
+sudo systemctl restart apache2
+    </pre>
+</div>
+
+<div class="block">
+    <h2>3️⃣ Instalar Java</h2>
+    <hr>
+
+    <h3>☕️ Instalar OpenJDK</h3>
+    <pre>
+sudo apt install openjdk-21-jdk
+    </pre>
+
+    <h3>🔍 Comprobar instalación</h3>
+    <pre>
+java -version
+    </pre>
+</div>
+
+<div class="block">
+    <h2>4️⃣ Instalar y configurar Tomcat</h2>
+    <hr>
+
+    <h3>👤 Crear usuario Tomcat</h3>
+    <pre>
+sudo useradd -m -U -d /opt/tomcat -s /bin/false tomcat
+    </pre>
+
+    <h3>📥 Descargar Tomcat</h3>
+    <pre>
+wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.13/bin/apache-tomcat-10.1.13.tar.gz
+    </pre>
+
+    <h3>📦 Extraer archivos</h3>
+    <pre>
+sudo tar -xzvf apache-tomcat-10.1.13.tar.gz -C /opt/tomcat --strip-components=1
+    </pre>
+
+    <h3>🔑 Dar permisos</h3>
+    <pre>
+sudo chown -R tomcat: /opt/tomcat
+sudo chmod -R u+x /opt/tomcat/bin
+    </pre>
+
+    <h3>🛠 Crear servicio systemd</h3>
+    <pre>
+sudo nano /etc/systemd/system/tomcat.service
+    </pre>
+
+    <h4>Contenido:</h4>
+    <pre>
+[Service]
+Type=forking
+User=tomcat
+Group=tomcat
+Environment="CATALINA_HOME=/opt/tomcat"
+Environment="CATALINA_BASE=/opt/tomcat"
+Environment="CATALINA_PID=/opt/tomcat/temp/tomcat.pid"
+ExecStart=/opt/tomcat/bin/startup.sh
+ExecStop=/opt/tomcat/bin/shutdown.sh
+    </pre>
+
+    <h3>▶️ Arrancar Tomcat</h3>
+    <pre>
+sudo systemctl daemon-reload
+sudo systemctl start tomcat
+sudo systemctl enable tomcat
+sudo systemctl status tomcat
+    </pre>
+</div>
+
+<div class="block">
+    <h2>5️⃣ Parte final (teoría)</h2>
+    <hr>
+
+    <p><strong>Comparar LAMP vs WAMP:</strong></p>
+    <ul>
+        <li><strong>LAMP:</strong> Linux, Apache, MySQL, PHP.</li>
+        <li><strong>WAMP:</strong> Windows, Apache, MySQL, PHP.</li>
+    </ul>
+
+    <p><strong>Diferencias:</strong></p>
+    <ul>
+        <li>LAMP usa Linux; WAMP usa Windows.</li>
+        <li>LAMP es más estable para producción; WAMP es más cómodo para desarrollo local.</li>
+        <li>LAMP ofrece mayor seguridad por arquitectura Linux.</li>
+    </ul>
+
+    <p><strong>Ventajas e inconvenientes incluidos para exposición o entrega.</strong></p>
+</div>
+
+</body>
+</html>

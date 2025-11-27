@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>RA2 – Guion Completo DAW</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background: #f7f7f7;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        h2 {
+            margin-top: 40px;
+            color: #444;
+        }
+        pre {
+            background: #222;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        .block {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #ccc;
+            margin: 25px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🚀 RA2 – Guion Completo (DAW)</h1>
+
+<!-- CERTIFICADO SSL -->
+<div class="block">
+    <h2>🔹 Certificado SSL (para tarea2b.com)</h2>
+    <hr>
+
+    <h3>📌 Crear certificado SSL (pág. 3)</h3>
+    <pre>
+sudo openssl req -new -x509 -days 3650 -nodes -out tarea2b.crt -keyout tarea2b.key
+    </pre>
+
+    <h3>📌 Firmar certificado para 10 años (pág. 4)</h3>
+    <pre>
+sudo openssl x509 -req -days 3650 -in tarea2b.csr -signkey tarea2b.key -out tarea2b.crt
+    </pre>
+
+    <h3>📌 Mover certificados a rutas estándar</h3>
+    <pre>
+sudo mv tarea2b.crt /etc/ssl/certs/tarea2b.crt
+sudo mv tarea2b.key /etc/ssl/private/tarea2b.key
+    </pre>
+</div>
+
+<!-- GESTIÓN DE USUARIOS -->
+<div class="block">
+    <h2>🔹 Gestión de Usuarios (para tarea2a.com)</h2>
+    <hr>
+
+    <h3>📌 Crear grupos y usuarios (pág. 4)</h3>
+    <pre>
+sudo groupadd administradores
+sudo groupadd empleados
+
+sudo useradd juan -G administradores
+sudo useradd julia -G administradores
+
+sudo useradd laura -G empleados
+sudo useradd pedro -G empleados
+
+sudo passwd juan
+sudo passwd julia
+sudo passwd laura
+sudo passwd pedro
+    </pre>
+</div>
+
+<!-- ETC/HOSTS -->
+<div class="block">
+    <h2>🔹 /etc/hosts (pág. 5)</h2>
+    <hr>
+
+    <h3>📌 Editar hosts</h3>
+    <pre>
+sudo nano /etc/hosts
+    </pre>
+
+    <p>Añadir lo siguiente:</p>
+    <pre>
+127.0.1.0 tarea2a.com
+127.0.1.0 tarea2b.com
+127.0.1.0 tarea2c.com
+    </pre>
+</div>
+
+<!-- MODULOS DE AUTENTICACION -->
+<div class="block">
+    <h2>🔹 Módulos de Autenticación (pág. 6)</h2>
+    <hr>
+
+    <h3>📌 Activar módulos</h3>
+    <pre>
+sudo a2enmod auth_basic
+sudo a2enmod authn_core
+sudo a2enmod authn_file
+sudo a2enmod authz_groupfile
+    </pre>
+</div>
+
+<!-- TAREA2A -->
+<div class="block">
+    <h2>🔹 tarea2a.com – Puerto 80</h2>
+    <hr>
+
+    <h3>📌 Crear VirtualHost (pág. 6)</h3>
+    <pre>
+sudo nano /etc/apache2/sites-available/tarea2a.com.conf
+    </pre>
+
+    <p>Contenido:</p>
+    <pre>
+<VirtualHost *:80>
+    ServerName tarea2a.com
+    DocumentRoot /var/www/tarea2a.com
+
+    <Directory /var/www/tarea2a.com>
+        AuthType Basic
+        AuthName "Zona Segura"
+        AuthUserFile /etc/apache2/.htpasswd
+        Require group administradores
+    </Directory>
+</VirtualHost>
+    </pre>
+
+    <h3>📌 Habilitar sitio</h3>
+    <pre>
+sudo a2ensite tarea2a.com.conf
+    </pre>
+
+    <h3>📌 Recargar Apache</h3>
+    <pre>
+sudo systemctl reload apache2
+    </pre>
+
+    <h3>📌 Probar</h3>
+    <pre>
+http://tarea2a.com
+    </pre>
+</div>
+
+<!-- TAREA2B -->
+<div class="block">
+    <h2>🔹 tarea2b.com – Puerto 443 + SSL</h2>
+    <hr>
+
+    <h3>📌 Crear VirtualHost SSL (pág. 7)</h3>
+    <pre>
+sudo nano /etc/apache2/sites-available/tarea2b.com.conf
+    </pre>
+
+    <p>Contenido:</p>
+    <pre>
+<VirtualHost *:443>
+    ServerName tarea2b.com
+    DocumentRoot /var/www/tarea2b.com
+
+    SSLEngine on
+    SSLCertificateFile /etc/ssl/certs/tarea2b.crt
+    SSLCertificateKeyFile /etc/ssl/private/tarea2b.key
+</VirtualHost>
+    </pre>
+
+    <h3>📌 Habilitar SSL</h3>
+    <pre>
+sudo a2enmod ssl
+sudo a2ensite tarea2b.com.conf
+    </pre>
+
+    <h3>📌 Reiniciar Apache</h3>
+    <pre>
+sudo systemctl restart apache2
+    </pre>
+
+    <h3>📌 Probar</h3>
+    <pre>
+https://tarea2b.com
+    </pre>
+</div>
+
+<!-- TAREA2C -->
+<div class="block">
+    <h2>🔹 tarea2c.com – Redirección → tarea2a</h2>
+    <hr>
+
+    <h3>📌 Crear VHost (pág. 7)</h3>
+    <pre>
+sudo nano /etc/apache2/sites-available/tarea2c.com.conf
+    </pre>
+
+    <p>Contenido:</p>
+    <pre>
+<VirtualHost *:80>
+    ServerName tarea2c.com
+    Redirect / http://tarea2a.com
+</VirtualHost>
+    </pre>
+
+    <h3>📌 Habilitar sitio</h3>
+    <pre>
+sudo a2ensite tarea2c.com.conf
+    </pre>
+
+    <h3>📌 Recargar Apache</h3>
+    <pre>
+sudo systemctl reload apache2
+    </pre>
+
+    <h3>📌 Probar</h3>
+    <pre>
+http://tarea2c.com
+    </pre>
+
+    <p>➡️ Redirige correctamente a tarea2a.com 🎉</p>
+</div>
+
+<h2 style="text-align:center;">🎉 Fin del RA2 – Todas las pruebas OK</h2>
+
+</body>
+</html>
