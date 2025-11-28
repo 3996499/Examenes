@@ -2,63 +2,56 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RA2 – Guion Completo DAW</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background: #f7f7f7;
-            line-height: 1.6;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        h2 {
-            margin-top: 40px;
-            color: #444;
-        }
         pre {
-            background: #222;
-            color: #0f0;
+            background: #1e293b;
+            color: #4ade80;
             padding: 15px;
             border-radius: 6px;
             overflow-x: auto;
-        }
-        .block {
-            background: #fff;
-            padding: 20px;
-            border-radius: 6px;
-            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
-        hr {
-            border: none;
-            border-top: 2px solid #ccc;
-            margin: 25px 0;
+            max-width: 100%;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
 
-<h1>🚀 RA2 – Guion Completo (DAW)</h1>
+<div data-part="module" class="flex flex-col gap-6">
+
+<h1 class="text-2xl font-bold text-center text-slate-900 dark:text-white">🚀 RA2 – Guion Completo (DAW)</h1>
 
 <!-- CERTIFICADO SSL -->
-<div class="block">
-    <h2>🔹 Certificado SSL (para tarea2b.com)</h2>
-    <hr>
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">🔹 Certificado SSL (para tarea2b.com)</h2>
+    <hr class="border-slate-300 dark:border-slate-600 my-4">
 
-    <h3>📌 Crear certificado SSL (pág. 3)</h3>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📌 Crear certificado SSL (pág. 3)</h3>
     <pre>
 sudo openssl req -new -x509 -days 3650 -nodes -out tarea2b.crt -keyout tarea2b.key
     </pre>
 
-    <h3>📌 Firmar certificado para 10 años (pág. 4)</h3>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📌 Firmar certificado para 10 años (pág. 4)</h3>
     <pre>
 sudo openssl x509 -req -days 3650 -in tarea2b.csr -signkey tarea2b.key -out tarea2b.crt
     </pre>
 
-    <h3>📌 Mover certificados a rutas estándar</h3>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📌 Mover certificados a rutas estándar</h3>
     <pre>
 sudo mv tarea2b.crt /etc/ssl/certs/tarea2b.crt
 sudo mv tarea2b.key /etc/ssl/private/tarea2b.key
@@ -66,11 +59,11 @@ sudo mv tarea2b.key /etc/ssl/private/tarea2b.key
 </div>
 
 <!-- GESTIÓN DE USUARIOS -->
-<div class="block">
-    <h2>🔹 Gestión de Usuarios (para tarea2a.com)</h2>
-    <hr>
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">🔹 Gestión de Usuarios (para tarea2a.com)</h2>
+    <hr class="border-slate-300 dark:border-slate-600 my-4">
 
-    <h3>📌 Crear grupos y usuarios (pág. 4)</h3>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📌 Crear grupos y usuarios (pág. 4)</h3>
     <pre>
 sudo groupadd administradores
 sudo groupadd empleados
@@ -89,16 +82,16 @@ sudo passwd pedro
 </div>
 
 <!-- ETC/HOSTS -->
-<div class="block">
-    <h2>🔹 /etc/hosts (pág. 5)</h2>
-    <hr>
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">🔹 /etc/hosts (pág. 5)</h2>
+    <hr class="border-slate-300 dark:border-slate-600 my-4">
 
-    <h3>📌 Editar hosts</h3>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📌 Editar hosts</h3>
     <pre>
 sudo nano /etc/hosts
     </pre>
 
-    <p>Añadir lo siguiente:</p>
+    <p class="text-slate-700 dark:text-slate-300 mt-2">Añadir lo siguiente:</p>
     <pre>
 127.0.1.0 tarea2a.com
 127.0.1.0 tarea2b.com
@@ -107,11 +100,11 @@ sudo nano /etc/hosts
 </div>
 
 <!-- MODULOS DE AUTENTICACION -->
-<div class="block">
-    <h2>🔹 Módulos de Autenticación (pág. 6)</h2>
-    <hr>
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">🔹 Módulos de Autenticación (pág. 6)</h2>
+    <hr class="border-slate-300 dark:border-slate-600 my-4">
 
-    <h3>📌 Activar módulos</h3>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📌 Activar módulos</h3>
     <pre>
 sudo a2enmod auth_basic
 sudo a2enmod authn_core
@@ -121,122 +114,124 @@ sudo a2enmod authz_groupfile
 </div>
 
 <!-- TAREA2A -->
-<div class="block">
-    <h2>🔹 tarea2a.com – Puerto 80</h2>
-    <hr>
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">🔹 tarea2a.com – Puerto 80</h2>
+    <hr class="border-slate-300 dark:border-slate-600 my-4">
 
-    <h3>📌 Crear VirtualHost (pág. 6)</h3>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📌 Crear VirtualHost (pág. 6)</h3>
     <pre>
 sudo nano /etc/apache2/sites-available/tarea2a.com.conf
     </pre>
 
-    <p>Contenido:</p>
+    <p class="text-slate-700 dark:text-slate-300 mt-2">Contenido:</p>
     <pre>
-<VirtualHost *:80>
+&lt;VirtualHost *:80&gt;
     ServerName tarea2a.com
     DocumentRoot /var/www/tarea2a.com
 
-    <Directory /var/www/tarea2a.com>
+    &lt;Directory /var/www/tarea2a.com&gt;
         AuthType Basic
         AuthName "Zona Segura"
         AuthUserFile /etc/apache2/.htpasswd
         Require group administradores
-    </Directory>
-</VirtualHost>
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
     </pre>
 
-    <h3>📌 Habilitar sitio</h3>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📌 Habilitar sitio</h3>
     <pre>
 sudo a2ensite tarea2a.com.conf
     </pre>
 
-    <h3>📌 Recargar Apache</h3>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📌 Recargar Apache</h3>
     <pre>
 sudo systemctl reload apache2
     </pre>
 
-    <h3>📌 Probar</h3>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📌 Probar</h3>
     <pre>
 http://tarea2a.com
     </pre>
 </div>
 
 <!-- TAREA2B -->
-<div class="block">
-    <h2>🔹 tarea2b.com – Puerto 443 + SSL</h2>
-    <hr>
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">🔹 tarea2b.com – Puerto 443 + SSL</h2>
+    <hr class="border-slate-300 dark:border-slate-600 my-4">
 
-    <h3>📌 Crear VirtualHost SSL (pág. 7)</h3>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📌 Crear VirtualHost SSL (pág. 7)</h3>
     <pre>
 sudo nano /etc/apache2/sites-available/tarea2b.com.conf
     </pre>
 
-    <p>Contenido:</p>
+    <p class="text-slate-700 dark:text-slate-300 mt-2">Contenido:</p>
     <pre>
-<VirtualHost *:443>
+&lt;VirtualHost *:443&gt;
     ServerName tarea2b.com
     DocumentRoot /var/www/tarea2b.com
 
     SSLEngine on
     SSLCertificateFile /etc/ssl/certs/tarea2b.crt
     SSLCertificateKeyFile /etc/ssl/private/tarea2b.key
-</VirtualHost>
+&lt;/VirtualHost&gt;
     </pre>
 
-    <h3>📌 Habilitar SSL</h3>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📌 Habilitar SSL</h3>
     <pre>
 sudo a2enmod ssl
 sudo a2ensite tarea2b.com.conf
     </pre>
 
-    <h3>📌 Reiniciar Apache</h3>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📌 Reiniciar Apache</h3>
     <pre>
 sudo systemctl restart apache2
     </pre>
 
-    <h3>📌 Probar</h3>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📌 Probar</h3>
     <pre>
 https://tarea2b.com
     </pre>
 </div>
 
 <!-- TAREA2C -->
-<div class="block">
-    <h2>🔹 tarea2c.com – Redirección → tarea2a</h2>
-    <hr>
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">🔹 tarea2c.com – Redirección → tarea2a</h2>
+    <hr class="border-slate-300 dark:border-slate-600 my-4">
 
-    <h3>📌 Crear VHost (pág. 7)</h3>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📌 Crear VHost (pág. 7)</h3>
     <pre>
 sudo nano /etc/apache2/sites-available/tarea2c.com.conf
     </pre>
 
-    <p>Contenido:</p>
+    <p class="text-slate-700 dark:text-slate-300 mt-2">Contenido:</p>
     <pre>
-<VirtualHost *:80>
+&lt;VirtualHost *:80&gt;
     ServerName tarea2c.com
     Redirect / http://tarea2a.com
-</VirtualHost>
+&lt;/VirtualHost&gt;
     </pre>
 
-    <h3>📌 Habilitar sitio</h3>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📌 Habilitar sitio</h3>
     <pre>
 sudo a2ensite tarea2c.com.conf
     </pre>
 
-    <h3>📌 Recargar Apache</h3>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📌 Recargar Apache</h3>
     <pre>
 sudo systemctl reload apache2
     </pre>
 
-    <h3>📌 Probar</h3>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📌 Probar</h3>
     <pre>
 http://tarea2c.com
     </pre>
 
-    <p>➡️ Redirige correctamente a tarea2a.com 🎉</p>
+    <p class="text-slate-700 dark:text-slate-300 mt-2">➡️ Redirige correctamente a tarea2a.com 🎉</p>
 </div>
 
-<h2 style="text-align:center;">🎉 Fin del RA2 – Todas las pruebas OK</h2>
+<h2 class="text-xl font-semibold text-center text-slate-900 dark:text-white">🎉 Fin del RA2 – Todas las pruebas OK</h2>
+
+</div>
 
 </body>
 </html>
