@@ -1,0 +1,87 @@
+name: Sync External Repos
+
+on:
+  schedule:
+    # Ejecutar cada 6 horas
+    - cron: '0 */6 * * *'
+  workflow_dispatch: # Permite ejecutar manualmente
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sync-repos.yml'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch DWEC Arrays repo structure
+        run: |
+          mkdir -p data
+          curl -s "https://api.github.com/repos/DavidGom1/Arrays-Js-Practice" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            > data/dwec-arrays-info.json
+          
+          curl -s "https://api.github.com/repos/DavidGom1/Arrays-Js-Practice/git/trees/main?recursive=1" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            > data/dwec-arrays-tree.json
+
+      - name: Fetch DWES Examenes repo structure
+        run: |
+          curl -s "https://api.github.com/repos/DavidGom1/DWES-Examenes-otros-a-os" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            > data/dwes-examenes-info.json
+          
+          curl -s "https://api.github.com/repos/DavidGom1/DWES-Examenes-otros-a-os/git/trees/main?recursive=1" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            > data/dwes-examenes-tree.json
+
+      - name: Generate combined data file
+        run: |
+          node << 'EOF'
+          const fs = require('fs');
+          
+          function processRepo(infoFile, treeFile) {
+            const info = JSON.parse(fs.readFileSync(infoFile, 'utf8'));
+            const tree = JSON.parse(fs.readFileSync(treeFile, 'utf8'));
+            
+            // Construir estructura de archivos desde el tree
+            const files = (tree.tree || []).map(item => ({
+              path: item.path,
+              type: item.type === 'tree' ? 'dir' : 'file',
+              size: item.size || 0
+            }));
+            
+            return {
+              name: info.name,
+              full_name: info.full_name,
+              description: info.description,
+              pushed_at: info.pushed_at,
+              html_url: info.html_url,
+              default_branch: info.default_branch || 'main',
+              files: files
+            };
+          }
+          
+          const data = {
+            generated_at: new Date().toISOString(),
+            repos: {
+              'dwec-arrays': processRepo('data/dwec-arrays-info.json', 'data/dwec-arrays-tree.json'),
+              'dwes-examenes': processRepo('data/dwes-examenes-info.json', 'data/dwes-examenes-tree.json')
+            }
+          };
+          
+          fs.writeFileSync('data/repos.json', JSON.stringify(data, null, 2));
+          console.log('Generated repos.json successfully');
+          EOF
+
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/
+          git diff --quiet --staged || git commit -m "🔄 Sync external repos data [skip ci]"
+          git push

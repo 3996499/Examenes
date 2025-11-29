@@ -281,20 +281,85 @@ document.addEventListener('DOMContentLoaded', () => {
         hookInlineLinks();
     }
 
+    // Cache de datos de repos
+    let reposData = null;
+    
+    async function loadReposData() {
+        if (reposData) return reposData;
+        try {
+            const res = await fetch('data/repos.json');
+            reposData = await res.json();
+            return reposData;
+        } catch (e) {
+            console.error('Error cargando repos.json:', e);
+            return null;
+        }
+    }
+
+    // Convertir tree plano a estructura jerárquica para el nivel raíz
+    function getTopLevelFiles(files) {
+        const topLevel = [];
+        const seen = new Set();
+        
+        for (const file of files) {
+            const parts = file.path.split('/');
+            const name = parts[0];
+            
+            if (seen.has(name)) continue;
+            seen.add(name);
+            
+            if (parts.length === 1 && file.type === 'file') {
+                topLevel.push({ name, path: file.path, type: 'file', size: file.size });
+            } else if (parts.length > 1 || file.type === 'dir') {
+                topLevel.push({ name, path: name, type: 'dir', size: 0 });
+            }
+        }
+        
+        return topLevel;
+    }
+
+    // Obtener contenido de una carpeta del tree
+    function getFolderContents(files, folderPath) {
+        const contents = [];
+        const seen = new Set();
+        const prefix = folderPath + '/';
+        
+        for (const file of files) {
+            if (!file.path.startsWith(prefix)) continue;
+            
+            const relativePath = file.path.slice(prefix.length);
+            const parts = relativePath.split('/');
+            const name = parts[0];
+            
+            if (seen.has(name)) continue;
+            seen.add(name);
+            
+            if (parts.length === 1 && file.type === 'file') {
+                contents.push({ name, path: file.path, type: 'file', size: file.size });
+            } else {
+                contents.push({ name, path: folderPath + '/' + name, type: 'dir', size: 0 });
+            }
+        }
+        
+        return contents;
+    }
+
     // Cargar repositorio de Arrays
     async function loadDWECArraysRepo() {
         const REPO_OWNER = 'DavidGom1';
         const REPO_NAME = 'Arrays-Js-Practice';
-        const API_BASE = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`;
 
         viewer.innerHTML = loadingTemplate('Arrays JS Practice');
 
         try {
-            // Obtener info del repo
-            const repoInfo = await fetch(API_BASE).then(r => r.json());
-            const contents = await fetch(`${API_BASE}/contents`).then(r => r.json());
+            const data = await loadReposData();
+            const repo = data?.repos?.['dwec-arrays'];
+            
+            if (!repo || !repo.files || repo.files.length === 0) {
+                throw new Error('Datos no disponibles');
+            }
 
-            const lastPush = new Date(repoInfo.pushed_at);
+            const lastPush = new Date(repo.pushed_at);
             const lastUpdateText = lastPush.toLocaleDateString('es-ES', {
                 day: 'numeric',
                 month: 'long',
@@ -303,19 +368,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 minute: '2-digit'
             });
 
-            const template = dwecTemplate(lastUpdateText, contents, REPO_OWNER, REPO_NAME);
-            viewer.innerHTML = template;
+            const topLevelFiles = getTopLevelFiles(repo.files);
             
-            // Guardar referencia para las funciones de archivos
-            window.DWEC_API_BASE = API_BASE;
+            // Guardar archivos completos para navegación de carpetas
+            window.DWEC_FILES = repo.files;
+            
+            const template = dwecTemplate(lastUpdateText, topLevelFiles, REPO_OWNER, REPO_NAME);
+            viewer.innerHTML = template;
             
             hookDWECActions();
             pushState({ type: 'module', title: 'DWEC - Arrays', html: template }, true);
 
         } catch (error) {
             console.error('Error al cargar DWEC:', error);
-            viewer.innerHTML = errorTemplate('DWEC');
-            showToast('No se pudo cargar el repositorio');
+            viewer.innerHTML = repoErrorTemplate('DWEC - Arrays', REPO_OWNER, REPO_NAME, error.message);
+            pushState({ type: 'module', title: 'DWEC - Arrays', html: viewer.innerHTML }, true);
         }
     }
 
@@ -434,26 +501,20 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Carpetas
+        // Carpetas - usando datos locales
         viewer.querySelectorAll('[data-action="toggle-folder"]').forEach(btn => {
-            btn.addEventListener('click', async () => {
+            btn.addEventListener('click', () => {
                 const path = btn.dataset.folderPath;
                 const folderItem = btn.closest('.folder');
                 const contents = folderItem.querySelector('.folder-contents');
                 const arrow = btn.querySelector('.folder-arrow');
 
                 if (contents.classList.contains('hidden')) {
-                    contents.innerHTML = '<div class="py-2 text-sm text-slate-500">Cargando...</div>';
+                    const folderFiles = getFolderContents(window.DWEC_FILES || [], path);
+                    contents.innerHTML = renderRepoFiles(folderFiles);
                     contents.classList.remove('hidden');
                     arrow.textContent = '▼';
-
-                    try {
-                        const files = await fetch(`${window.DWEC_API_BASE}/contents/${path}`).then(r => r.json());
-                        contents.innerHTML = renderRepoFiles(files);
-                        hookDWECActions(); // Re-hook para nuevos elementos
-                    } catch (e) {
-                        contents.innerHTML = '<div class="py-2 text-sm text-red-500">Error al cargar</div>';
-                    }
+                    hookDWECActions(); // Re-hook para nuevos elementos
                 } else {
                     contents.classList.add('hidden');
                     arrow.textContent = '▶';
@@ -461,7 +522,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Archivos
+        // Archivos - usando raw.githubusercontent.com
         viewer.querySelectorAll('[data-action="view-file"]').forEach(btn => {
             btn.addEventListener('click', async () => {
                 const path = btn.dataset.filePath;
@@ -475,8 +536,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 codeViewer.classList.remove('hidden');
 
                 try {
-                    const fileData = await fetch(`${window.DWEC_API_BASE}/contents/${path}`).then(r => r.json());
-                    const content = atob(fileData.content);
+                    // Usar raw.githubusercontent.com que no tiene rate limit
+                    const rawUrl = `https://raw.githubusercontent.com/DavidGom1/Arrays-Js-Practice/main/${path}`;
+                    const response = await fetch(rawUrl);
+                    const content = await response.text();
                     codeContent.textContent = content;
                 } catch (e) {
                     codeContent.textContent = 'Error al cargar el archivo';
@@ -543,15 +606,18 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadDWESExamenesRepo() {
         const REPO_OWNER = 'DavidGom1';
         const REPO_NAME = 'DWES-Examenes-otros-a-os';
-        const API_BASE = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`;
 
         viewer.innerHTML = loadingTemplate('Exámenes DWES');
 
         try {
-            const repoInfo = await fetch(API_BASE).then(r => r.json());
-            const contents = await fetch(`${API_BASE}/contents`).then(r => r.json());
+            const data = await loadReposData();
+            const repo = data?.repos?.['dwes-examenes'];
+            
+            if (!repo || !repo.files || repo.files.length === 0) {
+                throw new Error('Datos no disponibles');
+            }
 
-            const lastPush = new Date(repoInfo.pushed_at);
+            const lastPush = new Date(repo.pushed_at);
             const lastUpdateText = lastPush.toLocaleDateString('es-ES', {
                 day: 'numeric',
                 month: 'long',
@@ -560,18 +626,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 minute: '2-digit'
             });
 
-            const template = dwesRepoTemplate(lastUpdateText, contents, REPO_OWNER, REPO_NAME);
-            viewer.innerHTML = template;
+            const topLevelFiles = getTopLevelFiles(repo.files);
             
-            window.DWES_API_BASE = API_BASE;
+            // Guardar archivos completos para navegación de carpetas
+            window.DWES_FILES = repo.files;
+
+            const template = dwesRepoTemplate(lastUpdateText, topLevelFiles, REPO_OWNER, REPO_NAME);
+            viewer.innerHTML = template;
             
             hookDWESActions();
             pushState({ type: 'module', title: 'DWES - Exámenes', html: template }, true);
 
         } catch (error) {
             console.error('Error al cargar DWES:', error);
-            viewer.innerHTML = errorTemplate('DWES');
-            showToast('No se pudo cargar el repositorio');
+            viewer.innerHTML = repoErrorTemplate('DWES - Exámenes', REPO_OWNER, REPO_NAME, error.message);
+            pushState({ type: 'module', title: 'DWES - Exámenes', html: viewer.innerHTML }, true);
         }
     }
 
@@ -688,26 +757,20 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Carpetas
+        // Carpetas - usando datos locales
         viewer.querySelectorAll('[data-action="dwes-toggle-folder"]').forEach(btn => {
-            btn.addEventListener('click', async () => {
+            btn.addEventListener('click', () => {
                 const path = btn.dataset.folderPath;
                 const folderItem = btn.closest('.folder');
                 const contents = folderItem.querySelector('.dwes-folder-contents');
                 const arrow = btn.querySelector('.dwes-folder-arrow');
 
                 if (contents.classList.contains('hidden')) {
-                    contents.innerHTML = '<div class="py-2 text-sm text-slate-500">Cargando...</div>';
+                    const folderFiles = getFolderContents(window.DWES_FILES || [], path);
+                    contents.innerHTML = renderDWESRepoFiles(folderFiles);
                     contents.classList.remove('hidden');
                     arrow.textContent = '▼';
-
-                    try {
-                        const files = await fetch(`${window.DWES_API_BASE}/contents/${path}`).then(r => r.json());
-                        contents.innerHTML = renderDWESRepoFiles(files);
-                        hookDWESActions();
-                    } catch (e) {
-                        contents.innerHTML = '<div class="py-2 text-sm text-red-500">Error al cargar</div>';
-                    }
+                    hookDWESActions();
                 } else {
                     contents.classList.add('hidden');
                     arrow.textContent = '▶';
@@ -715,15 +778,15 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Archivos
+        // Archivos - usando raw.githubusercontent.com
         viewer.querySelectorAll('[data-action="dwes-view-file"]').forEach(btn => {
             btn.addEventListener('click', async () => {
                 const path = btn.dataset.filePath;
                 const name = btn.dataset.fileName;
                 const ext = name.split('.').pop().toLowerCase();
                 
-                // Si es ZIP, descargar directamente
-                if (ext === 'zip') {
+                // Si es ZIP o PDF, descargar directamente
+                if (ext === 'zip' || ext === 'pdf') {
                     window.open(`https://raw.githubusercontent.com/DavidGom1/DWES-Examenes-otros-a-os/main/${path}`, '_blank');
                     return;
                 }
@@ -737,8 +800,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 codeViewer.classList.remove('hidden');
 
                 try {
-                    const fileData = await fetch(`${window.DWES_API_BASE}/contents/${path}`).then(r => r.json());
-                    const content = atob(fileData.content);
+                    const rawUrl = `https://raw.githubusercontent.com/DavidGom1/DWES-Examenes-otros-a-os/main/${path}`;
+                    const response = await fetch(rawUrl);
+                    const content = await response.text();
                     codeContent.textContent = content;
                 } catch (e) {
                     codeContent.textContent = 'Error al cargar el archivo';
@@ -804,6 +868,47 @@ document.addEventListener('DOMContentLoaded', () => {
             <article class="viewer-content rounded-[1.25rem] border border-dashed border-slate-300/80 bg-white/80 p-6 text-center text-slate-600 shadow-inner dark:border-white/30 dark:bg-slate-900/70 dark:text-slate-200">
                 <h3 class="text-xl font-semibold text-slate-900 dark:text-white">No se pudo abrir ${label}</h3>
                 <p class="mt-2">Revisa el archivo o inténtalo de nuevo más tarde.</p>
+            </article>
+        `;
+    }
+
+    function repoErrorTemplate(label, owner, repo, errorMsg) {
+        const isRateLimit = errorMsg && errorMsg.includes('rate limit');
+        const message = isRateLimit 
+            ? 'Se ha superado el límite de peticiones a GitHub. Puedes acceder directamente al repositorio o descargar el ZIP.'
+            : 'No se pudo cargar el contenido del repositorio. Puedes acceder directamente a GitHub.';
+        
+        return `
+            <article class="module-detail viewer-content flex flex-col gap-6">
+                <div class="flex flex-col gap-2">
+                    <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Repositorio</span>
+                    <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">${label}</h2>
+                </div>
+                
+                <div class="rounded-xl border border-amber-200/60 bg-amber-50/50 p-4 dark:border-amber-400/20 dark:bg-amber-500/10">
+                    <div class="flex items-start gap-3">
+                        <span class="text-2xl">⚠️</span>
+                        <div>
+                            <h3 class="font-semibold text-amber-700 dark:text-amber-300">No se pudo cargar</h3>
+                            <p class="text-sm text-amber-600 dark:text-amber-200 mt-1">${message}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-3">
+                    <a href="https://github.com/${owner}/${repo}/archive/refs/heads/main.zip" 
+                        class="inline-flex items-center gap-2 rounded-full border border-emerald-200/70 bg-emerald-500/10 px-5 py-2.5 text-sm font-semibold text-emerald-600 no-underline transition hover:bg-emerald-500/20 dark:border-emerald-400/30 dark:text-emerald-300"
+                        data-open="direct" download>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        Descargar ZIP
+                    </a>
+                    <a href="https://github.com/${owner}/${repo}" target="_blank" rel="noopener"
+                        class="inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/80 px-5 py-2.5 text-sm font-semibold text-slate-900 no-underline transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                        data-open="direct">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        Ver en GitHub
+                    </a>
+                </div>
             </article>
         `;
     }
