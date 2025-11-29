@@ -2,150 +2,88 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guión Paso a Paso RA1 – DAW</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background: #f7f7f7;
-            line-height: 1.6;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        h2 {
-            margin-top: 40px;
-            color: #444;
-        }
         pre {
-            background: #222;
-            color: #0f0;
+            background: #1e293b;
+            color: #4ade80;
             padding: 15px;
             border-radius: 6px;
             overflow-x: auto;
-        }
-        .block {
-            background: #fff;
-            padding: 20px;
-            border-radius: 6px;
-            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
-        .emoji {
-            font-size: 22px;
-        }
-        hr {
-            border: none;
-            border-top: 2px solid #ccc;
-            margin: 25px 0;
+            max-width: 100%;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
     </style>
 </head>
-<body>
-
-<h1>📌 Guión Paso a Paso RA1 – DAW</h1>
-
-<div class="block">
-    <h2>1️⃣ Actualizar paquetes</h2>
-    <hr>
-    <pre>
-sudo apt update
-sudo apt upgrade
-    </pre>
+<body class="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+<div data-part="module" class="flex flex-col gap-6">
+<h1 class="text-2xl font-bold text-center text-slate-900 dark:text-white">📌 Guión Paso a Paso RA1 – DAW</h1>
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">1️⃣ Actualizar paquetes</h2>
+    <hr class="border-slate-300 dark:border-slate-600 my-4">
+    <pre>sudo apt update
+sudo apt upgrade</pre>
 </div>
-
-<div class="block">
-    <h2>2️⃣ Instalar pila LAMP</h2>
-    <hr>
-
-    <h3>🧱 Instalar Apache</h3>
-    <pre>
-sudo apt install apache2
-    </pre>
-
-    <h3>▶️ Activar y arrancar Apache</h3>
-    <pre>
-sudo systemctl enable apache2
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">2️⃣ Instalar pila LAMP</h2>
+    <hr class="border-slate-300 dark:border-slate-600 my-4">
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">🧱 Instalar Apache</h3>
+    <pre>sudo apt install apache2</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">▶️ Activar y arrancar Apache</h3>
+    <pre>sudo systemctl enable apache2
 sudo systemctl start apache2
-sudo systemctl status apache2
-    </pre>
-
-    <h3>🐬 Instalar MySQL</h3>
-    <pre>
-sudo apt install mysql-server
-    </pre>
-
-    <h3>🔐 Ejecutar configuración segura</h3>
-    <pre>
-sudo mysql_secure_installation
-    </pre>
-
-    <h3>🚀 Probar MySQL</h3>
-    <pre>
-sudo systemctl status mysql
-sudo mysql
-    </pre>
-
-    <h3>🟡 Instalar PHP</h3>
-    <pre>
-sudo apt install php libapache2-mod-php php-mysql php-cli php-common php-json php-opcache php-readline
-    </pre>
-
-    <h3>Reiniciar Apache</h3>
-    <pre>
-sudo systemctl restart apache2
-    </pre>
+sudo systemctl status apache2</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">🐬 Instalar MySQL</h3>
+    <pre>sudo apt install mysql-server</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">🔐 Ejecutar configuración segura</h3>
+    <pre>sudo mysql_secure_installation</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">🚀 Probar MySQL</h3>
+    <pre>sudo systemctl status mysql
+sudo mysql</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">🟡 Instalar PHP</h3>
+    <pre>sudo apt install php libapache2-mod-php php-mysql php-cli php-common php-json php-opcache php-readline</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">Reiniciar Apache</h3>
+    <pre>sudo systemctl restart apache2</pre>
 </div>
-
-<div class="block">
-    <h2>3️⃣ Instalar Java</h2>
-    <hr>
-
-    <h3>☕️ Instalar OpenJDK</h3>
-    <pre>
-sudo apt install openjdk-21-jdk
-    </pre>
-
-    <h3>🔍 Comprobar instalación</h3>
-    <pre>
-java -version
-    </pre>
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">3️⃣ Instalar Java</h2>
+    <hr class="border-slate-300 dark:border-slate-600 my-4">
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">☕️ Instalar OpenJDK</h3>
+    <pre>sudo apt install openjdk-21-jdk</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">🔍 Comprobar instalación</h3>
+    <pre>java -version</pre>
 </div>
-
-<div class="block">
-    <h2>4️⃣ Instalar y configurar Tomcat</h2>
-    <hr>
-
-    <h3>👤 Crear usuario Tomcat</h3>
-    <pre>
-sudo useradd -m -U -d /opt/tomcat -s /bin/false tomcat
-    </pre>
-
-    <h3>📥 Descargar Tomcat</h3>
-    <pre>
-wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.13/bin/apache-tomcat-10.1.13.tar.gz
-    </pre>
-
-    <h3>📦 Extraer archivos</h3>
-    <pre>
-sudo tar -xzvf apache-tomcat-10.1.13.tar.gz -C /opt/tomcat --strip-components=1
-    </pre>
-
-    <h3>🔑 Dar permisos</h3>
-    <pre>
-sudo chown -R tomcat: /opt/tomcat
-sudo chmod -R u+x /opt/tomcat/bin
-    </pre>
-
-    <h3>🛠 Crear servicio systemd</h3>
-    <pre>
-sudo nano /etc/systemd/system/tomcat.service
-    </pre>
-
-    <h4>Contenido:</h4>
-    <pre>
-[Service]
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">4️⃣ Instalar y configurar Tomcat</h2>
+    <hr class="border-slate-300 dark:border-slate-600 my-4">
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">👤 Crear usuario Tomcat</h3>
+    <pre>sudo useradd -m -U -d /opt/tomcat -s /bin/false tomcat</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📥 Descargar Tomcat</h3>
+    <pre>wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.13/bin/apache-tomcat-10.1.13.tar.gz</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📦 Extraer archivos</h3>
+    <pre>sudo tar -xzvf apache-tomcat-10.1.13.tar.gz -C /opt/tomcat --strip-components=1</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">🔑 Dar permisos</h3>
+    <pre>sudo chown -R tomcat: /opt/tomcat
+sudo chmod -R u+x /opt/tomcat/bin</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">🛠 Crear servicio systemd</h3>
+    <pre>sudo nano /etc/systemd/system/tomcat.service</pre>
+    <h4 class="text-base font-medium text-slate-700 dark:text-slate-300 mt-2">Contenido:</h4>
+    <pre>[Service]
 Type=forking
 User=tomcat
 Group=tomcat
@@ -153,37 +91,29 @@ Environment="CATALINA_HOME=/opt/tomcat"
 Environment="CATALINA_BASE=/opt/tomcat"
 Environment="CATALINA_PID=/opt/tomcat/temp/tomcat.pid"
 ExecStart=/opt/tomcat/bin/startup.sh
-ExecStop=/opt/tomcat/bin/shutdown.sh
-    </pre>
-
-    <h3>▶️ Arrancar Tomcat</h3>
-    <pre>
-sudo systemctl daemon-reload
+ExecStop=/opt/tomcat/bin/shutdown.sh</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">▶️ Arrancar Tomcat</h3>
+    <pre>sudo systemctl daemon-reload
 sudo systemctl start tomcat
 sudo systemctl enable tomcat
-sudo systemctl status tomcat
-    </pre>
+sudo systemctl status tomcat</pre>
 </div>
-
-<div class="block">
-    <h2>5️⃣ Parte final (teoría)</h2>
-    <hr>
-
-    <p><strong>Comparar LAMP vs WAMP:</strong></p>
-    <ul>
-        <li><strong>LAMP:</strong> Linux, Apache, MySQL, PHP.</li>
-        <li><strong>WAMP:</strong> Windows, Apache, MySQL, PHP.</li>
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">5️⃣ Parte final (teoría)</h2>
+    <hr class="border-slate-300 dark:border-slate-600 my-4">
+    <p class="text-slate-700 dark:text-slate-300"><strong class="text-slate-900 dark:text-white">Comparar LAMP vs WAMP:</strong></p>
+    <ul class="list-disc list-inside text-slate-700 dark:text-slate-300 mt-2 space-y-1">
+        <li><strong class="text-slate-900 dark:text-white">LAMP:</strong> Linux, Apache, MySQL, PHP.</li>
+        <li><strong class="text-slate-900 dark:text-white">WAMP:</strong> Windows, Apache, MySQL, PHP.</li>
     </ul>
-
-    <p><strong>Diferencias:</strong></p>
-    <ul>
+    <p class="text-slate-700 dark:text-slate-300 mt-4"><strong class="text-slate-900 dark:text-white">Diferencias:</strong></p>
+    <ul class="list-disc list-inside text-slate-700 dark:text-slate-300 mt-2 space-y-1">
         <li>LAMP usa Linux; WAMP usa Windows.</li>
         <li>LAMP es más estable para producción; WAMP es más cómodo para desarrollo local.</li>
         <li>LAMP ofrece mayor seguridad por arquitectura Linux.</li>
     </ul>
-
-    <p><strong>Ventajas e inconvenientes incluidos para exposición o entrega.</strong></p>
+    <p class="text-slate-700 dark:text-slate-300 mt-4"><strong class="text-slate-900 dark:text-white">Ventajas e inconvenientes incluidos para exposición o entrega.</strong></p>
 </div>
-
+</div>
 </body>
 </html>

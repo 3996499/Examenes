@@ -2,158 +2,101 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RA3 – Guion Completo DAW</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background: #f7f7f7;
-            line-height: 1.6;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        h2 {
-            margin-top: 40px;
-            color: #444;
-        }
         pre {
-            background: #222;
-            color: #0f0;
+            background: #1e293b;
+            color: #4ade80;
             padding: 15px;
             border-radius: 6px;
             overflow-x: auto;
-        }
-        .block {
-            background: #fff;
-            padding: 20px;
-            border-radius: 6px;
-            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
-        hr {
-            border: none;
-            border-top: 2px solid #ccc;
-            margin: 25px 0;
+            max-width: 100%;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
     </style>
 </head>
-<body>
-
-<h1>🚀 RA3 – Guion Completo (DAW)</h1>
-
-<!-- PUNTO 1 -->
-<div class="block">
-    <h2>🔸 Punto 1 — Crear App y Generar WAR</h2>
-    <hr>
-
-    <h3>📁 Crear espacio de trabajo (pág. 3)</h3>
-    <pre>
-cd Documentos/
+<body class="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+<div data-part="module" class="flex flex-col gap-6">
+<h1 class="text-2xl font-bold text-center text-slate-900 dark:text-white">🚀 RA3 – Guion Completo (DAW)</h1>
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">🔸 Punto 1 — Crear App y Generar WAR</h2>
+    <hr class="border-slate-300 dark:border-slate-600 my-4">
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📁 Crear espacio de trabajo (pág. 3)</h3>
+    <pre>cd Documentos/
 mkdir miaplicacion.es
 cd miaplicacion.es
 mkdir WEB-INF
 mkdir WEB-INF/classes
-mkdir WEB-INF/lib
-    </pre>
-
-    <h3>✏️ Editar index.jsp (pág. 4)</h3>
-    <pre>
-sudo nano index.jsp
-    </pre>
-    <p>(Añadir HTML y tu nombre en el body)</p>
-
-    <h3>🔧 Corregir ubicación de WEB-INF (pág. 5)</h3>
-    <pre>
-sudo mv WEB-INF ./miaplicacion.es/
-    </pre>
-
-    <h3>📝 Crear descriptor web.xml (pág. 6)</h3>
-    <pre>
-cd WEB-INF
-sudo nano web.xml
-    </pre>
-
-    <p>Contenido:</p>
-    <pre>
-<?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+mkdir WEB-INF/lib</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">✏️ Editar index.jsp (pág. 4)</h3>
+    <pre>sudo nano index.jsp</pre>
+    <p class="text-slate-700 dark:text-slate-300 mt-2">(Añadir HTML y tu nombre en el body)</p>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">🔧 Corregir ubicación de WEB-INF (pág. 5)</h3>
+    <pre>sudo mv WEB-INF ./miaplicacion.es/</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📝 Crear descriptor web.xml (pág. 6)</h3>
+    <pre>cd WEB-INF
+sudo nano web.xml</pre>
+    <p class="text-slate-700 dark:text-slate-300 mt-2">Contenido:</p>
+    <pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-    <display-name>miaplicacion.es</display-name>
-    <description>Descriptor de Aplicacion miaplicacion.es</description>
-</web-app>
-    </pre>
-
-    <h3>📦 Generar archivo WAR (pág. 7)</h3>
-    <pre>
-cd ..
-jar -cvf miaplicacion.es.war *
-    </pre>
+         version="3.1"&gt;
+    &lt;display-name&gt;miaplicacion.es&lt;/display-name&gt;
+    &lt;description&gt;Descriptor de Aplicacion miaplicacion.es&lt;/description&gt;
+&lt;/web-app&gt;</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📦 Generar archivo WAR (pág. 7)</h3>
+    <pre>cd ..
+jar -cvf miaplicacion.es.war *</pre>
 </div>
-
-<!-- SUBIR WAR -->
-<div class="block">
-    <h2>🔸 Subir WAR a Tomcat (págs. 8–9)</h2>
-    <hr>
-
-    <h3>🌐 Acceder al Manager App</h3>
-    <pre>
-http://localhost:8080
-    </pre>
-
-    <h3>📤 Subir WAR</h3>
-    <p>Manager App → <strong>"Archivo WAR a desplegar"</strong></p>
-    <p>Seleccionar <strong>miaplicacion.es.war</strong> → <strong>Desplegar</strong></p>
-
-    <ul>
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">🔸 Subir WAR a Tomcat (págs. 8–9)</h2>
+    <hr class="border-slate-300 dark:border-slate-600 my-4">
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">🌐 Acceder al Manager App</h3>
+    <pre>http://localhost:8080</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📤 Subir WAR</h3>
+    <p class="text-slate-700 dark:text-slate-300 mt-2">Manager App → <strong class="text-slate-900 dark:text-white">"Archivo WAR a desplegar"</strong></p>
+    <p class="text-slate-700 dark:text-slate-300">Seleccionar <strong class="text-slate-900 dark:text-white">miaplicacion.es.war</strong> → <strong class="text-slate-900 dark:text-white">Desplegar</strong></p>
+    <ul class="list-disc list-inside text-slate-700 dark:text-slate-300 mt-2 space-y-1">
         <li>✔️ Tomcat muestra mensaje OK</li>
         <li>✔️ La app aparece en la lista</li>
     </ul>
-
-    <h3>📌 URL final</h3>
-    <pre>
-http://localhost:8080/miaplicacion.es/
-    </pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📌 URL final</h3>
+    <pre>http://localhost:8080/miaplicacion.es/</pre>
 </div>
-
-<!-- PROXY -->
-<div class="block">
-    <h2>🔸 Punto 2 — Configurar Apache como Proxy</h2>
-    <hr>
-
-    <h3>🟪 Activar módulos proxy (pág. 10)</h3>
-    <pre>
-sudo a2enmod proxy
-sudo a2enmod proxy_http
-    </pre>
-
-    <h3>🟩 Editar /etc/hosts (pág. 11)</h3>
-    <pre>
-sudo nano /etc/hosts
-    </pre>
-    <p>Añadir:</p>
-    <pre>
-127.0.1.0 miproxytomcat.es
-    </pre>
-
-    <h3>📝 Copiar VirtualHost por defecto (pág. 12)</h3>
-    <pre>
-cp /etc/apache2/sites-available/000-default.conf \
-   /etc/apache2/sites-available/miproxytomcat.es.conf
-    </pre>
-
-    <h3>🔧 Editar configuración del sitio (pág. 13)</h3>
-    <pre>
-sudo nano /etc/apache2/sites-available/miproxytomcat.es.conf
-    </pre>
-
-    <p>Contenido:</p>
-    <pre>
-<VirtualHost *:80>
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">🔸 Punto 2 — Configurar Apache como Proxy</h2>
+    <hr class="border-slate-300 dark:border-slate-600 my-4">
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">🟪 Activar módulos proxy (pág. 10)</h3>
+    <pre>sudo a2enmod proxy
+sudo a2enmod proxy_http</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">🟩 Editar /etc/hosts (pág. 11)</h3>
+    <pre>sudo nano /etc/hosts</pre>
+    <p class="text-slate-700 dark:text-slate-300 mt-2">Añadir:</p>
+    <pre>127.0.1.0 miproxytomcat.es</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📝 Copiar VirtualHost por defecto (pág. 12)</h3>
+    <pre>cp /etc/apache2/sites-available/000-default.conf \
+   /etc/apache2/sites-available/miproxytomcat.es.conf</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">🔧 Editar configuración del sitio (pág. 13)</h3>
+    <pre>sudo nano /etc/apache2/sites-available/miproxytomcat.es.conf</pre>
+    <p class="text-slate-700 dark:text-slate-300 mt-2">Contenido:</p>
+    <pre>&lt;VirtualHost *:80&gt;
     ServerName miproxytomcat.es
     ServerAdmin webmaster@localhost
     DocumentRoot /home/david/Documentos/miaplicacion.es/
@@ -161,53 +104,32 @@ sudo nano /etc/apache2/sites-available/miproxytomcat.es.conf
     ProxyPass / http://localhost:8080/miaplicacion.es/
     ProxyPassReverse / http://localhost:8080/miaplicacion.es/
 
-    <Directory />
+    &lt;Directory /&gt;
         Order Allow,Deny
         Allow from all
-    </Directory>
-</VirtualHost>
-    </pre>
-
-    <h3>🟦 Habilitar sitio (pág. 14)</h3>
-    <pre>
-sudo a2ensite miproxytomcat.es.conf
-    </pre>
-
-    <h3>🔄 Reiniciar Apache</h3>
-    <pre>
-sudo service apache2 restart
-    </pre>
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">🟦 Habilitar sitio (pág. 14)</h3>
+    <pre>sudo a2ensite miproxytomcat.es.conf</pre>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">🔄 Reiniciar Apache</h3>
+    <pre>sudo service apache2 restart</pre>
 </div>
-
-<!-- EDITAR TOMCAT -->
-<div class="block">
-    <h2>🔸 Editar server.xml en Tomcat</h2>
-    <hr>
-
-    <h3>📝 Editar archivo (pág. 15)</h3>
-    <pre>
-sudo nano /opt/tomcat/conf/server.xml
-    </pre>
-    <p>(Ajustar el conector como aparece en tu captura)</p>
-
-    <h3>🔄 Reiniciar Tomcat</h3>
-    <pre>
-sudo service tomcat restart
-    </pre>
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">🔸 Editar server.xml en Tomcat</h2>
+    <hr class="border-slate-300 dark:border-slate-600 my-4">
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">📝 Editar archivo (pág. 15)</h3>
+    <pre>sudo nano /opt/tomcat/conf/server.xml</pre>
+    <p class="text-slate-700 dark:text-slate-300 mt-2">(Ajustar el conector como aparece en tu captura)</p>
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">🔄 Reiniciar Tomcat</h3>
+    <pre>sudo service tomcat restart</pre>
 </div>
-
-<!-- FINAL -->
-<div class="block">
-    <h2>✅ Proxy funcionando (pág. 16)</h2>
-    <hr>
-
-    <h3>URL final:</h3>
-    <pre>
-http://miproxytomcat.es
-    </pre>
-
-    <p>Tu página muestra tu nombre correctamente 🎉</p>
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">✅ Proxy funcionando (pág. 16)</h2>
+    <hr class="border-slate-300 dark:border-slate-600 my-4">
+    <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mt-3">URL final:</h3>
+    <pre>http://miproxytomcat.es</pre>
+    <p class="text-slate-700 dark:text-slate-300 mt-2">Tu página muestra tu nombre correctamente 🎉</p>
 </div>
-
+</div>
 </body>
 </html>
