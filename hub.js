@@ -69,13 +69,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     moduleLinks.forEach(link => {
         link.addEventListener('click', event => {
-            event.preventDefault();
             const href = link.getAttribute('href') || '#';
             const label = link.dataset.label || link.textContent.trim();
+            
+            // Si tiene data-open="direct", navegar directamente
+            if (link.dataset.open === 'direct') {
+                return; // Deja que el navegador haga la navegación normal
+            }
+            
+            event.preventDefault();
+            
             if (!href || href === '#') {
                 showNotice(`${label} está en construcción.`, 'Estamos preparando los retos y materiales de este módulo.');
                 return;
             }
+            
+            // Módulo DWEC especial con GitHub API
+            if (label === 'DWEC' || href.includes('dwec')) {
+                if (appbar?.dataset.expanded === 'true' && window.innerWidth < 1024) {
+                    collapseAppbarMenu();
+                }
+                loadDWECModule();
+                return;
+            }
+            
+            // Módulo DWES especial con GitHub API
+            if (label === 'DWES' || href.includes('dwes')) {
+                if (appbar?.dataset.expanded === 'true' && window.innerWidth < 1024) {
+                    collapseAppbarMenu();
+                }
+                loadDWESModule();
+                return;
+            }
+            
             if (appbar?.dataset.expanded === 'true' && window.innerWidth < 1024) {
                 collapseAppbarMenu();
             }
@@ -176,11 +202,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
             const main = doc.querySelector('[data-part="module"]');
+            // Si no hay data-part="module", usamos el contenido del body directamente
             const snippet = main ? main.innerHTML : doc.body.innerHTML;
-            const template = moduleTemplate(label, snippet);
+            // Extraer título de la página cargada si existe
+            const pageTitle = doc.querySelector('title')?.textContent || label;
+            const template = moduleTemplate(pageTitle, snippet);
             viewer.innerHTML = template;
             hookInlineLinks();
-            pushState({ type: 'module', title: label, html: template }, true);
+            pushState({ type: 'module', title: pageTitle, html: template }, true);
         } catch (error) {
             const template = errorTemplate(label);
             viewer.innerHTML = template;
@@ -195,6 +224,527 @@ document.addEventListener('DOMContentLoaded', () => {
         viewer.innerHTML = template;
         hookInlineLinks();
         pushState({ type: 'module', title: 'NoteBookLM', html: template }, true);
+    }
+
+    // Módulo DWEC - Vista principal con RAs y acceso al repositorio
+    function loadDWECModule() {
+        const template = dwecMainTemplate();
+        viewer.innerHTML = template;
+        hookDWECMainActions();
+        pushState({ type: 'module', title: 'DWEC', html: template }, true);
+    }
+
+    function dwecMainTemplate() {
+        return `
+            <article class="module-detail viewer-content flex flex-col gap-6">
+                <div class="flex flex-col gap-2">
+                    <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Módulo</span>
+                    <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Desarrollo Web en Entorno Cliente</h2>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">JavaScript, DOM, eventos y programación asíncrona.</p>
+                </div>
+
+                <div class="space-y-3">
+                    <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Resultados de aprendizaje</span>
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        <div class="ra-card flex flex-col gap-3 rounded-[1.1rem] border border-dashed border-slate-300 bg-slate-50/50 p-5 dark:border-slate-600 dark:bg-slate-800/30">
+                            <span class="text-sm text-slate-400 dark:text-slate-500">Próximamente...</span>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Los cuestionarios de RAs estarán disponibles aquí.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Recursos de práctica</span>
+                    <div class="grid gap-4">
+                        <button data-action="open-arrays-repo"
+                            class="tilt-card group flex items-center gap-4 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 text-left shadow-lg transition hover:border-indigo-400 dark:border-white/10 dark:bg-slate-900/70">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-500/10 text-2xl">📦</div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Arrays JS Practice</h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-300">Repositorio con ejercicios de arrays en JavaScript - sincronizado con GitHub</p>
+                            </div>
+                            <span class="text-slate-400 group-hover:text-indigo-500 transition">→</span>
+                        </button>
+                    </div>
+                </div>
+            </article>
+        `;
+    }
+
+    function hookDWECMainActions() {
+        const arraysBtn = viewer.querySelector('[data-action="open-arrays-repo"]');
+        if (arraysBtn) {
+            arraysBtn.addEventListener('click', () => {
+                loadDWECArraysRepo();
+            });
+        }
+        hookInlineLinks();
+    }
+
+    // Cargar repositorio de Arrays
+    async function loadDWECArraysRepo() {
+        const REPO_OWNER = 'DavidGom1';
+        const REPO_NAME = 'Arrays-Js-Practice';
+        const API_BASE = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`;
+
+        viewer.innerHTML = loadingTemplate('Arrays JS Practice');
+
+        try {
+            // Obtener info del repo
+            const repoInfo = await fetch(API_BASE).then(r => r.json());
+            const contents = await fetch(`${API_BASE}/contents`).then(r => r.json());
+
+            const lastPush = new Date(repoInfo.pushed_at);
+            const lastUpdateText = lastPush.toLocaleDateString('es-ES', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            const template = dwecTemplate(lastUpdateText, contents, REPO_OWNER, REPO_NAME);
+            viewer.innerHTML = template;
+            
+            // Guardar referencia para las funciones de archivos
+            window.DWEC_API_BASE = API_BASE;
+            
+            hookDWECActions();
+            pushState({ type: 'module', title: 'DWEC - Arrays', html: template }, true);
+
+        } catch (error) {
+            console.error('Error al cargar DWEC:', error);
+            viewer.innerHTML = errorTemplate('DWEC');
+            showToast('No se pudo cargar el repositorio');
+        }
+    }
+
+    function dwecTemplate(lastUpdate, files, owner, repo) {
+        const filesHtml = renderRepoFiles(files);
+        return `
+            <article class="module-detail viewer-content flex flex-col gap-6">
+                <div class="flex flex-col gap-2">
+                    <button data-action="back-to-dwec" class="inline-flex items-center gap-1 text-sm text-indigo-500 hover:text-indigo-600 dark:text-indigo-400 dark:hover:text-indigo-300 mb-2">
+                        <span>←</span> Volver a DWEC
+                    </button>
+                    <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Repositorio en vivo</span>
+                    <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Arrays JS Practice</h2>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">Contenido sincronizado con GitHub</p>
+                </div>
+                
+                <div class="flex items-center justify-between flex-wrap gap-3">
+                    <span class="text-xs text-slate-500 dark:text-slate-400">
+                        <span class="text-emerald-500">●</span> Última actualización: ${lastUpdate}
+                    </span>
+                    <div class="flex items-center gap-2">
+                        <a href="https://github.com/${owner}/${repo}/archive/refs/heads/main.zip" 
+                            class="inline-flex items-center gap-2 rounded-full border border-emerald-200/70 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-600 no-underline transition hover:bg-emerald-500/20 dark:border-emerald-400/30 dark:text-emerald-300"
+                            data-open="direct" download>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                            Descargar ZIP
+                        </a>
+                        <a href="https://github.com/${owner}/${repo}" target="_blank" rel="noopener"
+                            class="inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 no-underline transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                            data-open="direct">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                            Ver en GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <div id="repoFiles" class="space-y-2">
+                    ${filesHtml}
+                </div>
+
+                <div id="codeViewer" class="hidden rounded-xl border border-slate-200/60 bg-slate-900 p-4 dark:border-white/10">
+                    <div class="flex items-center justify-between mb-3">
+                        <span id="codeFileName" class="text-sm font-semibold text-white">archivo.js</span>
+                        <button id="closeCodeViewer" class="text-slate-400 hover:text-white text-lg">&times;</button>
+                    </div>
+                    <pre id="codeContent" class="overflow-x-auto text-sm text-green-400 font-mono whitespace-pre-wrap"></pre>
+                </div>
+            </article>
+        `;
+    }
+
+    function renderRepoFiles(files) {
+        return files
+            .sort((a, b) => {
+                if (a.type === 'dir' && b.type !== 'dir') return -1;
+                if (a.type !== 'dir' && b.type === 'dir') return 1;
+                return a.name.localeCompare(b.name);
+            })
+            .map(file => {
+                const icon = file.type === 'dir' ? '📁' : getFileIcon(file.name);
+                const size = file.size ? formatFileSize(file.size) : '';
+
+                if (file.type === 'dir') {
+                    return `
+                        <div class="file-item folder" data-path="${file.path}">
+                            <button class="w-full flex items-center gap-3 rounded-lg border border-transparent bg-slate-50/80 px-4 py-3 text-left text-slate-900 transition hover:border-indigo-400 hover:bg-indigo-50/50 dark:bg-slate-800/80 dark:text-white dark:hover:bg-slate-700/80"
+                                data-action="toggle-folder" data-folder-path="${file.path}">
+                                <span class="text-lg">${icon}</span>
+                                <span class="font-medium">${file.name}</span>
+                                <span class="ml-auto text-slate-400 folder-arrow">▶</span>
+                            </button>
+                            <div class="folder-contents hidden ml-4 mt-2 space-y-2"></div>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="file-item">
+                            <button class="w-full flex items-center gap-3 rounded-lg border border-transparent bg-slate-50/80 px-4 py-3 text-left text-slate-900 transition hover:border-indigo-400 hover:bg-indigo-50/50 dark:bg-slate-800/80 dark:text-white dark:hover:bg-slate-700/80"
+                                data-action="view-file" data-file-path="${file.path}" data-file-name="${file.name}">
+                                <span class="text-lg">${icon}</span>
+                                <span class="font-medium">${file.name}</span>
+                                <span class="ml-auto text-xs text-slate-500">${size}</span>
+                            </button>
+                        </div>
+                    `;
+                }
+            }).join('');
+    }
+
+    function getFileIcon(filename) {
+        const ext = filename.split('.').pop().toLowerCase();
+        const icons = { 'js': '📜', 'html': '🌐', 'css': '🎨', 'json': '📋', 'md': '📝', 'txt': '📄' };
+        return icons[ext] || '📄';
+    }
+
+    function formatFileSize(bytes) {
+        if (bytes < 1024) return bytes + ' B';
+        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+        return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+
+    function hookDWECActions() {
+        // Botón volver a DWEC
+        const backToDwec = viewer.querySelector('[data-action="back-to-dwec"]');
+        if (backToDwec) {
+            backToDwec.addEventListener('click', () => {
+                loadDWECModule();
+            });
+        }
+
+        // Cerrar visor de código
+        const closeBtn = document.getElementById('closeCodeViewer');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                document.getElementById('codeViewer')?.classList.add('hidden');
+            });
+        }
+
+        // Carpetas
+        viewer.querySelectorAll('[data-action="toggle-folder"]').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const path = btn.dataset.folderPath;
+                const folderItem = btn.closest('.folder');
+                const contents = folderItem.querySelector('.folder-contents');
+                const arrow = btn.querySelector('.folder-arrow');
+
+                if (contents.classList.contains('hidden')) {
+                    contents.innerHTML = '<div class="py-2 text-sm text-slate-500">Cargando...</div>';
+                    contents.classList.remove('hidden');
+                    arrow.textContent = '▼';
+
+                    try {
+                        const files = await fetch(`${window.DWEC_API_BASE}/contents/${path}`).then(r => r.json());
+                        contents.innerHTML = renderRepoFiles(files);
+                        hookDWECActions(); // Re-hook para nuevos elementos
+                    } catch (e) {
+                        contents.innerHTML = '<div class="py-2 text-sm text-red-500">Error al cargar</div>';
+                    }
+                } else {
+                    contents.classList.add('hidden');
+                    arrow.textContent = '▶';
+                }
+            });
+        });
+
+        // Archivos
+        viewer.querySelectorAll('[data-action="view-file"]').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const path = btn.dataset.filePath;
+                const name = btn.dataset.fileName;
+                const codeViewer = document.getElementById('codeViewer');
+                const codeFileName = document.getElementById('codeFileName');
+                const codeContent = document.getElementById('codeContent');
+
+                codeFileName.textContent = name;
+                codeContent.textContent = 'Cargando...';
+                codeViewer.classList.remove('hidden');
+
+                try {
+                    const fileData = await fetch(`${window.DWEC_API_BASE}/contents/${path}`).then(r => r.json());
+                    const content = atob(fileData.content);
+                    codeContent.textContent = content;
+                } catch (e) {
+                    codeContent.textContent = 'Error al cargar el archivo';
+                }
+            });
+        });
+    }
+
+    // ========== MÓDULO DWES ==========
+    function loadDWESModule() {
+        const template = dwesMainTemplate();
+        viewer.innerHTML = template;
+        hookDWESMainActions();
+        pushState({ type: 'module', title: 'DWES', html: template }, true);
+    }
+
+    function dwesMainTemplate() {
+        return `
+            <article class="module-detail viewer-content flex flex-col gap-6">
+                <div class="flex flex-col gap-2">
+                    <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Módulo</span>
+                    <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Desarrollo Web en Entorno Servidor</h2>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">PHP, bases de datos, MVC y APIs REST.</p>
+                </div>
+
+                <div class="space-y-3">
+                    <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Resultados de aprendizaje</span>
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        <div class="ra-card flex flex-col gap-3 rounded-[1.1rem] border border-dashed border-slate-300 bg-slate-50/50 p-5 dark:border-slate-600 dark:bg-slate-800/30">
+                            <span class="text-sm text-slate-400 dark:text-slate-500">Próximamente...</span>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Los cuestionarios de RAs estarán disponibles aquí.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Recursos de práctica</span>
+                    <div class="grid gap-4">
+                        <button data-action="open-dwes-examenes"
+                            class="tilt-card group flex items-center gap-4 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 text-left shadow-lg transition hover:border-indigo-400 dark:border-white/10 dark:bg-slate-900/70">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-500/10 text-2xl">📝</div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Exámenes de otros años</h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-300">Colección de exámenes anteriores para practicar - sincronizado con GitHub</p>
+                            </div>
+                            <span class="text-slate-400 group-hover:text-indigo-500 transition">→</span>
+                        </button>
+                    </div>
+                </div>
+            </article>
+        `;
+    }
+
+    function hookDWESMainActions() {
+        const examenesBtn = viewer.querySelector('[data-action="open-dwes-examenes"]');
+        if (examenesBtn) {
+            examenesBtn.addEventListener('click', () => {
+                loadDWESExamenesRepo();
+            });
+        }
+        hookInlineLinks();
+    }
+
+    async function loadDWESExamenesRepo() {
+        const REPO_OWNER = 'DavidGom1';
+        const REPO_NAME = 'DWES-Examenes-otros-a-os';
+        const API_BASE = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`;
+
+        viewer.innerHTML = loadingTemplate('Exámenes DWES');
+
+        try {
+            const repoInfo = await fetch(API_BASE).then(r => r.json());
+            const contents = await fetch(`${API_BASE}/contents`).then(r => r.json());
+
+            const lastPush = new Date(repoInfo.pushed_at);
+            const lastUpdateText = lastPush.toLocaleDateString('es-ES', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            const template = dwesRepoTemplate(lastUpdateText, contents, REPO_OWNER, REPO_NAME);
+            viewer.innerHTML = template;
+            
+            window.DWES_API_BASE = API_BASE;
+            
+            hookDWESActions();
+            pushState({ type: 'module', title: 'DWES - Exámenes', html: template }, true);
+
+        } catch (error) {
+            console.error('Error al cargar DWES:', error);
+            viewer.innerHTML = errorTemplate('DWES');
+            showToast('No se pudo cargar el repositorio');
+        }
+    }
+
+    function dwesRepoTemplate(lastUpdate, files, owner, repo) {
+        const filesHtml = renderDWESRepoFiles(files);
+        return `
+            <article class="module-detail viewer-content flex flex-col gap-6">
+                <div class="flex flex-col gap-2">
+                    <button data-action="back-to-dwes" class="inline-flex items-center gap-1 text-sm text-indigo-500 hover:text-indigo-600 dark:text-indigo-400 dark:hover:text-indigo-300 mb-2">
+                        <span>←</span> Volver a DWES
+                    </button>
+                    <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Repositorio en vivo</span>
+                    <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Exámenes de otros años</h2>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">Contenido sincronizado con GitHub</p>
+                </div>
+                
+                <div class="flex items-center justify-between flex-wrap gap-3">
+                    <span class="text-xs text-slate-500 dark:text-slate-400">
+                        <span class="text-emerald-500">●</span> Última actualización: ${lastUpdate}
+                    </span>
+                    <div class="flex items-center gap-2">
+                        <a href="https://github.com/${owner}/${repo}/archive/refs/heads/main.zip" 
+                            class="inline-flex items-center gap-2 rounded-full border border-emerald-200/70 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-600 no-underline transition hover:bg-emerald-500/20 dark:border-emerald-400/30 dark:text-emerald-300"
+                            data-open="direct" download>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                            Descargar ZIP
+                        </a>
+                        <a href="https://github.com/${owner}/${repo}" target="_blank" rel="noopener"
+                            class="inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 no-underline transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                            data-open="direct">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                            Ver en GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <div id="dwesRepoFiles" class="space-y-2">
+                    ${filesHtml}
+                </div>
+
+                <div id="dwesCodeViewer" class="hidden rounded-xl border border-slate-200/60 bg-slate-900 p-4 dark:border-white/10">
+                    <div class="flex items-center justify-between mb-3">
+                        <span id="dwesCodeFileName" class="text-sm font-semibold text-white">archivo.php</span>
+                        <button id="closeDwesCodeViewer" class="text-slate-400 hover:text-white text-lg">&times;</button>
+                    </div>
+                    <pre id="dwesCodeContent" class="overflow-x-auto text-sm text-green-400 font-mono whitespace-pre-wrap"></pre>
+                </div>
+            </article>
+        `;
+    }
+
+    function renderDWESRepoFiles(files) {
+        return files
+            .sort((a, b) => {
+                if (a.type === 'dir' && b.type !== 'dir') return -1;
+                if (a.type !== 'dir' && b.type === 'dir') return 1;
+                return a.name.localeCompare(b.name);
+            })
+            .map(file => {
+                const icon = file.type === 'dir' ? '📁' : getDWESFileIcon(file.name);
+                const size = file.size ? formatFileSize(file.size) : '';
+
+                if (file.type === 'dir') {
+                    return `
+                        <div class="dwes-file-item folder" data-path="${file.path}">
+                            <button class="w-full flex items-center gap-3 rounded-lg border border-transparent bg-slate-50/80 px-4 py-3 text-left text-slate-900 transition hover:border-indigo-400 hover:bg-indigo-50/50 dark:bg-slate-800/80 dark:text-white dark:hover:bg-slate-700/80"
+                                data-action="dwes-toggle-folder" data-folder-path="${file.path}">
+                                <span class="text-lg">${icon}</span>
+                                <span class="font-medium">${file.name}</span>
+                                <span class="ml-auto text-slate-400 dwes-folder-arrow">▶</span>
+                            </button>
+                            <div class="dwes-folder-contents hidden ml-4 mt-2 space-y-2"></div>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="dwes-file-item">
+                            <button class="w-full flex items-center gap-3 rounded-lg border border-transparent bg-slate-50/80 px-4 py-3 text-left text-slate-900 transition hover:border-indigo-400 hover:bg-indigo-50/50 dark:bg-slate-800/80 dark:text-white dark:hover:bg-slate-700/80"
+                                data-action="dwes-view-file" data-file-path="${file.path}" data-file-name="${file.name}">
+                                <span class="text-lg">${icon}</span>
+                                <span class="font-medium">${file.name}</span>
+                                <span class="ml-auto text-xs text-slate-500">${size}</span>
+                            </button>
+                        </div>
+                    `;
+                }
+            }).join('');
+    }
+
+    function getDWESFileIcon(filename) {
+        const ext = filename.split('.').pop().toLowerCase();
+        const icons = { 
+            'php': '🐘', 'html': '🌐', 'css': '🎨', 'js': '📜',
+            'json': '📋', 'md': '📝', 'txt': '📄', 'sql': '🗃️',
+            'zip': '📦', 'pdf': '📕'
+        };
+        return icons[ext] || '📄';
+    }
+
+    function hookDWESActions() {
+        // Botón volver a DWES
+        const backToDwes = viewer.querySelector('[data-action="back-to-dwes"]');
+        if (backToDwes) {
+            backToDwes.addEventListener('click', () => {
+                loadDWESModule();
+            });
+        }
+
+        // Cerrar visor de código
+        const closeBtn = document.getElementById('closeDwesCodeViewer');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                document.getElementById('dwesCodeViewer')?.classList.add('hidden');
+            });
+        }
+
+        // Carpetas
+        viewer.querySelectorAll('[data-action="dwes-toggle-folder"]').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const path = btn.dataset.folderPath;
+                const folderItem = btn.closest('.folder');
+                const contents = folderItem.querySelector('.dwes-folder-contents');
+                const arrow = btn.querySelector('.dwes-folder-arrow');
+
+                if (contents.classList.contains('hidden')) {
+                    contents.innerHTML = '<div class="py-2 text-sm text-slate-500">Cargando...</div>';
+                    contents.classList.remove('hidden');
+                    arrow.textContent = '▼';
+
+                    try {
+                        const files = await fetch(`${window.DWES_API_BASE}/contents/${path}`).then(r => r.json());
+                        contents.innerHTML = renderDWESRepoFiles(files);
+                        hookDWESActions();
+                    } catch (e) {
+                        contents.innerHTML = '<div class="py-2 text-sm text-red-500">Error al cargar</div>';
+                    }
+                } else {
+                    contents.classList.add('hidden');
+                    arrow.textContent = '▶';
+                }
+            });
+        });
+
+        // Archivos
+        viewer.querySelectorAll('[data-action="dwes-view-file"]').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const path = btn.dataset.filePath;
+                const name = btn.dataset.fileName;
+                const ext = name.split('.').pop().toLowerCase();
+                
+                // Si es ZIP, descargar directamente
+                if (ext === 'zip') {
+                    window.open(`https://raw.githubusercontent.com/DavidGom1/DWES-Examenes-otros-a-os/main/${path}`, '_blank');
+                    return;
+                }
+                
+                const codeViewer = document.getElementById('dwesCodeViewer');
+                const codeFileName = document.getElementById('dwesCodeFileName');
+                const codeContent = document.getElementById('dwesCodeContent');
+
+                codeFileName.textContent = name;
+                codeContent.textContent = 'Cargando...';
+                codeViewer.classList.remove('hidden');
+
+                try {
+                    const fileData = await fetch(`${window.DWES_API_BASE}/contents/${path}`).then(r => r.json());
+                    const content = atob(fileData.content);
+                    codeContent.textContent = content;
+                } catch (e) {
+                    codeContent.textContent = 'Error al cargar el archivo';
+                }
+            });
+        });
     }
 
     function loadingTemplate(label) {
