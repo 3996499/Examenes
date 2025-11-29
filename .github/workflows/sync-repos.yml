@@ -10,6 +10,9 @@ on:
     paths:
       - '.github/workflows/sync-repos.yml'
 
+permissions:
+  contents: write
+
 jobs:
   sync:
     runs-on: ubuntu-latest
