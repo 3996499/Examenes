@@ -1,23 +1,275 @@
 {
-  "generated_at": "2024-01-01T00:00:00.000Z",
+  "generated_at": "2025-11-29T08:03:34.061Z",
   "repos": {
     "dwec-arrays": {
       "name": "Arrays-Js-Practice",
       "full_name": "DavidGom1/Arrays-Js-Practice",
-      "description": "Ejercicios de arrays en JavaScript",
-      "pushed_at": "2024-01-01T00:00:00.000Z",
+      "description": null,
+      "pushed_at": "2025-11-18T13:22:24Z",
       "html_url": "https://github.com/DavidGom1/Arrays-Js-Practice",
       "default_branch": "main",
-      "files": []
+      "files": [
+        {
+          "path": "README.md",
+          "type": "file",
+          "size": 4514
+        },
+        {
+          "path": "SOLUCIONES",
+          "type": "dir",
+          "size": 0
+        },
+        {
+          "path": "SOLUCIONES/guia.md",
+          "type": "file",
+          "size": 8152
+        },
+        {
+          "path": "SOLUCIONES/soluciones.js",
+          "type": "file",
+          "size": 9503
+        },
+        {
+          "path": "app.js",
+          "type": "file",
+          "size": 10698
+        }
+      ]
     },
     "dwes-examenes": {
       "name": "DWES-Examenes-otros-a-os",
       "full_name": "DavidGom1/DWES-Examenes-otros-a-os",
-      "description": "Exámenes de otros años de DWES",
-      "pushed_at": "2024-01-01T00:00:00.000Z",
+      "description": null,
+      "pushed_at": "2025-11-29T07:53:36Z",
       "html_url": "https://github.com/DavidGom1/DWES-Examenes-otros-a-os",
       "default_branch": "main",
-      "files": []
+      "files": [
+        {
+          "path": "Examen2023diciembre.zip",
+          "type": "file",
+          "size": 68936
+        },
+        {
+          "path": "Examen2023diciembre",
+          "type": "dir",
+          "size": 0
+        },
+        {
+          "path": "Examen2023diciembre/Examen DWES - 18_12_2023 - Primera evaluación.pdf",
+          "type": "file",
+          "size": 63575
+        },
+        {
+          "path": "Examen2023diciembre/examen-resuelto",
+          "type": "dir",
+          "size": 0
+        },
+        {
+          "path": "Examen2023diciembre/examen-resuelto/examen2023-12-2",
+          "type": "dir",
+          "size": 0
+        },
+        {
+          "path": "Examen2023diciembre/examen-resuelto/examen2023-12-2/index.php",
+          "type": "file",
+          "size": 1959
+        },
+        {
+          "path": "Examen2023diciembre/examen-resuelto/examen2023-12-2/nbproject",
+          "type": "dir",
+          "size": 0
+        },
+        {
+          "path": "Examen2023diciembre/examen-resuelto/examen2023-12-2/nbproject/private",
+          "type": "dir",
+          "size": 0
+        },
+        {
+          "path": "Examen2023diciembre/examen-resuelto/examen2023-12-2/nbproject/private/private.properties",
+          "type": "file",
+          "size": 153
+        },
+        {
+          "path": "Examen2023diciembre/examen-resuelto/examen2023-12-2/nbproject/project.properties",
+          "type": "file",
+          "size": 134
+        },
+        {
+          "path": "Examen2023diciembre/examen-resuelto/examen2023-12-2/nbproject/project.xml",
+          "type": "file",
+          "size": 317
+        },
+        {
+          "path": "Examen2023diciembre/examen-resuelto/examen2023-12",
+          "type": "dir",
+          "size": 0
+        },
+        {
+          "path": "Examen2023diciembre/examen-resuelto/examen2023-12/conexion.php",
+          "type": "file",
+          "size": 435
+        },
+        {
+          "path": "Examen2023diciembre/examen-resuelto/examen2023-12/index.php",
+          "type": "file",
+          "size": 2465
+        },
+        {
+          "path": "Examen2023diciembre/examen-resuelto/examen2023-12/insertar.php",
+          "type": "file",
+          "size": 2341
+        },
+        {
+          "path": "Examen2023diciembre/examen-resuelto/examen2023-12/nbproject",
+          "type": "dir",
+          "size": 0
+        },
+        {
+          "path": "Examen2023diciembre/examen-resuelto/examen2023-12/nbproject/private",
+          "type": "dir",
+          "size": 0
+        },
+        {
+          "path": "Examen2023diciembre/examen-resuelto/examen2023-12/nbproject/private/private.properties",
+          "type": "file",
+          "size": 151
+        },
+        {
+          "path": "Examen2023diciembre/examen-resuelto/examen2023-12/nbproject/private/private.xml",
+          "type": "file",
+          "size": 561
+        },
+        {
+          "path": "Examen2023diciembre/examen-resuelto/examen2023-12/nbproject/project.properties",
+          "type": "file",
+          "size": 134
+        },
+        {
+          "path": "Examen2023diciembre/examen-resuelto/examen2023-12/nbproject/project.xml",
+          "type": "file",
+          "size": 315
+        },
+        {
+          "path": "Examen2023diciembre/examen-resuelto/examen2023-12/partida.php",
+          "type": "file",
+          "size": 3142
+        },
+        {
+          "path": "Examen2023diciembre/videojuegos (7).sql",
+          "type": "file",
+          "size": 7693
+        },
+        {
+          "path": "Examen2024diciembre.zip",
+          "type": "file",
+          "size": 188259
+        },
+        {
+          "path": "Examen2024diciembre",
+          "type": "dir",
+          "size": 0
+        },
+        {
+          "path": "Examen2024diciembre/Examen DWES - 12_12_2024 - Primera evaluación (1).pdf",
+          "type": "file",
+          "size": 204677
+        },
+        {
+          "path": "Examen2024diciembre/examen-resuelto",
+          "type": "dir",
+          "size": 0
+        },
+        {
+          "path": "Examen2024diciembre/examen-resuelto/examen2024diciembre1",
+          "type": "dir",
+          "size": 0
+        },
+        {
+          "path": "Examen2024diciembre/examen-resuelto/examen2024diciembre1/conexion.php",
+          "type": "file",
+          "size": 332
+        },
+        {
+          "path": "Examen2024diciembre/examen-resuelto/examen2024diciembre1/index.php",
+          "type": "file",
+          "size": 4187
+        },
+        {
+          "path": "Examen2024diciembre/examen-resuelto/examen2024diciembre1/nbproject",
+          "type": "dir",
+          "size": 0
+        },
+        {
+          "path": "Examen2024diciembre/examen-resuelto/examen2024diciembre1/nbproject/private",
+          "type": "dir",
+          "size": 0
+        },
+        {
+          "path": "Examen2024diciembre/examen-resuelto/examen2024diciembre1/nbproject/private/private.properties",
+          "type": "file",
+          "size": 158
+        },
+        {
+          "path": "Examen2024diciembre/examen-resuelto/examen2024diciembre1/nbproject/private/private.xml",
+          "type": "file",
+          "size": 505
+        },
+        {
+          "path": "Examen2024diciembre/examen-resuelto/examen2024diciembre1/nbproject/project.properties",
+          "type": "file",
+          "size": 134
+        },
+        {
+          "path": "Examen2024diciembre/examen-resuelto/examen2024diciembre1/nbproject/project.xml",
+          "type": "file",
+          "size": 322
+        },
+        {
+          "path": "Examen2024diciembre/examen-resuelto/examen2024diciembre2",
+          "type": "dir",
+          "size": 0
+        },
+        {
+          "path": "Examen2024diciembre/examen-resuelto/examen2024diciembre2/index.php",
+          "type": "file",
+          "size": 3039
+        },
+        {
+          "path": "Examen2024diciembre/examen-resuelto/examen2024diciembre2/nbproject",
+          "type": "dir",
+          "size": 0
+        },
+        {
+          "path": "Examen2024diciembre/examen-resuelto/examen2024diciembre2/nbproject/private",
+          "type": "dir",
+          "size": 0
+        },
+        {
+          "path": "Examen2024diciembre/examen-resuelto/examen2024diciembre2/nbproject/private/private.properties",
+          "type": "file",
+          "size": 158
+        },
+        {
+          "path": "Examen2024diciembre/examen-resuelto/examen2024diciembre2/nbproject/private/private.xml",
+          "type": "file",
+          "size": 427
+        },
+        {
+          "path": "Examen2024diciembre/examen-resuelto/examen2024diciembre2/nbproject/project.properties",
+          "type": "file",
+          "size": 134
+        },
+        {
+          "path": "Examen2024diciembre/examen-resuelto/examen2024diciembre2/nbproject/project.xml",
+          "type": "file",
+          "size": 322
+        },
+        {
+          "path": "Examen2024diciembre/tienda_examen (1).sql",
+          "type": "file",
+          "size": 9857
+        }
+      ]
     }
   }
 }

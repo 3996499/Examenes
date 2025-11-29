@@ -1,0 +1,46 @@
+{
+  "sha": "35ff762cdd5a6a1d8a23204488fdc203e17febc0",
+  "url": "https://api.github.com/repos/DavidGom1/Arrays-Js-Practice/git/trees/35ff762cdd5a6a1d8a23204488fdc203e17febc0",
+  "tree": [
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "86bd032c1a0be953a8e0be54461ce9ae9694cabc",
+      "size": 4514,
+      "url": "https://api.github.com/repos/DavidGom1/Arrays-Js-Practice/git/blobs/86bd032c1a0be953a8e0be54461ce9ae9694cabc"
+    },
+    {
+      "path": "SOLUCIONES",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "a6e917eb36d7215062f326271c8ab885dd88b062",
+      "url": "https://api.github.com/repos/DavidGom1/Arrays-Js-Practice/git/trees/a6e917eb36d7215062f326271c8ab885dd88b062"
+    },
+    {
+      "path": "SOLUCIONES/guia.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "99dd1db672d609e0852e92caaf6f6038a280b41b",
+      "size": 8152,
+      "url": "https://api.github.com/repos/DavidGom1/Arrays-Js-Practice/git/blobs/99dd1db672d609e0852e92caaf6f6038a280b41b"
+    },
+    {
+      "path": "SOLUCIONES/soluciones.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8bdf6b3c64fec32665a3803b4d9063d469a7286c",
+      "size": 9503,
+      "url": "https://api.github.com/repos/DavidGom1/Arrays-Js-Practice/git/blobs/8bdf6b3c64fec32665a3803b4d9063d469a7286c"
+    },
+    {
+      "path": "app.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "36d163fba064f331a1506c7b5a485b2776a792bf",
+      "size": 10698,
+      "url": "https://api.github.com/repos/DavidGom1/Arrays-Js-Practice/git/blobs/36d163fba064f331a1506c7b5a485b2776a792bf"
+    }
+  ],
+  "truncated": false
+}
