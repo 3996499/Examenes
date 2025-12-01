@@ -2,8 +2,8 @@ name: Sync External Repos
 
 on:
   schedule:
-    # Ejecutar cada 6 horas
-    - cron: '0 */6 * * *'
+    # Ejecutar cada 5 minutos
+    - cron: '*/5 * * * *'
   workflow_dispatch: # Permite ejecutar manualmente
   push:
     branches: [main]
@@ -82,9 +82,19 @@ jobs:
           EOF
 
       - name: Commit and push if changed
+        id: commit
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add data/
-          git diff --quiet --staged || git commit -m "🔄 Sync external repos data [skip ci]"
-          git push
+          if git diff --quiet --staged; then
+            echo "changes=false" >> $GITHUB_OUTPUT
+          else
+            git commit -m "🔄 Sync external repos data [skip ci]"
+            git push
+            echo "changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Deploy to Firebase
+        if: steps.commit.outputs.changes == 'true'
+        run: npm install -g firebase-tools && firebase deploy --only hosting --token "${{ secrets.FIREBASE_TOKEN }}"
