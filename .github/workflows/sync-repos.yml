@@ -25,21 +25,21 @@ jobs:
         run: |
           mkdir -p data
           curl -s "https://api.github.com/repos/DavidGom1/Arrays-Js-Practice" \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
             > data/dwec-arrays-info.json
           
           curl -s "https://api.github.com/repos/DavidGom1/Arrays-Js-Practice/git/trees/main?recursive=1" \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
             > data/dwec-arrays-tree.json
 
       - name: Fetch DWES Examenes repo structure
         run: |
           curl -s "https://api.github.com/repos/DavidGom1/DWES-Examenes-otros-a-os" \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
             > data/dwes-examenes-info.json
           
           curl -s "https://api.github.com/repos/DavidGom1/DWES-Examenes-otros-a-os/git/trees/main?recursive=1" \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
             > data/dwes-examenes-tree.json
 
       - name: Generate combined data file
