@@ -173,3 +173,21 @@ html.reduced-motion .tilt-card:focus-within {
     margin-top: 1rem;
     padding: 1rem;
 }
+
+/* Estilos para bloques de código pre dentro del visor */
+#viewer pre,
+.viewer-content pre,
+.module-detail pre {
+    background: #1e293b;
+    color: #4ade80;
+    padding: 15px;
+    border-radius: 6px;
+    overflow-x: auto;
+    max-width: 100%;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}

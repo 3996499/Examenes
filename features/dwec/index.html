@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DWEC · Desarrollo Web en Entorno Cliente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="../../shared/assets/favicon.svg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
+    <link rel="stylesheet" href="../../shared/styles/theme.css">
+    <script defer src="../../shared/scripts/particles.js"></script>
+    <!-- Highlight.js para resaltado de código -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+
+<body data-theme="light"
+    class="font-sans min-h-screen text-slate-900 transition-colors duration-300 ease-out antialiased dark:text-slate-100">
+    <div class="detail-shell w-full max-w-4xl px-4 sm:px-6 pt-12 pb-10 mx-auto flex flex-col gap-6">
+        <header
+            class="appbar sticky top-4 z-10 flex flex-wrap items-center gap-4 rounded-[1.75rem] border border-slate-200/60 bg-white/80 px-5 py-4 shadow-[0_18px_48px_rgba(15,23,42,0.25)] backdrop-blur dark:border-white/10 dark:bg-slate-900/70">
+            <a class="icon-button inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/60 bg-white/80 text-slate-900 transition duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-white shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
+                href="../../index.html" aria-label="Volver">
+                &#8592;
+            </a>
+            <div class="brand flex flex-col gap-1">
+                <span class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">2º
+                    DAW</span>
+                <h1 class="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-white">Desarrollo Web en Entorno Cliente</h1>
+            </div>
+            <div class="appbar-actions ml-auto flex items-center gap-3">
+                <span id="themeStatus"
+                    class="chip inline-flex items-center rounded-full border border-slate-200/60 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-700 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                    aria-live="polite">Modo claro</span>
+                <button
+                    class="icon-button inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/60 bg-white/80 text-slate-900 transition duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-white shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
+                    id="themeToggle" aria-label="Cambiar tema">&#9788;</button>
+            </div>
+        </header>
+
+        <main class="detail-main flex flex-col gap-6" data-part="module">
+            <!-- Sección del Repositorio de Arrays -->
+            <article
+                class="repo-section relative rounded-[1.5rem] border border-slate-200/60 bg-white/80 p-6 shadow-[0_30px_70px_rgba(15,23,42,0.18)] backdrop-blur dark:border-white/10 dark:bg-slate-900/70">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <span class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Repositorio en vivo</span>
+                        <h2 class="text-xl font-semibold text-slate-900 dark:text-white mt-1">Arrays JS Practice</h2>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 mt-1">Contenido sincronizado con GitHub</p>
+                    </div>
+                    <a href="https://github.com/DavidGom1/Arrays-Js-Practice" target="_blank" rel="noopener"
+                        class="inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 no-underline transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        Ver en GitHub
+                    </a>
+                </div>
+                
+                <div id="repoLastUpdate" class="text-xs text-slate-500 dark:text-slate-400 mb-4">
+                    <span class="animate-pulse">Cargando última actualización...</span>
+                </div>
+
+                <!-- Lista de archivos del repo -->
+                <div id="repoFiles" class="space-y-3">
+                    <div class="flex items-center justify-center py-8">
+                        <div class="h-8 w-8 rounded-full border-4 border-indigo-200/70 border-t-indigo-500 animate-spin"></div>
+                        <span class="ml-3 text-sm text-slate-600 dark:text-slate-300">Cargando archivos del repositorio...</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Visor de código -->
+            <article id="codeViewer"
+                class="hidden relative rounded-[1.5rem] border border-slate-200/60 bg-white/80 p-6 shadow-[0_30px_70px_rgba(15,23,42,0.18)] backdrop-blur dark:border-white/10 dark:bg-slate-900/70">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <span class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Código fuente</span>
+                        <h3 id="codeFileName" class="text-lg font-semibold text-slate-900 dark:text-white mt-1">archivo.js</h3>
+                    </div>
+                    <button id="closeCodeViewer"
+                        class="icon-button inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/60 bg-white/80 text-slate-900 transition duration-200 ease-out hover:-translate-y-0.5 hover:bg-white shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20">
+                        &#10006;
+                    </button>
+                </div>
+                <div id="codeContent" class="overflow-x-auto rounded-lg">
+                    <pre><code class="language-javascript"></code></pre>
+                </div>
+            </article>
+
+        </main>
+    </div>
+
+    <div class="toast fixed bottom-8 left-1/2 -translate-x-1/2 translate-y-full rounded-full border border-slate-200/80 bg-white/90 px-6 py-3 text-sm font-semibold text-slate-900 shadow-xl transition dark:border-white/10 dark:bg-slate-900/90 dark:text-white"
+        id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+        // Configuración del repositorio
+        const REPO_OWNER = 'DavidGom1';
+        const REPO_NAME = 'Arrays-Js-Practice';
+        const API_BASE = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+            const root = document.documentElement;
+            const themeToggle = document.getElementById('themeToggle');
+            const themeStatus = document.getElementById('themeStatus');
+            const toast = document.getElementById('toast');
+            const repoFiles = document.getElementById('repoFiles');
+            const repoLastUpdate = document.getElementById('repoLastUpdate');
+            const codeViewer = document.getElementById('codeViewer');
+            const codeFileName = document.getElementById('codeFileName');
+            const codeContent = document.getElementById('codeContent');
+            const closeCodeViewer = document.getElementById('closeCodeViewer');
+
+            // Tema
+            const storedTheme = localStorage.getItem('preferred-theme');
+            setTheme(storedTheme || 'dark');
+
+            themeToggle.addEventListener('click', () => {
+                setTheme(body.dataset.theme === 'light' ? 'dark' : 'light');
+            });
+
+            closeCodeViewer.addEventListener('click', () => {
+                codeViewer.classList.add('hidden');
+            });
+
+            // Cargar contenido del repo
+            loadRepository();
+
+            function setTheme(theme) {
+                body.dataset.theme = theme;
+                const isDark = theme === 'dark';
+                root.classList.toggle('dark', isDark);
+                body.classList.toggle('dark', isDark);
+                document.documentElement.classList.toggle('dark', isDark);
+                localStorage.setItem('preferred-theme', theme);
+                themeToggle.textContent = theme === 'light' ? '\u2600' : '\u263E';
+                if (themeStatus) {
+                    themeStatus.textContent = theme === 'light' ? 'Modo claro' : 'Modo oscuro';
+                }
+            }
+
+            async function loadRepository() {
+                try {
+                    // Obtener info del repo
+                    const repoInfo = await fetch(API_BASE).then(r => r.json());
+                    const lastPush = new Date(repoInfo.pushed_at);
+                    repoLastUpdate.innerHTML = `<span class="text-emerald-500">●</span> Última actualización: ${lastPush.toLocaleDateString('es-ES', { 
+                        day: 'numeric', 
+                        month: 'long', 
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    })}`;
+
+                    // Obtener contenido del repo
+                    const contents = await fetch(`${API_BASE}/contents`).then(r => r.json());
+                    renderFiles(contents);
+                } catch (error) {
+                    console.error('Error al cargar el repositorio:', error);
+                    repoFiles.innerHTML = `
+                        <div class="text-center py-8 text-slate-600 dark:text-slate-300">
+                            <p>No se pudo cargar el repositorio.</p>
+                            <p class="text-sm mt-2">Comprueba tu conexión o inténtalo más tarde.</p>
+                        </div>
+                    `;
+                }
+            }
+
+            function renderFiles(files, container = repoFiles, level = 0) {
+                const html = files
+                    .sort((a, b) => {
+                        // Carpetas primero
+                        if (a.type === 'dir' && b.type !== 'dir') return -1;
+                        if (a.type !== 'dir' && b.type === 'dir') return 1;
+                        return a.name.localeCompare(b.name);
+                    })
+                    .map(file => {
+                        const icon = file.type === 'dir' ? '📁' : getFileIcon(file.name);
+                        const paddingLeft = level * 1.5;
+                        
+                        if (file.type === 'dir') {
+                            return `
+                                <div class="file-item folder" data-path="${file.path}" style="padding-left: ${paddingLeft}rem">
+                                    <button class="w-full flex items-center gap-3 rounded-lg border border-transparent bg-slate-50/80 px-4 py-3 text-left text-slate-900 transition hover:border-indigo-400 hover:bg-indigo-50/50 dark:bg-slate-800/80 dark:text-white dark:hover:bg-slate-700/80"
+                                        onclick="toggleFolder(this, '${file.path}')">
+                                        <span class="text-lg">${icon}</span>
+                                        <span class="font-medium">${file.name}</span>
+                                        <span class="ml-auto text-slate-400">▶</span>
+                                    </button>
+                                    <div class="folder-contents hidden ml-4 mt-2 space-y-2"></div>
+                                </div>
+                            `;
+                        } else {
+                            return `
+                                <div class="file-item" style="padding-left: ${paddingLeft}rem">
+                                    <button class="w-full flex items-center gap-3 rounded-lg border border-transparent bg-slate-50/80 px-4 py-3 text-left text-slate-900 transition hover:border-indigo-400 hover:bg-indigo-50/50 dark:bg-slate-800/80 dark:text-white dark:hover:bg-slate-700/80"
+                                        onclick="viewFile('${file.path}', '${file.name}')">
+                                        <span class="text-lg">${icon}</span>
+                                        <span class="font-medium">${file.name}</span>
+                                        <span class="ml-auto text-xs text-slate-500">${formatSize(file.size)}</span>
+                                    </button>
+                                </div>
+                            `;
+                        }
+                    }).join('');
+                
+                container.innerHTML = html;
+            }
+
+            function getFileIcon(filename) {
+                const ext = filename.split('.').pop().toLowerCase();
+                const icons = {
+                    'js': '📜',
+                    'html': '🌐',
+                    'css': '🎨',
+                    'json': '📋',
+                    'md': '📝',
+                    'txt': '📄',
+                    'gitignore': '🔒'
+                };
+                return icons[ext] || '📄';
+            }
+
+            function formatSize(bytes) {
+                if (bytes < 1024) return bytes + ' B';
+                if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+                return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+            }
+
+            // Funciones globales para los onclick
+            window.toggleFolder = async function(button, path) {
+                const folderItem = button.closest('.folder');
+                const contents = folderItem.querySelector('.folder-contents');
+                const arrow = button.querySelector('span:last-child');
+                
+                if (contents.classList.contains('hidden')) {
+                    // Cargar contenido de la carpeta
+                    try {
+                        contents.innerHTML = '<div class="py-2 text-sm text-slate-500">Cargando...</div>';
+                        contents.classList.remove('hidden');
+                        arrow.textContent = '▼';
+                        
+                        const files = await fetch(`${API_BASE}/contents/${path}`).then(r => r.json());
+                        renderFiles(files, contents, 1);
+                    } catch (error) {
+                        contents.innerHTML = '<div class="py-2 text-sm text-red-500">Error al cargar</div>';
+                    }
+                } else {
+                    contents.classList.add('hidden');
+                    arrow.textContent = '▶';
+                }
+            };
+
+            window.viewFile = async function(path, name) {
+                try {
+                    codeFileName.textContent = name;
+                    codeContent.innerHTML = '<div class="py-4 text-center text-slate-500">Cargando código...</div>';
+                    codeViewer.classList.remove('hidden');
+                    
+                    const fileData = await fetch(`${API_BASE}/contents/${path}`).then(r => r.json());
+                    const content = atob(fileData.content);
+                    
+                    const ext = name.split('.').pop().toLowerCase();
+                    const langMap = {
+                        'js': 'javascript',
+                        'html': 'html',
+                        'css': 'css',
+                        'json': 'json',
+                        'md': 'markdown'
+                    };
+                    const lang = langMap[ext] || 'plaintext';
+                    
+                    codeContent.innerHTML = `<pre><code class="language-${lang}">${escapeHtml(content)}</code></pre>`;
+                    hljs.highlightAll();
+                    
+                    // Scroll al visor
+                    codeViewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } catch (error) {
+                    codeContent.innerHTML = '<div class="py-4 text-center text-red-500">Error al cargar el archivo</div>';
+                }
+            };
+
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            // Toast
+            let toastTimeout;
+            function showToast(message) {
+                if (!toast) return;
+                toast.textContent = message;
+                toast.classList.remove('translate-y-full');
+                toast.classList.add('translate-y-0');
+                clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => {
+                    toast.classList.add('translate-y-full');
+                    toast.classList.remove('translate-y-0');
+                }, 2400);
+            }
+        });
+    </script>
+</body>
+
+</html>

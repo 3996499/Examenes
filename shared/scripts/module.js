@@ -38,6 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            // Si es un enlace local (.html), dejamos que navegue normalmente
+            if (isLocalHtmlLink(href)) {
+                // No hacemos preventDefault, navegación normal
+                return;
+            }
+
             event.preventDefault();
             const label = anchor.dataset.label
                 || anchor.closest('.ra-card')?.querySelector('h3')?.textContent.trim()
@@ -108,6 +114,23 @@ document.addEventListener('DOMContentLoaded', () => {
             return url.hostname.endsWith('daypo.com');
         } catch (error) {
             return false;
+        }
+    }
+
+    function isLocalHtmlLink(href) {
+        if (!href) {
+            return false;
+        }
+        // Comprueba si el enlace es relativo y termina en .html
+        // o si es absoluto pero apunta al mismo origen
+        try {
+            const url = new URL(href, window.location.href);
+            const sameOrigin = url.origin === window.location.origin;
+            const isHtml = url.pathname.endsWith('.html');
+            return sameOrigin && isHtml;
+        } catch (error) {
+            // Si falla el parseo, comprobamos como string relativo
+            return href.endsWith('.html');
         }
     }
 });
