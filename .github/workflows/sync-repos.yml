@@ -78,7 +78,6 @@ jobs:
           };
           
           fs.writeFileSync('data/repos.json', JSON.stringify(data, null, 2));
-          console.log('Generated repos.json successfully');
           EOF
 
       - name: Commit and push if changed

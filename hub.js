@@ -71,19 +71,19 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', event => {
             const href = link.getAttribute('href') || '#';
             const label = link.dataset.label || link.textContent.trim();
-            
+
             // Si tiene data-open="direct", navegar directamente
             if (link.dataset.open === 'direct') {
                 return; // Deja que el navegador haga la navegación normal
             }
-            
+
             event.preventDefault();
-            
+
             if (!href || href === '#') {
                 showNotice(`${label} está en construcción.`, 'Estamos preparando los retos y materiales de este módulo.');
                 return;
             }
-            
+
             // Módulo DWEC especial con GitHub API
             if (label === 'DWEC' || href.includes('dwec')) {
                 if (appbar?.dataset.expanded === 'true' && window.innerWidth < 1024) {
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadDWECModule();
                 return;
             }
-            
+
             // Módulo DWES especial con GitHub API
             if (label === 'DWES' || href.includes('dwes')) {
                 if (appbar?.dataset.expanded === 'true' && window.innerWidth < 1024) {
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadDWESModule();
                 return;
             }
-            
+
             if (appbar?.dataset.expanded === 'true' && window.innerWidth < 1024) {
                 collapseAppbarMenu();
             }
@@ -150,16 +150,49 @@ document.addEventListener('DOMContentLoaded', () => {
     function homeTemplate() {
         return `
             <section class="viewer-content flex flex-col gap-6">
-                <div class="space-y-4">
-                    <span class="inline-flex items-center rounded-full bg-indigo-500/10 px-4 py-1 text-sm font-semibold text-indigo-400 dark:text-indigo-200">Hub interactivo</span>
-                    <h2 class="text-3xl font-semibold text-slate-900 dark:text-white">Practica para tus exámenes.</h2>
-                    <p class="text-lg text-slate-600 dark:text-slate-300">Activa el modo oscuro, abre los tests Daypo dentro del hub y utiliza el botón volver para navegar rápido entre módulos.</p>
-                </div>
-                <div class="flex flex-wrap gap-3">
-                    <button data-action="visit-daypo"
-                        class="inline-flex items-center rounded-full border border-slate-300/70 px-5 py-2 text-sm font-semibold text-slate-900 transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/20 dark:text-white">
-                        Abrir Daypo
-                    </button>
+                <!-- Hero Section Adaptable -->
+                <div class="relative overflow-hidden rounded-[2rem] bg-white p-8 shadow-[0_20px_50px_rgba(0,0,0,0.05)] transition-all dark:bg-slate-900 dark:shadow-2xl">
+                    
+                    <!-- Efectos de fondo -->
+                    <div class="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-indigo-100 blur-3xl dark:bg-indigo-500/30"></div>
+                    <div class="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-purple-100 blur-3xl dark:bg-purple-500/30"></div>
+                    
+                    <div class="relative z-10 space-y-6">
+                        <div class="flex items-center gap-3">
+                            <span class="inline-flex items-center rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-indigo-600 border border-indigo-100 dark:bg-indigo-400/20 dark:text-indigo-200 dark:border-indigo-400/20 dark:backdrop-blur-md">
+                                Hub interactivo
+                            </span>
+                        </div>
+
+                        <div class="space-y-2">
+                            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl text-slate-900 dark:text-white">
+                                Practica para tus exámenes
+                            </h2>
+                            <p class="max-w-xl text-lg text-slate-600 dark:text-indigo-100/80">
+                                Recopilación de recursos, tests de Daypo y exámenes de años anteriores.
+                            </p>
+                        </div>
+
+                        <!-- SECCIÓN DE NOVEDADES -->
+                        <div class="rounded-xl bg-slate-50 p-5 border border-slate-200 dark:bg-slate-950/20 dark:border-white/10 dark:backdrop-blur-sm">
+                            <h3 class="flex items-center gap-2 text-sm font-bold text-slate-700 mb-4 uppercase tracking-wide dark:text-white dark:opacity-90">
+                                Últimas actualizaciones
+                            </h3>
+                            <ul class="space-y-3">
+                                <!-- Noticia 1 -->
+                                <li class="group flex items-center justify-between gap-4 rounded-lg bg-white p-3 shadow-sm hover:shadow-md transition border border-slate-200/60 cursor-pointer hover:border-indigo-300 dark:bg-white/5 dark:border-white/5 dark:hover:bg-white/10 dark:hover:border-white/20"
+                                    data-action="nav-module" data-target="features/python/index.html" data-label="Python">
+                                    <div class="flex items-center gap-4">
+                                        <div>
+                                            <p class="font-semibold text-slate-900 group-hover:text-indigo-600 transition dark:text-white dark:group-hover:text-indigo-200">Python - RA5</p>
+                                            <p class="text-sm text-slate-500 dark:text-indigo-100/60">Añadidos tests de TDD, Unittest y Pytest.</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-slate-400 group-hover:translate-x-1 group-hover:text-indigo-500 transition dark:text-white/40 dark:group-hover:text-white">→</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </section>
         `;
@@ -168,6 +201,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function attachHomeActions() {
         const scrollButton = viewer.querySelector('[data-action="scroll-nav"]');
         const daypoButton = viewer.querySelector('[data-action="visit-daypo"]');
+        const navButtons = viewer.querySelectorAll('[data-action="nav-module"]');
+
         if (scrollButton) {
             scrollButton.addEventListener('click', () => {
                 document.querySelector('.nav-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -178,6 +213,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 openExternal('https://www.daypo.com/', 'Daypo');
             });
         }
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const target = btn.dataset.target;
+                const label = btn.dataset.label;
+                loadModule(target, label);
+            });
+        });
     }
 
     function updateBackButton() {
@@ -283,7 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cache de datos de repos
     let reposData = null;
-    
+
     async function loadReposData() {
         if (reposData) return reposData;
         try {
@@ -300,21 +342,21 @@ document.addEventListener('DOMContentLoaded', () => {
     function getTopLevelFiles(files) {
         const topLevel = [];
         const seen = new Set();
-        
+
         for (const file of files) {
             const parts = file.path.split('/');
             const name = parts[0];
-            
+
             if (seen.has(name)) continue;
             seen.add(name);
-            
+
             if (parts.length === 1 && file.type === 'file') {
                 topLevel.push({ name, path: file.path, type: 'file', size: file.size });
             } else if (parts.length > 1 || file.type === 'dir') {
                 topLevel.push({ name, path: name, type: 'dir', size: 0 });
             }
         }
-        
+
         return topLevel;
     }
 
@@ -323,24 +365,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const contents = [];
         const seen = new Set();
         const prefix = folderPath + '/';
-        
+
         for (const file of files) {
             if (!file.path.startsWith(prefix)) continue;
-            
+
             const relativePath = file.path.slice(prefix.length);
             const parts = relativePath.split('/');
             const name = parts[0];
-            
+
             if (seen.has(name)) continue;
             seen.add(name);
-            
+
             if (parts.length === 1 && file.type === 'file') {
                 contents.push({ name, path: file.path, type: 'file', size: file.size });
             } else {
                 contents.push({ name, path: folderPath + '/' + name, type: 'dir', size: 0 });
             }
         }
-        
+
         return contents;
     }
 
@@ -354,7 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const data = await loadReposData();
             const repo = data?.repos?.['dwec-arrays'];
-            
+
             if (!repo || !repo.files || repo.files.length === 0) {
                 throw new Error('Datos no disponibles');
             }
@@ -369,13 +411,13 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const topLevelFiles = getTopLevelFiles(repo.files);
-            
+
             // Guardar archivos completos para navegación de carpetas
             window.DWEC_FILES = repo.files;
-            
+
             const template = dwecTemplate(lastUpdateText, topLevelFiles, REPO_OWNER, REPO_NAME);
             viewer.innerHTML = template;
-            
+
             hookDWECActions();
             pushState({ type: 'module', title: 'DWEC - Arrays', html: template }, true);
 
@@ -612,7 +654,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const data = await loadReposData();
             const repo = data?.repos?.['dwes-examenes'];
-            
+
             if (!repo || !repo.files || repo.files.length === 0) {
                 throw new Error('Datos no disponibles');
             }
@@ -627,13 +669,13 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const topLevelFiles = getTopLevelFiles(repo.files);
-            
+
             // Guardar archivos completos para navegación de carpetas
             window.DWES_FILES = repo.files;
 
             const template = dwesRepoTemplate(lastUpdateText, topLevelFiles, REPO_OWNER, REPO_NAME);
             viewer.innerHTML = template;
-            
+
             hookDWESActions();
             pushState({ type: 'module', title: 'DWES - Exámenes', html: template }, true);
 
@@ -732,7 +774,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getDWESFileIcon(filename) {
         const ext = filename.split('.').pop().toLowerCase();
-        const icons = { 
+        const icons = {
             'php': '🐘', 'html': '🌐', 'css': '🎨', 'js': '📜',
             'json': '📋', 'md': '📝', 'txt': '📄', 'sql': '🗃️',
             'zip': '📦', 'pdf': '📕'
@@ -784,13 +826,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const path = btn.dataset.filePath;
                 const name = btn.dataset.fileName;
                 const ext = name.split('.').pop().toLowerCase();
-                
+
                 // Si es ZIP o PDF, descargar directamente
                 if (ext === 'zip' || ext === 'pdf') {
                     window.open(`https://raw.githubusercontent.com/DavidGom1/DWES-Examenes-otros-a-os/main/${path}`, '_blank');
                     return;
                 }
-                
+
                 const codeViewer = document.getElementById('dwesCodeViewer');
                 const codeFileName = document.getElementById('dwesCodeFileName');
                 const codeContent = document.getElementById('dwesCodeContent');
@@ -840,12 +882,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 Links a los cuadernos de las asignaturas.
             </p>
             <div class="grid gap-5 md:grid-cols-2">
-                ${notebookEntry('DWEC', 'Conceptos clave de JavaScript en entorno cliente.', 'dwec', 'https://notebooklm.google.com/notebook/d4ab9e00-b333-46c7-bd04-d07fddbc4ebc')}
-                ${notebookEntry('DWES', 'Backend con PHP y servicios complementarios.', 'dwes', 'https://notebooklm.google.com/notebook/4e099eaf-b752-4229-8031-15249c1346f8')}
-                ${notebookEntry('DAW', 'Despliegue y administración de aplicaciones web.', 'daw','https://notebooklm.google.com/notebook/b76c0e0a-97a3-4ca0-b860-6db1741c4e95')}
-                ${notebookEntry('DIW', 'Interfaces web y diseño responsive.', 'diw', 'https://notebooklm.google.com/notebook/5f65dbcc-3ae9-46ad-84fa-d689cbf0714d')}
-                ${notebookEntry('PYTHON', 'Automatizaciones y scripts para afrontar los retos.', 'python', 'https://notebooklm.google.com/notebook/5d6d7b9d-c296-4d4d-9232-8dc3bfb04a25')}
-                ${notebookEntry('SASP', 'Sostenibilidad y proyectos sociales.', 'sasp', 'https://notebooklm.google.com/notebook/dd815534-2c57-499e-843d-34c83fb3e153')}
+                <!-- Cuadernos no disponibles actualmente -->
+                <div class="col-span-full rounded-[1.1rem] border border-dashed border-slate-300 p-8 text-center text-slate-500 dark:border-slate-700 dark:text-slate-400">
+                    <p>No hay cuadernos disponibles por el momento.</p>
+                </div>
             </div>
         `;
     }
@@ -874,10 +914,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function repoErrorTemplate(label, owner, repo, errorMsg) {
         const isRateLimit = errorMsg && errorMsg.includes('rate limit');
-        const message = isRateLimit 
+        const message = isRateLimit
             ? 'Se ha superado el límite de peticiones a GitHub. Puedes acceder directamente al repositorio o descargar el ZIP.'
             : 'No se pudo cargar el contenido del repositorio. Puedes acceder directamente a GitHub.';
-        
+
         return `
             <article class="module-detail viewer-content flex flex-col gap-6">
                 <div class="flex flex-col gap-2">
@@ -955,6 +995,139 @@ document.addEventListener('DOMContentLoaded', () => {
                 openExternal(url.href, label);
             });
         });
+
+        // Setup acordeones después de cargar el módulo
+        setupAccordions();
+    }
+
+    function setupAccordions() {
+        // 1. Configurar acordeones de evaluaciones (comportamiento exclusivo)
+        const evaluationDetails = viewer.querySelectorAll('details.group');
+
+        evaluationDetails.forEach((details, idx) => {
+            const summary = details.querySelector('summary');
+            if (!summary) return;
+
+            // Preparar wrapper de contenido
+            let content = details.querySelector('.accordion-content');
+            if (!content) {
+                content = document.createElement('div');
+                content.className = 'accordion-content';
+                content.style.overflow = 'hidden';
+
+                let nextNode = summary.nextSibling;
+                while (nextNode) {
+                    const nodeToMove = nextNode;
+                    nextNode = nextNode.nextSibling;
+                    content.appendChild(nodeToMove);
+                }
+                details.appendChild(content);
+            }
+
+            const newSummary = summary.cloneNode(true);
+            summary.parentNode.replaceChild(newSummary, summary);
+
+            newSummary.addEventListener('click', (e) => {
+                e.preventDefault();
+                const isOpen = details.hasAttribute('open');
+
+                if (isOpen) {
+                    closeAccordion(details, content);
+                } else {
+                    // Cerrar otros acordeones de evaluación
+                    evaluationDetails.forEach(other => {
+                        if (other !== details && other.hasAttribute('open')) {
+                            const otherContent = other.querySelector('.accordion-content');
+                            if (otherContent) closeAccordion(other, otherContent);
+                        }
+                    });
+                    openAccordion(details, content);
+                }
+            });
+        });
+
+        // 2. Configurar acordeones de versiones RA (comportamiento independiente)
+        const raDetails = viewer.querySelectorAll('.ra-multi');
+        ('📦 Configurando acordeones de versiones RA:', raDetails.length);
+
+        raDetails.forEach((details, idx) => {
+            const summary = details.querySelector('summary');
+            if (!summary) return;
+
+            let content = details.querySelector('.accordion-content');
+            if (!content) {
+                content = document.createElement('div');
+                content.className = 'accordion-content';
+                content.style.overflow = 'hidden';
+
+                let nextNode = summary.nextSibling;
+                while (nextNode) {
+                    const nodeToMove = nextNode;
+                    nextNode = nextNode.nextSibling;
+                    content.appendChild(nodeToMove);
+                }
+                details.appendChild(content);
+            }
+
+            const newSummary = summary.cloneNode(true);
+            summary.parentNode.replaceChild(newSummary, summary);
+
+            newSummary.addEventListener('click', (e) => {
+                e.preventDefault();
+                const isOpen = details.hasAttribute('open');
+
+                if (isOpen) {
+                    closeAccordion(details, content);
+                } else {
+                    openAccordion(details, content);
+                }
+            });
+        });
+    }
+
+    function closeAccordion(details, content) {
+        const startHeight = content.scrollHeight;
+
+        content.style.height = `${startHeight}px`;
+        content.style.transition = 'height 0.3s ease-out';
+
+        requestAnimationFrame(() => {
+            content.style.height = '0px';
+        });
+
+        const onEnd = () => {
+            if (content.style.height === '0px') {
+                details.removeAttribute('open');
+            }
+            content.style.removeProperty('height');
+            content.style.removeProperty('transition');
+            content.removeEventListener('transitionend', onEnd);
+        };
+
+        content.addEventListener('transitionend', onEnd);
+    }
+
+    function openAccordion(details, content) {
+        details.setAttribute('open', '');
+
+        const targetHeight = content.scrollHeight;
+
+        content.style.height = '0px';
+        content.style.transition = 'height 0.3s ease-out';
+
+        requestAnimationFrame(() => {
+            content.style.height = `${targetHeight}px`;
+        });
+
+        const onEnd = () => {
+            if (content.style.height !== '0px') {
+                content.style.removeProperty('height');
+                content.style.removeProperty('transition');
+            }
+            content.removeEventListener('transitionend', onEnd);
+        };
+
+        content.addEventListener('transitionend', onEnd);
     }
 
     function openExternal(url, label) {

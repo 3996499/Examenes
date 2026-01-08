@@ -7,7 +7,8 @@
     <title>DIW · Resultados</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="../../shared/assets/favicon.svg">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -36,8 +37,10 @@
                 &#8592;
             </a>
             <div class="brand flex flex-col gap-1">
-                <span class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">2º DAW</span>
-                <h1 class="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-white">Diseño de Interfaces Web</h1>
+                <span class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">2º
+                    DAW</span>
+                <h1 class="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-white">Diseño de Interfaces Web
+                </h1>
             </div>
             <div class="appbar-actions ml-auto flex items-center gap-3">
                 <span id="themeStatus"
@@ -50,28 +53,64 @@
         </header>
 
         <main class="detail-main flex flex-col gap-6" data-part="module">
-            <article class="module-card relative rounded-[1.5rem] border border-slate-200/60 bg-white/80 p-6 shadow-[0_30px_70px_rgba(15,23,42,0.18)] backdrop-blur dark:border-white/10 dark:bg-slate-900/70">
-                <span class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Resultados de aprendizaje</span>
-                
-                <div class="ra-grid grid gap-4 mt-6 sm:grid-cols-2">
-                    <div class="ra-card tilt-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg transition hover:border-indigo-400 min-h-[150px] dark:border-white/10 dark:bg-slate-900/70">
-                        <h3 class="text-xl font-semibold text-slate-900 dark:text-white">RA1</h3>
-                        <p class="text-sm text-slate-600 dark:text-slate-300 flex-1">Principios básicos de diseño, accesibilidad y guías de estilo.</p>
-                        <a class="ra-link inline-flex items-center justify-center gap-1 rounded-full border border-slate-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 no-underline transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white"
-                            href="https://www.daypo.com/ra01-diw.html">Abrir ↗</a>
-                    </div>
-                    <div class="ra-card tilt-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg transition hover:border-indigo-400 min-h-[150px] dark:border-white/10 dark:bg-slate-900/70">
-                        <h3 class="text-xl font-semibold text-slate-900 dark:text-white">RA2</h3>
-                        <p class="text-sm text-slate-600 dark:text-slate-300 flex-1">Maquetación avanzada, responsive design y componentes interactivos.</p>
-                        <a class="ra-link inline-flex items-center justify-center gap-1 rounded-full border border-slate-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 no-underline transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white"
-                            href="https://www.daypo.com/ra02-diw.html">Abrir ↗</a>
-                    </div>
-                    <div class="ra-card tilt-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg transition hover:border-indigo-400 min-h-[150px] dark:border-white/10 dark:bg-slate-900/70">
-                        <h3 class="text-xl font-semibold text-slate-900 dark:text-white">RA3</h3>
-                        <p class="text-sm text-slate-600 dark:text-slate-300 flex-1">Optimización visual y pruebas con usuarios.</p>
-                        <a class="ra-link inline-flex items-center justify-center gap-1 rounded-full border border-slate-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 no-underline transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white"
-                            href="https://www.daypo.com/ra03-diw.html">Abrir ↗</a>
-                    </div>
+            <article
+                class="module-card relative rounded-[1.5rem] border border-slate-200/60 bg-white/80 p-6 shadow-[0_30px_70px_rgba(15,23,42,0.18)] backdrop-blur dark:border-white/10 dark:bg-slate-900/70">
+                <span
+                    class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Resultados
+                    de aprendizaje</span>
+
+                <div class="mt-6 flex flex-col gap-4">
+                    <!-- 1ª Evaluación -->
+                    <details
+                        class="group rounded-xl border border-slate-200/60 bg-white/50 p-1 dark:border-white/5 dark:bg-white/5">
+                        <summary
+                            class="flex cursor-pointer items-center justify-between rounded-lg bg-white/80 px-4 py-3 font-semibold text-slate-900 shadow-sm transition hover:bg-white dark:bg-white/10 dark:text-white dark:hover:bg-white/20">
+                            1ª Evaluación
+                            <span class="transition-transform duration-300 group-open:rotate-180">▾</span>
+                        </summary>
+                        <div class="ra-grid grid gap-4 p-4 sm:grid-cols-2">
+                            <div
+                                class="ra-card tilt-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg transition hover:border-indigo-400 min-h-[150px] dark:border-white/10 dark:bg-slate-900/70">
+                                <h3 class="text-xl font-semibold text-slate-900 dark:text-white">RA1</h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-300 flex-1">Principios básicos de
+                                    diseño, accesibilidad y guías de estilo.</p>
+                                <a class="ra-link inline-flex items-center justify-center gap-1 rounded-full border border-slate-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 no-underline transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                                    href="https://www.daypo.com/ra01-diw.html">Abrir ↗</a>
+                            </div>
+                            <div
+                                class="ra-card tilt-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg transition hover:border-indigo-400 min-h-[150px] dark:border-white/10 dark:bg-slate-900/70">
+                                <h3 class="text-xl font-semibold text-slate-900 dark:text-white">RA2</h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-300 flex-1">Maquetación avanzada,
+                                    responsive design y componentes interactivos.</p>
+                                <a class="ra-link inline-flex items-center justify-center gap-1 rounded-full border border-slate-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 no-underline transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                                    href="https://www.daypo.com/ra02-diw.html">Abrir ↗</a>
+                            </div>
+                            <div
+                                class="ra-card tilt-card flex flex-col gap-3 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 shadow-lg transition hover:border-indigo-400 min-h-[150px] dark:border-white/10 dark:bg-slate-900/70">
+                                <h3 class="text-xl font-semibold text-slate-900 dark:text-white">RA3</h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-300 flex-1">Optimización visual y
+                                    pruebas con usuarios.</p>
+                                <a class="ra-link inline-flex items-center justify-center gap-1 rounded-full border border-slate-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 no-underline transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                                    href="https://www.daypo.com/ra03-diw.html">Abrir ↗</a>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- 2ª Evaluación -->
+                    <details
+                        class="group rounded-xl border border-slate-200/60 bg-white/50 p-1 dark:border-white/5 dark:bg-white/5"
+                        open>
+                        <summary
+                            class="flex cursor-pointer items-center justify-between rounded-lg bg-white/80 px-4 py-3 font-semibold text-slate-900 shadow-sm transition hover:bg-white dark:bg-white/10 dark:text-white dark:hover:bg-white/20">
+                            2ª Evaluación
+                            <span class="transition-transform duration-300 group-open:rotate-180">▾</span>
+                        </summary>
+                        <div class="ra-grid grid gap-4 p-4 sm:grid-cols-2">
+                            <div class="col-span-full flex flex-col items-center justify-center py-8 text-center">
+                                <p class="text-slate-500 dark:text-slate-400">Contenido disponible próximamente.</p>
+                            </div>
+                        </div>
+                    </details>
                 </div>
             </article>
         </main>
@@ -83,7 +122,9 @@
             <div
                 class="embed-toolbar flex min-h-[56px] items-center justify-between gap-4 border-b border-slate-200/60 bg-white/90 px-6 py-3 shadow-lg dark:border-white/10 dark:bg-slate-900/90">
                 <div class="flex flex-col gap-1">
-                    <span class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Visor Daypo</span>
+                    <span
+                        class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Visor
+                        Daypo</span>
                     <h3 id="embedTitle" class="text-lg font-semibold text-slate-900 dark:text-white">Recurso</h3>
                 </div>
                 <button
