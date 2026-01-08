@@ -42,7 +42,8 @@
             <div class="brand flex flex-col gap-1">
                 <span class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">2º
                     DAW</span>
-                <h1 class="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-white">Desarrollo Web en Entorno Cliente</h1>
+                <h1 class="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-white">Desarrollo Web en Entorno
+                    Cliente</h1>
             </div>
             <div class="appbar-actions ml-auto flex items-center gap-3">
                 <span id="themeStatus"
@@ -56,41 +57,48 @@
 
         <main class="detail-main flex flex-col gap-6" data-part="module">
             <!-- Sección del Repositorio de Arrays -->
-            <article
-                class="repo-section relative rounded-[1.5rem] border border-slate-200/60 bg-white/80 p-6 shadow-[0_30px_70px_rgba(15,23,42,0.18)] backdrop-blur dark:border-white/10 dark:bg-slate-900/70">
-                <div class="flex items-center justify-between mb-4">
-                    <div>
-                        <span class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Repositorio en vivo</span>
-                        <h2 class="text-xl font-semibold text-slate-900 dark:text-white mt-1">Arrays JS Practice</h2>
-                        <p class="text-sm text-slate-600 dark:text-slate-300 mt-1">Contenido sincronizado con GitHub</p>
-                    </div>
-                    <a href="https://github.com/DavidGom1/Arrays-Js-Practice" target="_blank" rel="noopener"
-                        class="inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 no-underline transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                        Ver en GitHub
-                    </a>
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <span
+                        class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Repositorio
+                        en vivo</span>
+                    <h2 class="text-xl font-semibold text-slate-900 dark:text-white mt-1">Arrays JS Practice</h2>
+                    <p class="text-sm text-slate-600 dark:text-slate-300 mt-1">Contenido sincronizado con GitHub</p>
                 </div>
-                
-                <div id="repoLastUpdate" class="text-xs text-slate-500 dark:text-slate-400 mb-4">
-                    <span class="animate-pulse">Cargando última actualización...</span>
-                </div>
+                <a href="https://github.com/DavidGom1/Arrays-Js-Practice" target="_blank" rel="noopener"
+                    class="inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 no-underline transition hover:border-indigo-400 hover:text-indigo-500 dark:border-white/10 dark:bg-white/5 dark:text-white">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                    Ver en GitHub
+                </a>
+            </div>
 
-                <!-- Lista de archivos del repo -->
-                <div id="repoFiles" class="space-y-3">
-                    <div class="flex items-center justify-center py-8">
-                        <div class="h-8 w-8 rounded-full border-4 border-indigo-200/70 border-t-indigo-500 animate-spin"></div>
-                        <span class="ml-3 text-sm text-slate-600 dark:text-slate-300">Cargando archivos del repositorio...</span>
+            <div id="repoLastUpdate" class="text-xs text-slate-500 dark:text-slate-400 mb-4">
+                <span class="animate-pulse">Cargando última actualización...</span>
+            </div>
+
+            <!-- Lista de archivos del repo -->
+            <div id="repoFiles" class="space-y-3">
+                <div class="flex items-center justify-center py-8">
+                    <div class="h-8 w-8 rounded-full border-4 border-indigo-200/70 border-t-indigo-500 animate-spin">
                     </div>
+                    <span class="ml-3 text-sm text-slate-600 dark:text-slate-300">Cargando archivos del
+                        repositorio...</span>
                 </div>
-            </article>
+            </div>
 
             <!-- Visor de código -->
             <article id="codeViewer"
                 class="hidden relative rounded-[1.5rem] border border-slate-200/60 bg-white/80 p-6 shadow-[0_30px_70px_rgba(15,23,42,0.18)] backdrop-blur dark:border-white/10 dark:bg-slate-900/70">
                 <div class="flex items-center justify-between mb-4">
                     <div>
-                        <span class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Código fuente</span>
-                        <h3 id="codeFileName" class="text-lg font-semibold text-slate-900 dark:text-white mt-1">archivo.js</h3>
+                        <span
+                            class="eyebrow text-[0.75rem] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Código
+                            fuente</span>
+                        <h3 id="codeFileName" class="text-lg font-semibold text-slate-900 dark:text-white mt-1">
+                            archivo.js</h3>
                     </div>
                     <button id="closeCodeViewer"
                         class="icon-button inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/60 bg-white/80 text-slate-900 transition duration-200 ease-out hover:-translate-y-0.5 hover:bg-white shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20">
@@ -160,9 +168,9 @@
                     // Obtener info del repo
                     const repoInfo = await fetch(API_BASE).then(r => r.json());
                     const lastPush = new Date(repoInfo.pushed_at);
-                    repoLastUpdate.innerHTML = `<span class="text-emerald-500">●</span> Última actualización: ${lastPush.toLocaleDateString('es-ES', { 
-                        day: 'numeric', 
-                        month: 'long', 
+                    repoLastUpdate.innerHTML = `<span class="text-emerald-500">●</span> Última actualización: ${lastPush.toLocaleDateString('es-ES', {
+                        day: 'numeric',
+                        month: 'long',
                         year: 'numeric',
                         hour: '2-digit',
                         minute: '2-digit'
@@ -193,7 +201,7 @@
                     .map(file => {
                         const icon = file.type === 'dir' ? '📁' : getFileIcon(file.name);
                         const paddingLeft = level * 1.5;
-                        
+
                         if (file.type === 'dir') {
                             return `
                                 <div class="file-item folder" data-path="${file.path}" style="padding-left: ${paddingLeft}rem">
@@ -219,7 +227,7 @@
                             `;
                         }
                     }).join('');
-                
+
                 container.innerHTML = html;
             }
 
@@ -244,18 +252,18 @@
             }
 
             // Funciones globales para los onclick
-            window.toggleFolder = async function(button, path) {
+            window.toggleFolder = async function (button, path) {
                 const folderItem = button.closest('.folder');
                 const contents = folderItem.querySelector('.folder-contents');
                 const arrow = button.querySelector('span:last-child');
-                
+
                 if (contents.classList.contains('hidden')) {
                     // Cargar contenido de la carpeta
                     try {
                         contents.innerHTML = '<div class="py-2 text-sm text-slate-500">Cargando...</div>';
                         contents.classList.remove('hidden');
                         arrow.textContent = '▼';
-                        
+
                         const files = await fetch(`${API_BASE}/contents/${path}`).then(r => r.json());
                         renderFiles(files, contents, 1);
                     } catch (error) {
@@ -267,15 +275,15 @@
                 }
             };
 
-            window.viewFile = async function(path, name) {
+            window.viewFile = async function (path, name) {
                 try {
                     codeFileName.textContent = name;
                     codeContent.innerHTML = '<div class="py-4 text-center text-slate-500">Cargando código...</div>';
                     codeViewer.classList.remove('hidden');
-                    
+
                     const fileData = await fetch(`${API_BASE}/contents/${path}`).then(r => r.json());
                     const content = atob(fileData.content);
-                    
+
                     const ext = name.split('.').pop().toLowerCase();
                     const langMap = {
                         'js': 'javascript',
@@ -285,10 +293,10 @@
                         'md': 'markdown'
                     };
                     const lang = langMap[ext] || 'plaintext';
-                    
+
                     codeContent.innerHTML = `<pre><code class="language-${lang}">${escapeHtml(content)}</code></pre>`;
                     hljs.highlightAll();
-                    
+
                     // Scroll al visor
                     codeViewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 } catch (error) {

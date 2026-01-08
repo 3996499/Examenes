@@ -1088,8 +1088,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function closeAccordion(details, content) {
         const startHeight = content.scrollHeight;
 
+        content.style.willChange = 'height';
         content.style.height = `${startHeight}px`;
         content.style.transition = 'height 0.3s ease-out';
+
+        // Forzar reflow para asegurar que el navegador registre la altura inicial
+        content.getBoundingClientRect();
 
         requestAnimationFrame(() => {
             content.style.height = '0px';
@@ -1101,18 +1105,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             content.style.removeProperty('height');
             content.style.removeProperty('transition');
+            content.style.removeProperty('will-change');
             content.removeEventListener('transitionend', onEnd);
         };
 
-        content.addEventListener('transitionend', onEnd);
+        content.addEventListener('transitionend', onEnd, { once: true });
     }
 
     function openAccordion(details, content) {
+        // Fijar altura a 0 antes de abrir para evitar parpadeo (FOUC)
+        content.style.height = '0px';
         details.setAttribute('open', '');
 
         const targetHeight = content.scrollHeight;
 
-        content.style.height = '0px';
+        content.style.willChange = 'height';
         content.style.transition = 'height 0.3s ease-out';
 
         requestAnimationFrame(() => {
@@ -1123,11 +1130,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (content.style.height !== '0px') {
                 content.style.removeProperty('height');
                 content.style.removeProperty('transition');
+                content.style.removeProperty('will-change');
             }
             content.removeEventListener('transitionend', onEnd);
         };
 
-        content.addEventListener('transitionend', onEnd);
+        content.addEventListener('transitionend', onEnd, { once: true });
     }
 
     function openExternal(url, label) {
