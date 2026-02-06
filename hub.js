@@ -151,15 +151,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return `
             <section class="viewer-content flex flex-col gap-6">
                 <!-- Hero Section Adaptable -->
-                <div class="relative overflow-hidden rounded-[2rem] bg-white p-8 shadow-[0_20px_50px_rgba(0,0,0,0.05)] transition-all dark:bg-slate-900 dark:shadow-2xl">
-                    
-                    <!-- Efectos de fondo -->
-                    <div class="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-indigo-100 blur-3xl dark:bg-indigo-500/30"></div>
-                    <div class="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-purple-100 blur-3xl dark:bg-purple-500/30"></div>
+                <div class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-white/10 dark:bg-slate-900">
                     
                     <div class="relative z-10 space-y-6">
                         <div class="flex items-center gap-3">
-                            <span class="inline-flex items-center rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-indigo-600 border border-indigo-100 dark:bg-indigo-400/20 dark:text-indigo-200 dark:border-indigo-400/20 dark:backdrop-blur-md">
+                            <span class="inline-flex items-center rounded-md border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-xs font-medium text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
                                 Hub interactivo
                             </span>
                         </div>
@@ -181,11 +177,36 @@ document.addEventListener('DOMContentLoaded', () => {
                             <ul class="space-y-3">
                                 <!-- Noticia 1 -->
                                 <li class="group flex items-center justify-between gap-4 rounded-lg bg-white p-3 shadow-sm hover:shadow-md transition border border-slate-200/60 cursor-pointer hover:border-indigo-300 dark:bg-white/5 dark:border-white/5 dark:hover:bg-white/10 dark:hover:border-white/20"
-                                    data-action="nav-module" data-target="features/python/index.html" data-label="Python">
+                                    data-action="open-notebooklm">
                                     <div class="flex items-center gap-4">
+                                        <span class="text-2xl">📓</span>
                                         <div>
-                                            <p class="font-semibold text-slate-900 group-hover:text-indigo-600 transition dark:text-white dark:group-hover:text-indigo-200">Python - RA5</p>
-                                            <p class="text-sm text-slate-500 dark:text-indigo-100/60">Añadidos tests de TDD, Unittest y Pytest.</p>
+                                            <p class="font-semibold text-slate-900 group-hover:text-indigo-600 transition dark:text-white dark:group-hover:text-indigo-200">Cuadernos NotebookLM</p>
+                                            <p class="text-sm text-slate-500 dark:text-indigo-100/60">Ya disponibles los cuadernos inteligentes de todos los módulos.</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-slate-400 group-hover:translate-x-1 group-hover:text-indigo-500 transition dark:text-white/40 dark:group-hover:text-white">→</span>
+                                </li>
+                                <!-- Noticia 2 -->
+                                <li class="group flex items-center justify-between gap-4 rounded-lg bg-white p-3 shadow-sm hover:shadow-md transition border border-slate-200 cursor-pointer hover:border-indigo-300 dark:bg-white/5 dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20"
+                                    data-action="open-news-link" data-target="features/python/index.html" data-label="Python">
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-2xl">🐍</span>
+                                        <div>
+                                            <p class="font-semibold text-slate-900 group-hover:text-indigo-600 transition dark:text-white dark:group-hover:text-indigo-200">Tarea RA5 Python</p>
+                                            <p class="text-sm text-slate-500 dark:text-indigo-100/60">Nueva tarea de repaso añadida para el RA5.</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-slate-400 group-hover:translate-x-1 group-hover:text-indigo-500 transition dark:text-white/40 dark:group-hover:text-white">→</span>
+                                </li>
+                                <!-- Noticia 3 -->
+                                <li class="group flex items-center justify-between gap-4 rounded-lg bg-white p-3 shadow-sm hover:shadow-md transition border border-slate-200/60 cursor-pointer hover:border-indigo-300 dark:bg-white/5 dark:border-white/5 dark:hover:bg-white/10 dark:hover:border-white/20"
+                                    data-action="open-news-link" data-target="features/bbdd/index.html" data-label="BBDD">
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-2xl">💾</span>
+                                        <div>
+                                            <p class="font-semibold text-slate-900 group-hover:text-indigo-600 transition dark:text-white dark:group-hover:text-indigo-200">Recuperación BBDD</p>
+                                            <p class="text-sm text-slate-500 dark:text-indigo-100/60">Nuevo módulo de recuperación con test de repaso.</p>
                                         </div>
                                     </div>
                                     <span class="text-slate-400 group-hover:translate-x-1 group-hover:text-indigo-500 transition dark:text-white/40 dark:group-hover:text-white">→</span>
@@ -217,6 +238,25 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.addEventListener('click', () => {
                 const target = btn.dataset.target;
                 const label = btn.dataset.label;
+                loadModule(target, label);
+            });
+        });
+
+        const notebookButtons = viewer.querySelectorAll('[data-action="open-notebooklm"]');
+        notebookButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                loadNotebookModule();
+            });
+        });
+
+        // News links handler
+        const newsLinks = viewer.querySelectorAll('[data-action="open-news-link"]');
+        newsLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = link.dataset.target;
+                const label = link.dataset.label;
                 loadModule(target, label);
             });
         });
@@ -307,6 +347,16 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                             <span class="text-slate-400 group-hover:text-indigo-500 transition">→</span>
                         </button>
+                        
+                        <a href="https://notebooklm.google.com/notebook/89de0f2e-3bb7-41d3-8ca6-460f1b947eb9?authuser=1" target="_blank" rel="noopener" data-open="direct"
+                            class="tilt-card group flex items-center gap-4 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 text-left shadow-lg transition hover:border-indigo-400 dark:border-white/10 dark:bg-slate-900/70 no-underline">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-500/10 text-2xl">📓</div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Cuaderno de apuntes</h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-300">NotebookLM con recursos y documentación de DWEC</p>
+                            </div>
+                            <span class="text-slate-400 group-hover:text-indigo-500 transition">→</span>
+                        </a>
                     </div>
                 </div>
             </article>
@@ -629,6 +679,16 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                             <span class="text-slate-400 group-hover:text-indigo-500 transition">→</span>
                         </button>
+
+                        <a href="https://notebooklm.google.com/notebook/124422c4-726c-4402-91d2-06a61dce6c8b?authuser=1" target="_blank" rel="noopener" data-open="direct"
+                            class="tilt-card group flex items-center gap-4 rounded-[1.1rem] border border-slate-200/60 bg-white/80 p-5 text-left shadow-lg transition hover:border-indigo-400 dark:border-white/10 dark:bg-slate-900/70 no-underline">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-500/10 text-2xl">📓</div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Cuaderno de apuntes</h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-300">NotebookLM con recursos y documentación de DWES</p>
+                            </div>
+                            <span class="text-slate-400 group-hover:text-indigo-500 transition">→</span>
+                        </a>
                     </div>
                 </div>
             </article>
@@ -882,30 +942,56 @@ document.addEventListener('DOMContentLoaded', () => {
                 Links a los cuadernos de las asignaturas.
             </p>
             <div class="grid gap-5 md:grid-cols-2">
-                <!-- Cuadernos no disponibles actualmente -->
-                <div class="col-span-full rounded-[1.1rem] border border-dashed border-slate-300 p-8 text-center text-slate-500 dark:border-slate-700 dark:text-slate-400">
-                    <p>No hay cuadernos disponibles por el momento.</p>
-                </div>
+                ${notebookEntry(
+            'DWEC',
+            'Desarrollo Web en Entorno Cliente',
+            'dwec',
+            'https://notebooklm.google.com/notebook/89de0f2e-3bb7-41d3-8ca6-460f1b947eb9?authuser=1'
+        )}
+                ${notebookEntry(
+            'DWES',
+            'Desarrollo Web en Entorno Servidor',
+            'dwes',
+            'https://notebooklm.google.com/notebook/124422c4-726c-4402-91d2-06a61dce6c8b?authuser=1'
+        )}
+                ${notebookEntry(
+            'DAW',
+            'Despliegue de Aplicaciones Web',
+            'despliegue',
+            'https://notebooklm.google.com/notebook/68684c68-d5bc-45ff-aab0-3eaaa92c9378?authuser=1'
+        )}
+                ${notebookEntry(
+            'DIW',
+            'Diseño de Interfaces Web',
+            'interfaces',
+            'https://notebooklm.google.com/notebook/0787d140-e525-4de4-bc58-ab2e57f0be7d?authuser=1'
+        )}
+                ${notebookEntry(
+            'Python',
+            'Programación en Python',
+            'python',
+            'https://notebooklm.google.com/notebook/d9864bd5-04cf-4f17-8bc4-3259b8aead7c?authuser=1'
+        )}
             </div>
         `;
     }
 
     function notebookEntry(name, description, key, link = '#') {
         return `
-            <article class="tilt-card group flex flex-col gap-4 rounded-[1.2rem] border border-slate-200/70 bg-white/80 p-5 shadow-[0_18px_38px_rgba(15,23,42,0.08)] transition duration-300 ease-out hover:border-indigo-300/80 dark:border-white/10 dark:bg-slate-900/70 dark:shadow-[0_18px_38px_rgba(0,0,0,0.45)]">
+            <article class="tilt-card group flex flex-col gap-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition duration-300 ease-out hover:border-indigo-300 dark:border-white/10 dark:bg-slate-900 dark:shadow-md">
                 <div class="space-y-1">
-                    <span class="text-xs font-semibold uppercase tracking-[0.3em] text-indigo-400/80">Cuaderno</span>
+                    <span class="text-xs font-semibold uppercase tracking-[0.3em] text-indigo-500/80">Cuaderno</span>
                     <h3 class="text-lg font-semibold text-slate-900 dark:text-white">${name}</h3>
                     <p class="text-sm text-slate-600 dark:text-slate-300">${description}</p>
                 </div>
-                <a class="inline-flex items-center justify-center rounded-full border border-indigo-200/70 bg-indigo-500/10 px-4 py-2 text-sm font-semibold text-indigo-600 transition hover:bg-indigo-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 dark:border-indigo-400/30 dark:text-indigo-100" href="${link}" target="_blank" rel="noopener" data-notebook="${key}" data-open="direct">Ir al cuaderno</a>
+                <a class="inline-flex items-center justify-center rounded-lg border border-indigo-200 bg-indigo-50 px-4 py-2 text-sm font-semibold text-indigo-600 transition hover:bg-indigo-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 dark:border-indigo-400/30 dark:bg-indigo-500/10 dark:text-indigo-100" href="${link}" target="_blank" rel="noopener" data-notebook="${key}" data-open="direct">Ir al cuaderno</a>
             </article>
         `;
     }
 
     function errorTemplate(label) {
         return `
-            <article class="viewer-content rounded-[1.25rem] border border-dashed border-slate-300/80 bg-white/80 p-6 text-center text-slate-600 shadow-inner dark:border-white/30 dark:bg-slate-900/70 dark:text-slate-200">
+            <article class="viewer-content rounded-xl border border-dashed border-slate-300 bg-white/50 p-6 text-center text-slate-600 shadow-inner dark:border-white/20 dark:bg-slate-900/50 dark:text-slate-200">
                 <h3 class="text-xl font-semibold text-slate-900 dark:text-white">No se pudo abrir ${label}</h3>
                 <p class="mt-2">Revisa el archivo o inténtalo de nuevo más tarde.</p>
             </article>
