@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-09T18:34:50.206Z",
+  "generated_at": "2026-02-09T19:49:55.696Z",
   "repos": {
     "dwec-arrays": {
       "name": "Arrays-Js-Practice",
@@ -8,33 +8,7 @@
       "pushed_at": "2025-11-18T13:22:24Z",
       "html_url": "https://github.com/DavidGom1/Arrays-Js-Practice",
       "default_branch": "main",
-      "files": [
-        {
-          "path": "README.md",
-          "type": "file",
-          "size": 4514
-        },
-        {
-          "path": "SOLUCIONES",
-          "type": "dir",
-          "size": 0
-        },
-        {
-          "path": "SOLUCIONES/guia.md",
-          "type": "file",
-          "size": 8152
-        },
-        {
-          "path": "SOLUCIONES/soluciones.js",
-          "type": "file",
-          "size": 9503
-        },
-        {
-          "path": "app.js",
-          "type": "file",
-          "size": 10698
-        }
-      ]
+      "files": []
     },
     "dwes-examenes": {
       "name": "DWES-Examenes-otros-a-os",
