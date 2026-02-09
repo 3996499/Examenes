@@ -129,9 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
         themeToggleButtons.forEach(button => {
             button.textContent = theme === 'light' ? '\u2600' : '\u263E';
         });
-        themeStatusBadges.forEach(badge => {
-            badge.textContent = theme === 'light' ? 'Modo claro' : 'Modo oscuro';
-        });
     }
 
     function renderState(state) {
@@ -151,8 +148,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return `
             <section class="viewer-content flex flex-col gap-6">
                 <!-- Hero Section Adaptable -->
-                <div class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-white/10 dark:bg-slate-900">
-                    
                     <div class="relative z-10 space-y-6">
                         <div class="flex items-center gap-3">
                             <span class="inline-flex items-center rounded-md border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-xs font-medium text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
@@ -177,6 +172,30 @@ document.addEventListener('DOMContentLoaded', () => {
                             <ul class="space-y-3">
                                 <!-- Noticia 1 -->
                                 <li class="group flex items-center justify-between gap-4 rounded-lg bg-white p-3 shadow-sm hover:shadow-md transition border border-slate-200/60 cursor-pointer hover:border-indigo-300 dark:bg-white/5 dark:border-white/5 dark:hover:bg-white/10 dark:hover:border-white/20"
+                                    data-action="open-news-link" data-target="features/interfaces/index.html" data-label="DIW">
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-2xl">🎨</span>
+                                        <div>
+                                            <p class="font-semibold text-slate-900 group-hover:text-indigo-600 transition dark:text-white dark:group-hover:text-indigo-200">DIW: RAs 4, 5 y 6</p>
+                                            <p class="text-sm text-slate-500 dark:text-indigo-100/60">Nuevos tests de accesibilidad, frameworks y React.</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-slate-400 group-hover:translate-x-1 group-hover:text-indigo-500 transition dark:text-white/40 dark:group-hover:text-white">→</span>
+                                </li>
+                                <!-- Noticia 2 -->
+                                <li class="group flex items-center justify-between gap-4 rounded-lg bg-white p-3 shadow-sm hover:shadow-md transition border border-slate-200 cursor-pointer hover:border-indigo-300 dark:bg-white/5 dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20"
+                                    data-action="open-news-link" data-target="features/sostenibilidad/index.html" data-label="SASP">
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-2xl">🌱</span>
+                                        <div>
+                                            <p class="font-semibold text-slate-900 group-hover:text-indigo-600 transition dark:text-white dark:group-hover:text-indigo-200">SASP: Unidades 4 y 5</p>
+                                            <p class="text-sm text-slate-600 dark:text-indigo-100/60">Añadidos tests de economía circular y planes de sostenibilidad.</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-slate-400 group-hover:translate-x-1 group-hover:text-indigo-500 transition dark:text-white/40 dark:group-hover:text-white">→</span>
+                                </li>
+                                <!-- Noticia 3 -->
+                                <li class="group flex items-center justify-between gap-4 rounded-lg bg-white p-3 shadow-sm hover:shadow-md transition border border-slate-200/60 cursor-pointer hover:border-indigo-300 dark:bg-white/5 dark:border-white/5 dark:hover:bg-white/10 dark:hover:border-white/20"
                                     data-action="open-notebooklm">
                                     <div class="flex items-center gap-4">
                                         <span class="text-2xl">📓</span>
@@ -187,32 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     </div>
                                     <span class="text-slate-400 group-hover:translate-x-1 group-hover:text-indigo-500 transition dark:text-white/40 dark:group-hover:text-white">→</span>
                                 </li>
-                                <!-- Noticia 2 -->
-                                <li class="group flex items-center justify-between gap-4 rounded-lg bg-white p-3 shadow-sm hover:shadow-md transition border border-slate-200 cursor-pointer hover:border-indigo-300 dark:bg-white/5 dark:border-white/10 dark:hover:bg-white/10 dark:hover:border-white/20"
-                                    data-action="open-news-link" data-target="features/python/index.html" data-label="Python">
-                                    <div class="flex items-center gap-4">
-                                        <span class="text-2xl">🐍</span>
-                                        <div>
-                                            <p class="font-semibold text-slate-900 group-hover:text-indigo-600 transition dark:text-white dark:group-hover:text-indigo-200">Tarea RA5 Python</p>
-                                            <p class="text-sm text-slate-500 dark:text-indigo-100/60">Nueva tarea de repaso añadida para el RA5.</p>
-                                        </div>
-                                    </div>
-                                    <span class="text-slate-400 group-hover:translate-x-1 group-hover:text-indigo-500 transition dark:text-white/40 dark:group-hover:text-white">→</span>
-                                </li>
-                                <!-- Noticia 3 -->
-                                <li class="group flex items-center justify-between gap-4 rounded-lg bg-white p-3 shadow-sm hover:shadow-md transition border border-slate-200/60 cursor-pointer hover:border-indigo-300 dark:bg-white/5 dark:border-white/5 dark:hover:bg-white/10 dark:hover:border-white/20"
-                                    data-action="open-news-link" data-target="features/bbdd/index.html" data-label="BBDD">
-                                    <div class="flex items-center gap-4">
-                                        <span class="text-2xl">💾</span>
-                                        <div>
-                                            <p class="font-semibold text-slate-900 group-hover:text-indigo-600 transition dark:text-white dark:group-hover:text-indigo-200">Recuperación BBDD</p>
-                                            <p class="text-sm text-slate-500 dark:text-indigo-100/60">Nuevo módulo de recuperación con test de repaso.</p>
-                                        </div>
-                                    </div>
-                                    <span class="text-slate-400 group-hover:translate-x-1 group-hover:text-indigo-500 transition dark:text-white/40 dark:group-hover:text-white">→</span>
-                                </li>
                             </ul>
-                        </div>
                     </div>
                 </div>
             </section>
