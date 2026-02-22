@@ -23,24 +23,24 @@ jobs:
 
       - name: Fetch DWEC Arrays repo structure
         run: |
-          mkdir -p data
+          mkdir -p tmp_data
           curl -s "https://api.github.com/repos/DavidGom1/Arrays-Js-Practice" \
             -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
-            > data/dwec-arrays-info.json
+            > tmp_data/dwec-arrays-info.json
           
           curl -s "https://api.github.com/repos/DavidGom1/Arrays-Js-Practice/git/trees/main?recursive=1" \
             -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
-            > data/dwec-arrays-tree.json
+            > tmp_data/dwec-arrays-tree.json
 
       - name: Fetch DWES Examenes repo structure
         run: |
           curl -s "https://api.github.com/repos/DavidGom1/DWES-Examenes-otros-a-os" \
             -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
-            > data/dwes-examenes-info.json
+            > tmp_data/dwes-examenes-info.json
           
           curl -s "https://api.github.com/repos/DavidGom1/DWES-Examenes-otros-a-os/git/trees/main?recursive=1" \
             -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
-            > data/dwes-examenes-tree.json
+            > tmp_data/dwes-examenes-tree.json
 
       - name: Generate combined data file
         run: |
@@ -70,13 +70,13 @@ jobs:
           }
           
           const data = {
-            generated_at: new Date().toISOString(),
             repos: {
-              'dwec-arrays': processRepo('data/dwec-arrays-info.json', 'data/dwec-arrays-tree.json'),
-              'dwes-examenes': processRepo('data/dwes-examenes-info.json', 'data/dwes-examenes-tree.json')
+              'dwec-arrays': processRepo('tmp_data/dwec-arrays-info.json', 'tmp_data/dwec-arrays-tree.json'),
+              'dwes-examenes': processRepo('tmp_data/dwes-examenes-info.json', 'tmp_data/dwes-examenes-tree.json')
             }
           };
           
+          if (!fs.existsSync('data')) { fs.mkdirSync('data'); }
           fs.writeFileSync('data/repos.json', JSON.stringify(data, null, 2));
           EOF
 
@@ -85,7 +85,8 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add data/
+          git add data/repos.json
+          git add -u data/
           if git diff --quiet --staged; then
             echo "changes=false" >> $GITHUB_OUTPUT
           else
