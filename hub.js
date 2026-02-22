@@ -172,6 +172,18 @@ document.addEventListener('DOMContentLoaded', () => {
                             <ul class="space-y-3">
                                 <!-- Noticia 1 -->
                                 <li class="group flex items-center justify-between gap-4 rounded-lg bg-white p-3 shadow-sm hover:shadow-md transition border border-slate-200/60 cursor-pointer hover:border-indigo-300 dark:bg-white/5 dark:border-white/5 dark:hover:bg-white/10 dark:hover:border-white/20"
+                                    data-action="open-news-link" data-target="features/python/index.html" data-label="Python">
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-2xl">🐍</span>
+                                        <div>
+                                            <p class="font-semibold text-slate-900 group-hover:text-indigo-600 transition dark:text-white dark:group-hover:text-indigo-200">Python: RA6</p>
+                                            <p class="text-sm text-slate-500 dark:text-indigo-100/60">Añadidos tests para los últimos ajustes antes del despliegue.</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-slate-400 group-hover:translate-x-1 group-hover:text-indigo-500 transition dark:text-white/40 dark:group-hover:text-white">→</span>
+                                </li>
+                                <!-- Noticia 2 -->
+                                <li class="group flex items-center justify-between gap-4 rounded-lg bg-white p-3 shadow-sm hover:shadow-md transition border border-slate-200/60 cursor-pointer hover:border-indigo-300 dark:bg-white/5 dark:border-white/5 dark:hover:bg-white/10 dark:hover:border-white/20"
                                     data-action="open-news-link" data-target="features/interfaces/index.html" data-label="DIW">
                                     <div class="flex items-center gap-4">
                                         <span class="text-2xl">🎨</span>
